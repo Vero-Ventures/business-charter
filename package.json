@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky && git config --unset-all core.hooksPath && pre-commit install"
+    "prepare": "husky && pip install pre-commit && git config --unset-all core.hooksPath && pre-commit install"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
