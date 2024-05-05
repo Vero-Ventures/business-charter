@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky && pip install pre-commit && git config --unset-all core.hooksPath && pre-commit install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -95,9 +95,11 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "**/*": [
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
+    "*.{ts, html}": [
+      "eslint --fix"
+    ],
+    "*.{json,css,scss,less,md,ts,html}": [
+      "prettier --write"
     ]
   }
 }
