@@ -1,9 +1,9 @@
 name: Format
 on:
   pull_request:
-    branches: [main]
-  # push:
-  #   branches: [main]
+    branches: [devops/actions]
+  push:
+    branches: [devops/actions]
 
 jobs:
   format:
@@ -39,4 +39,3 @@ jobs:
               repo: context.repo.repo,
               body: 'Formatting failed. Please check the logs.'
             })
-            
