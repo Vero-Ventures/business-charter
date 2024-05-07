@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write . && eslint --fix .",
+    "format": "eslint --fix . && prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
@@ -96,7 +96,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{ts, html}": [
+    "*.{ts}": [
       "eslint --fix"
     ],
     "*.{json,css,scss,less,md,ts,html}": [
