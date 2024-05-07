@@ -2,9 +2,15 @@
 
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import { usePathname } from "next/navigation";
 
-const links = [
+const mainLinks = [
+  { href: "/profile", label: "Your Profile" },
+  { href: "/family", label: "Your Family" },
+];
+
+const familySublinks = [
   { href: "/decision-tree", label: "Decision Tree" },
   { href: "/family-values", label: "Family Values" },
   { href: "/family-code", label: "Family Code" },
@@ -26,7 +32,22 @@ export default function NavBar() {
   const pathname = usePathname();
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
-      {links.map((link) => (
+      {mainLinks.map((link) => (
+        <Link
+          key={link.label}
+          className="w-full cursor-pointer"
+          href={link.href}
+        >
+          <Button
+            variant={pathname === link.href ? "default" : "ghost"}
+            className="w-full"
+          >
+            {link.label}
+          </Button>
+        </Link>
+      ))}
+      <Separator className="mx-auto mt-2 w-[90%]" />
+      {familySublinks.map((link) => (
         <Link
           key={link.label}
           className="w-full cursor-pointer"
