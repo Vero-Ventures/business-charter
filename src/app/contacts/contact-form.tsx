@@ -41,7 +41,6 @@ const formSchema = z.object({
       message: "Phone number must be at least 10 characters long",
     })
     .max(15),
-  isFamilyMember: z.boolean().default(false),
 });
 
 export type InsertContact = z.infer<typeof formSchema>;
@@ -55,7 +54,6 @@ export function ContactForm() {
       title: "",
       email: "",
       phone: "",
-      isFamilyMember: false,
     },
   });
 
@@ -125,38 +123,6 @@ export function ContactForm() {
                 <Input placeholder="604-689-8289" type="tel" {...field} />
               </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="isFamilyMember"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Is family member?</FormLabel>
-              <FormControl>
-                <div className="flex space-x-4">
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      value="Yes"
-                      checked={field.value === true}
-                      onChange={() => field.onChange(true)}
-                    />
-                    <span>Yes</span>
-                  </label>
-                  <label className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      value="No"
-                      checked={field.value === false}
-                      onChange={() => field.onChange(false)}
-                    />
-                    <span>No</span>
-                  </label>
-                </div>
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}
