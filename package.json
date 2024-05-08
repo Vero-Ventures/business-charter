@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky && pip install pre-commit && git config --unset-all core.hooksPath && pre-commit install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -84,7 +84,8 @@
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
-    "eslint": "^8.57.0",
+
+    "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
@@ -95,9 +96,11 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "**/*": [
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
+    "*.{ts, html}": [
+      "eslint --fix"
+    ],
+    "*.{json,css,scss,less,md,ts,html}": [
+      "prettier --write"
     ]
   }
 }
