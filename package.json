@@ -96,7 +96,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{ts}": [
+    "*.ts": [
       "eslint --fix"
     ],
     "*.{json,css,scss,less,md,ts,html}": [
