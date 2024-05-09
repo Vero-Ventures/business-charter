@@ -1,35 +1,35 @@
-import { useMutation } from "@tanstack/react-query";
-import { InsertFamilyCrest as familyCrestFormSchema } from "./family-crest-form";
-import { createClient } from "@/lib/supabase/client";
-import { addFamilyCrest } from "./actions";
+import { useMutation } from '@tanstack/react-query';
+import { InsertFamilyCrest as familyCrestFormSchema } from './family-crest-form';
+import { createClient } from '@/lib/supabase/client';
+import { addFamilyCrest } from './actions';
 
 const randomString = (length: number) =>
-  crypto.getRandomValues(new Uint8Array(length)).join("");
+  crypto.getRandomValues(new Uint8Array(length)).join('');
 
 export default function useGenerateCrest() {
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (family: familyCrestFormSchema) => {
-      const response = await fetch("/api/generate-family-crest", {
-        method: "POST",
+      const response = await fetch('/api/generate-family-crest', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(family),
       });
       const resData = await response.json();
       // Decode the base64 string
-      const imageFile = Buffer.from(resData, "base64");
-      const bucket = "family_crest";
+      const imageFile = Buffer.from(resData, 'base64');
+      const bucket = 'family_crest';
 
       const supabase = createClient();
 
       const imageName = randomString(8);
-      const { data } = await supabase.auth.getUser();
+      // const { data } = await supabase.auth.getUser();
 
       const { error } = await supabase.storage
         .from(bucket)
         .upload(imageName, imageFile, {
-          contentType: "image/png",
+          contentType: 'image/png',
         });
 
       if (error) {
