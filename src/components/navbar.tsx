@@ -4,10 +4,14 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { usePathname } from "next/navigation";
+import { User, Users } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faUsers } from "@fortawesome/free-solid-svg-icons";
+
 
 const mainLinks = [
-  { href: "/profile", label: "Your Profile" },
-  { href: "/family", label: "Your Family" },
+  { href: "/profile", label: "Your Profile", icon: faUser },
+  { href: "/family", label: "Your Family", icon: faUsers },
 ];
 
 const familySublinks = [
@@ -32,17 +36,14 @@ export default function NavBar() {
   const pathname = usePathname();
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
-      {mainLinks.map((link) => (
-        <Link
-          key={link.label}
-          className="w-full cursor-pointer"
-          href={link.href}
-        >
+      {mainLinks.map(({ href, label, icon }) => (
+        <Link key={label} className="w-full cursor-pointer" href={href}>
           <Button
-            variant={pathname === link.href ? "default" : "ghost"}
-            className="w-full"
+            variant={pathname === href ? "default" : "ghost"}
+            className="w-full flex items-center gap-2"
           >
-            {link.label}
+            <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+            {label}
           </Button>
         </Link>
       ))}
