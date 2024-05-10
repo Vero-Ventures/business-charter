@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import {
   Form,
   FormControl,
@@ -48,11 +47,15 @@ export default function SignupForm() {
   async function onSubmit({ email, password }: SignupFormSchema) {
     setIsSubmitting(true);
     const error = await signup(email, password);
-    if (error) {
+    if (error.message) {
+      console.error('Signup Error:', error.message);
       setError(error.message);
+    } else {
+      setError("");
     }
     setIsSubmitting(false);
   }
+
   return (
     <Form {...form}>
       <form
