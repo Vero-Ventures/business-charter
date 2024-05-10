@@ -1,8 +1,8 @@
-"use client";
-import { ColumnDef } from "@tanstack/react-table";
-import DeleteRowButton from "../../components/delete-row-button";
-import { deletePolicy } from "./actions";
-import { InsertPolicyTree } from "./policy-tree-form";
+'use client';
+import { ColumnDef } from '@tanstack/react-table';
+import DeleteRowButton from '../../components/delete-row-button';
+import { deletePolicy } from './actions';
+import { InsertPolicyTree } from './policy-tree-form';
 
 interface PolicyTreeTableRow extends InsertPolicyTree {
   id: number;
@@ -10,40 +10,40 @@ interface PolicyTreeTableRow extends InsertPolicyTree {
 
 export const policyTreeColumns: ColumnDef<PolicyTreeTableRow>[] = [
   {
-    accessorKey: "carrier",
-    header: "Carrier",
+    accessorKey: 'carrier',
+    header: 'Carrier',
   },
   {
-    accessorKey: "type",
-    header: "Type",
+    accessorKey: 'type',
+    header: 'Type',
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: 'amount',
+    header: 'Amount',
     cell: ({ row }) => {
       const amountValue = row.original.amount;
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
+      const formatted = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
       }).format(+amountValue);
       return <div className="text-left font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "owner",
-    header: "Owner",
+    accessorKey: 'owner',
+    header: 'Owner',
   },
   {
-    accessorKey: "beneficiary",
-    header: "Beneficiary",
+    accessorKey: 'beneficiary',
+    header: 'Beneficiary',
   },
   {
-    accessorKey: "payor",
-    header: "Payor",
+    accessorKey: 'payor',
+    header: 'Payor',
   },
   {
-    accessorKey: "anniversary",
-    header: "Anniversary",
+    accessorKey: 'anniversary',
+    header: 'Anniversary',
     cell: ({ row }) => {
       const date = new Date(row.original.anniversary);
       const formatted = date.toLocaleDateString();
@@ -51,16 +51,16 @@ export const policyTreeColumns: ColumnDef<PolicyTreeTableRow>[] = [
     },
   },
   {
-    accessorKey: "insured",
-    header: "Insured",
+    accessorKey: 'insured',
+    header: 'Insured',
   },
 ];
 
 export const policyTreeColumnsWithDelete: ColumnDef<PolicyTreeTableRow>[] = [
   ...policyTreeColumns,
   {
-    id: "actions",
-    header: "Actions",
+    id: 'actions',
+    header: 'Actions',
     cell: ({ row }) => (
       <div>
         <DeleteRowButton

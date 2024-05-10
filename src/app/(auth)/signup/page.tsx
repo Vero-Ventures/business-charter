@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
-import SignupForm from "./signup-form";
-import { redirect } from "next/navigation";
+import { createClient } from '@/lib/supabase/server';
+import SignupForm from './signup-form';
+import { redirect } from 'next/navigation';
 
 export default async function SignupPage() {
   const supabase = createClient();
@@ -8,7 +8,7 @@ export default async function SignupPage() {
   const { data } = await supabase.auth.getUser();
 
   if (data?.user) {
-    redirect("/decision-tree");
+    redirect('/decision-tree');
   }
 
   return (

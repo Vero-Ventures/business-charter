@@ -1,5 +1,5 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Button } from '@/components/ui/button';
 
 export default function PrintPDFButton() {
   const handleClick = () => {
@@ -9,8 +9,7 @@ export default function PrintPDFButton() {
     <Button
       className="mb-5 print:hidden"
       onClick={handleClick}
-      aria-label="Print PDF"
-    >
+      aria-label="Print PDF">
       Print PDF
     </Button>
   );

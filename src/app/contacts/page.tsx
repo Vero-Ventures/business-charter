@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import Loading from "@/components/loading";
-import Contacts from "./contacts";
-import { ContactForm } from "./contact-form";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import { Suspense } from 'react';
+import Loading from '@/components/loading';
+import Contacts from './contacts';
+import { ContactForm } from './contact-form';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function ContactPage() {
   return (

@@ -9,9 +9,9 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
 **Proposed Solution:**
 
 - The LLM will replace the advisor role by:
-    - Employing probing questions to uncover stakeholders' or family members' underlying values and goals.
-    - Compiling these findings into a cohesive charter document for review and agreement.
-    - Allowing users to edit and refine the charter collaboratively.
+  - Employing probing questions to uncover stakeholders' or family members' underlying values and goals.
+  - Compiling these findings into a cohesive charter document for review and agreement.
+  - Allowing users to edit and refine the charter collaboratively.
 
 **Technical Approach:**
 
@@ -27,16 +27,16 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
 
 - **Programming Languages:** Python, Typescript
 - **Libraries/Frameworks:**
-    - PyTorch for deep learning
-    - Selenium for web scraping (potentially)
-    - Pandas for data manipulation
-    - Other AI/ML libraries as needed
+  - PyTorch for deep learning
+  - Selenium for web scraping (potentially)
+  - Pandas for data manipulation
+  - Other AI/ML libraries as needed
 - **APIs:** Existing LLM APIs for model interaction
 - **Tools:**
-    - IDE for development
-    - Code interpreter
-    - Web browser for research
-    - Potentially DevOps tools for CI/CD (continuous integration and deployment)
+  - IDE for development
+  - Code interpreter
+  - Web browser for research
+  - Potentially DevOps tools for CI/CD (continuous integration and deployment)
 - **Computational Resources:** Local AI/ML server with high computational power for training, development, and deployment of the LLM.
 
 ## **Current Work/Arrangement**

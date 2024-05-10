@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from '@/lib/supabase/server';
 
-import NavBarSheet from "./nav-bar-sheet";
+import NavBarSheet from './nav-bar-sheet';
 
 export default async function NavBarSheetWrapper() {
   const supabase = createClient();

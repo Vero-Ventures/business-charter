@@ -1,11 +1,11 @@
-"use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+'use client';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { addGuideline } from "./actions";
+import { addGuideline } from './actions';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   Form,
@@ -13,18 +13,18 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import FormSubmitButton from "@/components/form-submit-button";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import FormSubmitButton from '@/components/form-submit-button';
 
 const philanthropyGuidelineFormSchema = z.object({
   guideline: z
     .string()
     .min(2, {
-      message: "Guideline must be greater than 2 characters.",
+      message: 'Guideline must be greater than 2 characters.',
     })
     .max(250, {
-      message: "Guideline must be less than 250 characters.",
+      message: 'Guideline must be less than 250 characters.',
     }),
 });
 export type InsertGuideline = z.infer<typeof philanthropyGuidelineFormSchema>;
@@ -34,7 +34,7 @@ export default function PhilanthropyGuidelineForm() {
   const form = useForm<InsertGuideline>({
     resolver: zodResolver(philanthropyGuidelineFormSchema),
     defaultValues: {
-      guideline: "",
+      guideline: '',
     },
   });
   async function onSubmit(formData: InsertGuideline) {

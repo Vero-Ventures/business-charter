@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import PrintPDFButton from "./print-pdf-button";
-import Loading from "@/components/loading";
-import PDFPages from "./pdf-pages";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import { Suspense } from 'react';
+import PrintPDFButton from './print-pdf-button';
+import Loading from '@/components/loading';
+import PDFPages from './pdf-pages';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function PrintPDFPage() {
   return (
