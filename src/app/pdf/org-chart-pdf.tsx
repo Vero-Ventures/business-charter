@@ -1,10 +1,10 @@
-"use client";
-import { useOrgChartImageStore } from "../org-chart/org-chart-store";
-import PDFPage from "./pdf-page";
-import Image from "next/image";
+'use client';
+import { useOrgChartImageStore } from '../org-chart/org-chart-store';
+import PDFPage from './pdf-page';
+import Image from 'next/image';
 
 export default function FamilyTreePDF() {
-  const orgChartImage = useOrgChartImageStore((s) => s.imgString);
+  const orgChartImage = useOrgChartImageStore(s => s.imgString);
   return (
     <PDFPage>
       <h1>Org Chart</h1>

@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { User } from "@supabase/supabase-js";
-import { Menu } from "lucide-react";
+import { User } from '@supabase/supabase-js';
+import { Menu } from 'lucide-react';
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "./ui/button";
-import NavBar from "./navbar";
-import Profile from "./profile";
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from './ui/button';
+import NavBar from './navbar';
+import Profile from './profile';
 
 export default function NavBarSheet({ user }: { user: User | null }) {
   return (

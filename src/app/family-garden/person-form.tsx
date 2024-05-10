@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import MoneyInput from "../../components/money-input";
+import MoneyInput from '../../components/money-input';
 import {
   Form,
   FormControl,
@@ -8,20 +8,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import FormSubmitButton from "@/components/form-submit-button";
-import { useState } from "react";
-import { addPerson } from "./actions";
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Input } from '@/components/ui/input';
+import FormSubmitButton from '@/components/form-submit-button';
+import { useState } from 'react';
+import { addPerson } from './actions';
 
 const personFormSchema = z.object({
   name: z.string().min(2).max(50),
   beginAge: z.coerce.number().min(0).max(100),
-  beginAmount: z.coerce.number().min(0.01, "Must be greater than 0"),
+  beginAmount: z.coerce.number().min(0.01, 'Must be greater than 0'),
 });
 
 export type InsertPerson = z.infer<typeof personFormSchema>;
@@ -31,7 +31,7 @@ export default function PersonForm() {
   const form = useForm<InsertPerson>({
     resolver: zodResolver(personFormSchema),
     defaultValues: {
-      name: "",
+      name: '',
       beginAge: 30,
       beginAmount: 0,
     },
@@ -47,8 +47,7 @@ export default function PersonForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-10 space-y-8 rounded-lg border p-10"
-      >
+        className="mt-10 space-y-8 rounded-lg border p-10">
         <FormField
           control={form.control}
           name="name"

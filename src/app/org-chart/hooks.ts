@@ -1,9 +1,9 @@
-import { addEdge, useReactFlow } from "reactflow";
-import type { Connection, Node, Edge, OnConnectStartParams } from "reactflow";
-import { toast } from "sonner";
+import { addEdge, useReactFlow } from 'reactflow';
+import type { Connection, Node, Edge, OnConnectStartParams } from 'reactflow';
+import { toast } from 'sonner';
 
-import { Dispatch, SetStateAction, useCallback, useRef } from "react";
-import { IndividualNode, NodeData } from "./types";
+import { Dispatch, SetStateAction, useCallback, useRef } from 'react';
+import { IndividualNode, NodeData } from './types';
 
 export function useAddNodeOnEdgeDrop(
   setEdges: Dispatch<SetStateAction<Edge<any>[]>>,
@@ -16,7 +16,7 @@ export function useAddNodeOnEdgeDrop(
     (params: Edge | Connection) => {
       // reset the start node on connections
       connectingNodeId.current = null;
-      setEdges((eds) => addEdge(params, eds));
+      setEdges(eds => addEdge(params, eds));
     },
     [setEdges]
   );
@@ -42,34 +42,34 @@ export function useAddNodeOnEdgeDrop(
       )
         return;
 
-      const targetIsPane = event.target.classList.contains("react-flow__pane");
+      const targetIsPane = event.target.classList.contains('react-flow__pane');
       if (targetIsPane) {
         // we need to remove the wrapper bounds, in order to get the correct position
         const id = crypto.randomUUID();
         const newNode: IndividualNode = {
           id,
-          type: "customNode",
+          type: 'customNode',
           position: screenToFlowPosition({
             x: event.clientX,
             y: event.clientY,
           }),
           data: {
-            name: "",
-            surname: "",
-            dateOfBirth: "",
-            placeOfBirth: "",
-            gender: "Male",
+            name: '',
+            surname: '',
+            dateOfBirth: '',
+            placeOfBirth: '',
+            gender: 'Male',
             genderColor: {
-              Male: "#9ad3f6",
-              Female: "#f6bfba",
+              Male: '#9ad3f6',
+              Female: '#f6bfba',
             },
           },
-          style: { borderRadius: "4px" },
+          style: { borderRadius: '4px' },
         };
 
         setNodes((nds: Node<NodeData>[]) => nds.concat(newNode));
 
-        setEdges((eds) => {
+        setEdges(eds => {
           // if we are not connecting a node, we don't need to create an edge
           if (!connectingNodeId.current) return eds;
 
@@ -100,13 +100,13 @@ export function useSaveAndRestore(
   const onSave = useCallback(() => {
     // creates a JSON-compatible representation of the flow
     const flow = toObject();
-    localStorage.setItem("org-chart", JSON.stringify(flow));
-    toast.success("Your flow has been saved.");
+    localStorage.setItem('org-chart', JSON.stringify(flow));
+    toast.success('Your flow has been saved.');
   }, [toObject]);
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      const data = localStorage.getItem("org-chart");
+      const data = localStorage.getItem('org-chart');
       const flow = data ? JSON.parse(data) : null;
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -126,11 +126,11 @@ export function useSaveAndRestore(
 }
 
 export function useAddNewNode(
-  newNode: Node<any, "customNode" | "customJunction">,
+  newNode: Node<any, 'customNode' | 'customJunction'>,
   setNodes: Dispatch<SetStateAction<Node<NodeData, string | undefined>[]>>
 ) {
   const onAdd = useCallback(() => {
-    setNodes((nds) => nds.concat(newNode));
+    setNodes(nds => nds.concat(newNode));
   }, [newNode, setNodes]);
 
   return { onAdd };

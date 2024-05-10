@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { ImageIcon } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { ImageIcon } from 'lucide-react';
 
 export default async function FamilyCrestPreview({
   imageUrl,

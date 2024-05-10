@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface OrgChartState {
   imgString: string;
@@ -8,10 +8,10 @@ interface OrgChartState {
 
 export const useOrgChartImageStore = create<OrgChartState>()(
   persist(
-    (set) => ({
-      imgString: "",
+    set => ({
+      imgString: '',
       saveImgString: (newImgString: string) => set({ imgString: newImgString }),
     }),
-    { name: "org-chart-image" }
+    { name: 'org-chart-image' }
   )
 );

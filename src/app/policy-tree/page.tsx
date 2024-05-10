@@ -1,8 +1,8 @@
-import React, { Suspense } from "react";
-import PolicyTreeForm from "./policy-tree-form";
-import Policies from "./policies";
-import Loading from "@/components/loading";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import React, { Suspense } from 'react';
+import PolicyTreeForm from './policy-tree-form';
+import Policies from './policies';
+import Loading from '@/components/loading';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function PolicyPage() {
   return (

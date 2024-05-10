@@ -1,0 +1,42 @@
+name: Format
+on:
+  pull_request:
+    branches: [devops/actions]
+  push:
+    branches: [devops/actions]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.ACTIONS_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          token: ${{ secrets.ACTIONS_TOKEN }}
+      - run: npm ci
+      - run: npm run format
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply formatting changes
+          branch: ${{ github.head_ref }}
+
+      # - name: Notify failure
+      #   if: failure()
+      #   uses: actions/github-script@v4
+      #   with:
+      #     github-token: ${{ secrets.ACTIONS_TOKEN }}
+      #     script: |
+      #       github.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: 'Formatting failed. Please check the logs.'
+      #       })

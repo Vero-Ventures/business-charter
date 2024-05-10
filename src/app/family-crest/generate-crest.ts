@@ -1,11 +1,11 @@
-"use server";
+'use server';
 
-import { InsertFamilyCrest } from "./family-crest-form";
-import OpenAI from "openai";
+import { InsertFamilyCrest } from './family-crest-form';
+import OpenAI from 'openai';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Set the runtime to edge for best performance
-export const runtime = "edge";
+export const runtime = 'edge';
 
 export async function generateCrest(family: InsertFamilyCrest) {
   let prompt =
@@ -25,7 +25,7 @@ export async function generateCrest(family: InsertFamilyCrest) {
   }
   const res = await openai.images.generate({
     prompt,
-    model: "dall-e-3",
+    model: 'dall-e-3',
   });
 
   return res.data[0].url;

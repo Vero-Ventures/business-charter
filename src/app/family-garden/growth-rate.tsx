@@ -1,11 +1,11 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useFamilyGardenStore } from "./family-garden-store";
+'use client';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useFamilyGardenStore } from './family-garden-store';
 
 export default function GrowthRate() {
-  const growthRate = useFamilyGardenStore((state) => state.growthRate);
-  const setGrowthRate = useFamilyGardenStore((s) => s.setGrowthRate);
+  const growthRate = useFamilyGardenStore(state => state.growthRate);
+  const setGrowthRate = useFamilyGardenStore(s => s.setGrowthRate);
   return (
     <>
       <Label className="mb-4">Growth Rate</Label>
@@ -16,7 +16,7 @@ export default function GrowthRate() {
           min="0"
           max="100"
           value={growthRate}
-          onChange={(e) => setGrowthRate(+e.target.value)}
+          onChange={e => setGrowthRate(+e.target.value)}
         />
         <span>%</span>
       </div>

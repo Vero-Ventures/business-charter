@@ -1,13 +1,13 @@
-import { createClient } from "@/lib/supabase/server";
-import Contact from "./contact";
+import { createClient } from '@/lib/supabase/server';
+import Contact from './contact';
 
 export default async function Contacts() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();
   const { data: contacts, error } = await supabase
-    .from("contacts")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('contacts')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   if (error) {
     return <div>{error.message}</div>;
@@ -16,7 +16,7 @@ export default async function Contacts() {
   return (
     <div>
       {contacts ? (
-        contacts.map((contact) => (
+        contacts.map(contact => (
           <Contact key={contact.email} contact={contact} />
         ))
       ) : (

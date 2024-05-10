@@ -1,7 +1,7 @@
-import { Handle, getConnectedEdges, useNodeId, useStore } from "reactflow";
-import type { HandleProps, ReactFlowState } from "reactflow";
+import { Handle, getConnectedEdges, useNodeId, useStore } from 'reactflow';
+import type { HandleProps, ReactFlowState } from 'reactflow';
 
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 const selector = (s: ReactFlowState) => ({
   nodeInternals: s.nodeInternals,
@@ -19,7 +19,7 @@ export default function CustomSideHandle({
   const nodeId = useNodeId();
 
   const isHandleConnectable = useMemo(() => {
-    if (typeof connectionLimit === "number") {
+    if (typeof connectionLimit === 'number') {
       if (!nodeId) return isConnectable;
       const node = nodeInternals.get(nodeId);
       if (!node) return isConnectable;

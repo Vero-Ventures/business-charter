@@ -1,8 +1,8 @@
-"use client";
-import { useState } from "react";
-import { deleteContact } from "./actions";
-import { Loader2, Trash2Icon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+'use client';
+import { useState } from 'react';
+import { deleteContact } from './actions';
+import { Loader2, Trash2Icon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function Contact({ contact }: { contact: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -20,8 +20,7 @@ export default function Contact({ contact }: { contact: any }) {
       <Button
         variant="destructive"
         disabled={isDeleting}
-        onClick={handleDelete}
-      >
+        onClick={handleDelete}>
         {isDeleting ? (
           <Loader2 className="animate-spin" size={24}>
             <title className="sr-only">Delete</title>

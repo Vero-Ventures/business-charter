@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { addContact } from "./actions";
+import { addContact } from './actions';
 
 import {
   Form,
@@ -15,30 +15,30 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import FormSubmitButton from "@/components/form-submit-button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import FormSubmitButton from '@/components/form-submit-button';
 
 const formSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Name must be at least 2 characters long",
+      message: 'Name must be at least 2 characters long',
     })
     .max(50, {
-      message: "50 characters long",
+      message: '50 characters long',
     }),
   title: z
     .string()
     .min(5, {
-      message: "Job title must be at least 5 characters long",
+      message: 'Job title must be at least 5 characters long',
     })
     .max(50),
-  email: z.string().email({ message: "Invalid email" }),
+  email: z.string().email({ message: 'Invalid email' }),
   phone: z
     .string()
     .min(10, {
-      message: "Phone number must be at least 10 characters long",
+      message: 'Phone number must be at least 10 characters long',
     })
     .max(15),
 });
@@ -50,10 +50,10 @@ export function ContactForm() {
   const form = useForm<InsertContact>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      title: "",
-      email: "",
-      phone: "",
+      name: '',
+      title: '',
+      email: '',
+      phone: '',
     },
   });
 
