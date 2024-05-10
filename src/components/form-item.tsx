@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Loader2, Trash2Icon } from "lucide-react";
-import { Button } from "./ui/button";
-import { useState } from "react";
+import { Loader2, Trash2Icon } from 'lucide-react';
+import { Button } from './ui/button';
+import { useState } from 'react';
 
 type FormItemProps = {
   item: {
@@ -33,8 +33,7 @@ export default function FormItem({ item, deleteItem }: FormItemProps) {
       {item.description && (
         <p
           data-test="form-item-description"
-          className="text-gray-500 dark:text-gray-500"
-        >
+          className="text-gray-500 dark:text-gray-500">
           {item.description}
         </p>
       )}
@@ -43,8 +42,7 @@ export default function FormItem({ item, deleteItem }: FormItemProps) {
           variant="destructive"
           onClick={handleDelete}
           disabled={isDeleting}
-          data-test="delete-button"
-        >
+          data-test="delete-button">
           {isDeleting ? (
             <Loader2 className="animate-spin" size={24}>
               <title className="sr-only">Delete</title>

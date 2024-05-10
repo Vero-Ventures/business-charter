@@ -15,23 +15,21 @@
     "incremental": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-    },
+      "@/*": ["./src/*"]
+    }
   },
   "include": [
-    "video.d.ts",
     "next-env.d.ts",
-    "video.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "family-tree.d.ts",
     "jest.setup.ts",
-    "vitest.config.mjs",
+    "vitest.config.mjs"
   ],
-  "exclude": ["node_modules", "video.d.ts"],
+  "exclude": ["node_modules"]
 }

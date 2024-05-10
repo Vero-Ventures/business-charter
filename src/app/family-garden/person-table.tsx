@@ -1,8 +1,8 @@
-"use client";
-import { Person, useFamilyGardenStore } from "./family-garden-store";
+'use client';
+import { Person, useFamilyGardenStore } from './family-garden-store';
 
 export function PersonTable({ person }: { person: Person }) {
-  const growthRate = useFamilyGardenStore((s) => s.growthRate);
+  const growthRate = useFamilyGardenStore(s => s.growthRate);
   const data: Data[] = [];
   for (let age = person.begin_age; age <= 110; age += 10) {
     const netWorthGrowth =
@@ -47,7 +47,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 import {
   AlertDialog,
@@ -59,11 +59,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { deletePerson } from "./actions";
-import { moneyFormatter } from "@/lib/utils";
+} from '@/components/ui/alert-dialog';
+import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { deletePerson } from './actions';
+import { moneyFormatter } from '@/lib/utils';
 
 interface Data {
   age: number;

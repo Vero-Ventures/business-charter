@@ -1,8 +1,8 @@
-import Questions from "./questions";
-import FamilyQuestionForm from "./family-question-form";
-import { Suspense } from "react";
-import Loading from "@/components/loading";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import Questions from './questions';
+import FamilyQuestionForm from './family-question-form';
+import { Suspense } from 'react';
+import Loading from '@/components/loading';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function DecisionTreePage() {
   return (

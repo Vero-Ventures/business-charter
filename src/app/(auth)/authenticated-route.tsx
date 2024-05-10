@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 
 type AuthenticatedRouteProps = {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export default async function AuthenticatedRoute({
   const { data } = await supabase.auth.getUser();
 
   if (!data?.user) {
-    redirect("/login");
+    redirect('/login');
   }
 
   return <>{children}</>;

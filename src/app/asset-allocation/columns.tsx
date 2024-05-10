@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ColumnDef } from "@tanstack/react-table";
-import DeleteRowButton from "@/components/delete-row-button";
-import { deleteAssetAllocation } from "./actions";
-import { InsertAssetAllocation } from "./asset-allocation-form";
-import { moneyFormatter } from "@/lib/utils";
+import { ColumnDef } from '@tanstack/react-table';
+import DeleteRowButton from '@/components/delete-row-button';
+import { deleteAssetAllocation } from './actions';
+import { InsertAssetAllocation } from './asset-allocation-form';
+import { moneyFormatter } from '@/lib/utils';
 
 interface AssetAllocationTableRow extends InsertAssetAllocation {
   id: number;
@@ -12,32 +12,32 @@ interface AssetAllocationTableRow extends InsertAssetAllocation {
 
 export const assetAllocationColumns: ColumnDef<AssetAllocationTableRow>[] = [
   {
-    accessorKey: "type",
-    header: "Type",
+    accessorKey: 'type',
+    header: 'Type',
   },
   {
-    accessorKey: "band",
-    header: "Band",
+    accessorKey: 'band',
+    header: 'Band',
   },
   {
-    accessorKey: "target_allocation",
-    header: "Target Allocation",
+    accessorKey: 'target_allocation',
+    header: 'Target Allocation',
     cell: ({ row }) => {
       const targetAllocation = row.original.target_allocation;
       return <div>{targetAllocation}%</div>;
     },
   },
   {
-    accessorKey: "target_net_return",
-    header: "Target Net Return",
+    accessorKey: 'target_net_return',
+    header: 'Target Net Return',
     cell: ({ row }) => {
       const targetNetReturn = row.original.target_net_return;
       return <div>{targetNetReturn}%</div>;
     },
   },
   {
-    accessorKey: "sharpe_ratio_target",
-    header: "Sharpe Ratio Target",
+    accessorKey: 'sharpe_ratio_target',
+    header: 'Sharpe Ratio Target',
     cell: ({ row }) => {
       const sharpeRatioTarget = row.original.sharpe_ratio_target;
       return <div>{moneyFormatter.format(sharpeRatioTarget)}</div>;
@@ -49,8 +49,8 @@ export const assetAllocationColumnsWithDelete: ColumnDef<AssetAllocationTableRow
   [
     ...assetAllocationColumns,
     {
-      id: "actions",
-      header: "Actions",
+      id: 'actions',
+      header: 'Actions',
       cell: ({ row }) => (
         <div>
           <DeleteRowButton

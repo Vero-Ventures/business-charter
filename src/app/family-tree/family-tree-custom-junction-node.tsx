@@ -1,5 +1,5 @@
-import { useReactFlow, Position, addEdge, Handle } from "reactflow";
-import type { NodeProps } from "reactflow";
+import { useReactFlow, Position, addEdge, Handle } from 'reactflow';
+import type { NodeProps } from 'reactflow';
 
 export default function FamilyTreeCustomJunctionNode({
   isConnectable,
@@ -13,14 +13,14 @@ export default function FamilyTreeCustomJunctionNode({
         id="left"
         position={Position.Left}
         isConnectable={isConnectable}
-        onConnect={(params) => {
-          if (params.sourceHandle === "right") {
+        onConnect={params => {
+          if (params.sourceHandle === 'right') {
             const edge = {
               ...params,
-              type: "straight",
-              targetHandle: "right",
+              type: 'straight',
+              targetHandle: 'right',
             };
-            setEdges((edges) => addEdge(edge, edges));
+            setEdges(edges => addEdge(edge, edges));
           }
         }}
       />
@@ -29,14 +29,14 @@ export default function FamilyTreeCustomJunctionNode({
         id="right"
         position={Position.Right}
         isConnectable={isConnectable}
-        onConnect={(params) => {
-          if (params.targetHandle === "left") {
+        onConnect={params => {
+          if (params.targetHandle === 'left') {
             const edge = {
               ...params,
-              type: "straight",
-              targetHandle: "left",
+              type: 'straight',
+              targetHandle: 'left',
             };
-            setEdges((edges) => addEdge(edge, edges));
+            setEdges(edges => addEdge(edge, edges));
           }
         }}
       />

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 import {
   Form,
@@ -12,19 +12,19 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import FormSubmitButton from "@/components/form-submit-button";
-import { addStatement } from "./actions";
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import FormSubmitButton from '@/components/form-submit-button';
+import { addStatement } from './actions';
 
 const familyStatementFormSchema = z.object({
   statement: z
     .string()
     .min(2, {
-      message: "Statement must be greater than 2 characters.",
+      message: 'Statement must be greater than 2 characters.',
     })
     .max(250, {
-      message: "Statement must be less than 250 characters.",
+      message: 'Statement must be less than 250 characters.',
     }),
 });
 type FamilyStatementFormSchema = z.infer<typeof familyStatementFormSchema>;
@@ -34,7 +34,7 @@ export default function FamilyVisionForm() {
   const form = useForm<FamilyStatementFormSchema>({
     resolver: zodResolver(familyStatementFormSchema),
     defaultValues: {
-      statement: "",
+      statement: '',
     },
   });
   async function onSubmit({ statement }: FamilyStatementFormSchema) {

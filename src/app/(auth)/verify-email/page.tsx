@@ -1,15 +1,15 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 
 export default async function VerifyEmailPage() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();
 
   if (!data?.user) {
-    redirect("/login");
+    redirect('/login');
   }
   if (data.user?.email_confirmed_at) {
-    redirect("/decision-tree");
+    redirect('/decision-tree');
   }
 
   return (

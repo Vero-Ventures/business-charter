@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import ReactFlow, {
   Controls,
@@ -10,40 +10,40 @@ import ReactFlow, {
   getConnectedEdges,
   getNodesBounds,
   getViewportForBounds,
-} from "reactflow";
-import type { NodeDragHandler, Node } from "reactflow";
-import "reactflow/dist/style.css";
-import { toSvg } from "html-to-image";
+} from 'reactflow';
+import type { NodeDragHandler, Node } from 'reactflow';
+import 'reactflow/dist/style.css';
+import { toSvg } from 'html-to-image';
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react';
 import {
   useAddNewNode,
   useAddNodeOnEdgeDrop,
   useSaveAndRestore,
-} from "./hooks";
-import OrgChartIndividualNode from "./org-chart-individual-node";
-import type { IndividualNode, NodeData, NodeTypes } from "./types";
-import { useOrgChartImageStore } from "./org-chart-store";
+} from './hooks';
+import OrgChartIndividualNode from './org-chart-individual-node';
+import type { IndividualNode, NodeData, NodeTypes } from './types';
+import { useOrgChartImageStore } from './org-chart-store';
 
 const nodeData: NodeData = {
-  name: "",
-  surname: "",
-  dateOfBirth: "",
-  placeOfBirth: "",
-  gender: "Male",
+  name: '',
+  surname: '',
+  dateOfBirth: '',
+  placeOfBirth: '',
+  gender: 'Male',
   genderColor: {
-    Male: "#9ad3f6",
-    Female: "#f6bfba",
+    Male: '#9ad3f6',
+    Female: '#f6bfba',
   },
 };
 
 const initialNodes: IndividualNode[] = [
   {
-    id: "0",
-    type: "customNode",
+    id: '0',
+    type: 'customNode',
     data: nodeData,
     position: { x: 0, y: 0 },
-    style: { borderRadius: "4px" },
+    style: { borderRadius: '4px' },
   },
 ];
 
@@ -63,29 +63,29 @@ export default function OrgChartFlow() {
   const { onAdd } = useAddNewNode(
     {
       id: crypto.randomUUID(),
-      type: "customNode",
+      type: 'customNode',
       position: {
         x:
-          typeof window !== "undefined"
+          typeof window !== 'undefined'
             ? Math.random() * window.innerWidth - 100
             : 0,
         y:
-          typeof window !== "undefined"
+          typeof window !== 'undefined'
             ? Math.random() * window.innerHeight
             : 0,
       },
       data: {
-        name: "",
-        surname: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        gender: "Male",
+        name: '',
+        surname: '',
+        dateOfBirth: '',
+        placeOfBirth: '',
+        gender: 'Male',
         genderColor: {
-          Male: "#9ad3f6",
-          Female: "#f6bfba",
+          Male: '#9ad3f6',
+          Female: '#f6bfba',
         },
       },
-      style: { borderRadius: "4px" },
+      style: { borderRadius: '4px' },
     },
     setNodes
   );
@@ -101,8 +101,8 @@ export default function OrgChartFlow() {
         ...followerNode,
         position: { ...followerNode.position, y: newY },
       };
-      setNodes((prevNodes) =>
-        prevNodes.map((n) => (n.id === updatedNode.id ? updatedNode : n))
+      setNodes(prevNodes =>
+        prevNodes.map(n => (n.id === updatedNode.id ? updatedNode : n))
       );
     },
     [setNodes]
@@ -116,18 +116,18 @@ export default function OrgChartFlow() {
    * @param nodes A list of org chart nodes.
    */
   const handleNodeDrag: NodeDragHandler = useCallback(
-    (_, node, __) => {
+    (_, node) => {
       // If the node is not of type "customJunction", return
       // We only want to update the positions of the connected nodes for junction nodes
-      if (node.type !== "customJunction") return;
+      if (node.type !== 'customJunction') return;
 
       // Get the connected edges of the node
       const connectedEdges = getConnectedEdges([node], edges);
 
       // Get the node IDs of the left and right connected nodes
       const leftAndRightNodeIds = connectedEdges
-        .filter((edge) => edge.type === "straight")
-        .map((edge) => (edge.source === node.id ? edge.target : edge.source));
+        .filter(edge => edge.type === 'straight')
+        .map(edge => (edge.source === node.id ? edge.target : edge.source));
 
       // Get the node objects of the left and right connected nodes
       const [nodeOneId, nodeTwoId] = leftAndRightNodeIds;
@@ -153,7 +153,7 @@ export default function OrgChartFlow() {
   }, [onRestore]);
 
   // Save the flow image url to local storage on component unmount
-  const saveImgString = useOrgChartImageStore((s) => s.saveImgString);
+  const saveImgString = useOrgChartImageStore(s => s.saveImgString);
   function storeOrgChartImageString() {
     const imageWidth = 1024;
     const imageHeight = 768;
@@ -167,17 +167,17 @@ export default function OrgChartFlow() {
       2
     );
 
-    const orgChart = document.querySelector(".react-flow__viewport");
+    const orgChart = document.querySelector('.react-flow__viewport');
     if (!orgChart) return;
     function filter(node: HTMLElement) {
-      return node.tagName !== "i";
+      return node.tagName !== 'i';
     }
     toSvg(orgChart as HTMLElement, {
       filter,
       style: {
         transform: `translate(${transform.x}px, ${transform.y}px scale(${transform.zoom}))`,
       },
-    }).then((dataUrl) => {
+    }).then(dataUrl => {
       saveImgString(dataUrl);
     });
   }
@@ -186,8 +186,7 @@ export default function OrgChartFlow() {
     <div
       className="h-full grow"
       ref={reactFlowWrapper}
-      style={{ height: "100%" }}
-    >
+      style={{ height: '100%' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -198,20 +197,17 @@ export default function OrgChartFlow() {
         nodeTypes={nodeTypes}
         fitView
         fitViewOptions={{ padding: 2 }}
-        defaultEdgeOptions={{ type: "straight" }}
-        nodeOrigin={[0.5, 0]}
-      >
+        defaultEdgeOptions={{ type: 'straight' }}
+        nodeOrigin={[0.5, 0]}>
         <Panel
           className="divide-x rounded border bg-background py-1 shadow-xl"
-          position="top-right"
-        >
+          position="top-right">
           <button
             className="px-3"
             onClick={() => {
               onSave();
               storeOrgChartImageString();
-            }}
-          >
+            }}>
             save
           </button>
           <button className="px-3" onClick={onAdd}>
