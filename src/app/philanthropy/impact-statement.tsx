@@ -1,8 +1,8 @@
-"use client";
-import { useState } from "react";
-import { deleteImpactStatement } from "./actions";
-import { Loader2, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+'use client';
+import { useState } from 'react';
+import { deleteImpactStatement } from './actions';
+import { Loader2, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export default function ImpactStatement({
   impactStatement,
@@ -24,8 +24,7 @@ export default function ImpactStatement({
         <Button
           variant="destructive"
           disabled={isDeleting}
-          onClick={handleDelete}
-        >
+          onClick={handleDelete}>
           {isDeleting ? (
             <Loader2 className="animate-spin" size={24}>
               <title className="sr-only">Delete</title>

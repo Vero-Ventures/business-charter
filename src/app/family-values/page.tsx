@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import Loading from "@/components/loading";
-import FamilyValueForm from "./family-value-form";
-import FamilyValues from "./family-values";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import { Suspense } from 'react';
+import Loading from '@/components/loading';
+import FamilyValueForm from './family-value-form';
+import FamilyValues from './family-values';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function FamilyValuesPage() {
   return (

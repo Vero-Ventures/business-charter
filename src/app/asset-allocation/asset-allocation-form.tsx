@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -10,19 +10,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { addAssetAllocation } from "./actions";
-import { useState } from "react";
-import FormSubmitButton from "@/components/form-submit-button";
-import MoneyInput from "@/components/money-input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { addAssetAllocation } from './actions';
+import { useState } from 'react';
+import FormSubmitButton from '@/components/form-submit-button';
+import MoneyInput from '@/components/money-input';
 
 const assetAllocationFormSchema = z.object({
   type: z.string(),
   band: z.string(),
   target_allocation: z.coerce.number().min(0).max(100),
   target_net_return: z.coerce.number().min(0).max(100),
-  sharpe_ratio_target: z.coerce.number().min(0.01, "Must be greater than 0"),
+  sharpe_ratio_target: z.coerce.number().min(0.01, 'Must be greater than 0'),
 });
 export type InsertAssetAllocation = z.infer<typeof assetAllocationFormSchema>;
 
@@ -31,8 +31,8 @@ export default function AssetAllocationForm() {
   const form = useForm<InsertAssetAllocation>({
     resolver: zodResolver(assetAllocationFormSchema),
     defaultValues: {
-      type: "",
-      band: "",
+      type: '',
+      band: '',
       target_allocation: 0,
       target_net_return: 0,
       sharpe_ratio_target: 0,

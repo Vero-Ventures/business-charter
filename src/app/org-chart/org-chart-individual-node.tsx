@@ -1,11 +1,11 @@
-import { Handle, Position, useReactFlow } from "reactflow";
-import type { Node, NodeProps } from "reactflow";
-import { useDebouncedCallback } from "use-debounce";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Handle, Position, useReactFlow } from 'reactflow';
+import type { Node, NodeProps } from 'reactflow';
+import { useDebouncedCallback } from 'use-debounce';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useCallback } from "react";
-import type { NodeData } from "./types";
-import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
+import { useCallback } from 'react';
+import type { NodeData } from './types';
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 
 export default function OrgChartIndividualNode({
   id,
@@ -21,7 +21,7 @@ export default function OrgChartIndividualNode({
       const inputField = evt.target.name;
       const inputValue = evt.target.value;
       setNodes((nodes: Node<NodeData>[]) =>
-        nodes.map((node) => {
+        nodes.map(node => {
           if (node.id === id) {
             node.data = {
               ...node.data,
@@ -34,18 +34,18 @@ export default function OrgChartIndividualNode({
 
       // creates a JSON-compatible representation of the flow
       const flow = toObject();
-      localStorage.setItem("org-chart", JSON.stringify(flow));
+      localStorage.setItem('org-chart', JSON.stringify(flow));
     },
     300
   );
 
   const handleNodeGender = useCallback(() => {
     setNodes((nodes: Node<NodeData>[]) =>
-      nodes.map((node) => {
+      nodes.map(node => {
         if (node.id === id) {
           node.data = {
             ...node.data,
-            gender: node.data.gender === "Male" ? "Female" : "Male",
+            gender: node.data.gender === 'Male' ? 'Female' : 'Male',
           };
         }
         return node;
@@ -54,14 +54,13 @@ export default function OrgChartIndividualNode({
 
     // creates a JSON-compatible representation of the flow
     const flow = toObject();
-    localStorage.setItem("org-chart", JSON.stringify(flow));
+    localStorage.setItem('org-chart', JSON.stringify(flow));
   }, [setNodes, id, toObject]);
 
   return (
     <div
       style={{ backgroundColor: genderColor[gender] }}
-      className="rounded-lg p-5"
-    >
+      className="rounded-lg p-5">
       <Handle
         type="target"
         id="top"
@@ -77,8 +76,8 @@ export default function OrgChartIndividualNode({
 
       <div className="mb-3 flex items-center justify-center">
         <FontAwesomeIcon
-          icon={gender === "Male" ? (faMars as any) : (faVenus as any)}
-          className={`fa-lg cursor-pointer ${gender === "Male" ? "text-[#3daaee] hover:text-[#336889]" : "text-[#f26356] hover:text-[#aa483f]"}`}
+          icon={gender === 'Male' ? (faMars as any) : (faVenus as any)}
+          className={`fa-lg cursor-pointer ${gender === 'Male' ? 'text-[#3daaee] hover:text-[#336889]' : 'text-[#f26356] hover:text-[#aa483f]'}`}
           onClick={handleNodeGender}
         />
       </div>

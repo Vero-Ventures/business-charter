@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import FamilyCrestForm from "./family-crest-form";
-import FamilyCrestPreview from "./family-crest-preview";
-import Loading from "@/components/loading";
-import { createClient } from "@/lib/supabase/server";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import { Suspense } from 'react';
+import FamilyCrestForm from './family-crest-form';
+import FamilyCrestPreview from './family-crest-preview';
+import Loading from '@/components/loading';
+import { createClient } from '@/lib/supabase/server';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function FamilyCrestPage() {
   return (
@@ -19,9 +19,9 @@ async function FamilyCrestWrapper() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();
   const { data: crest } = await supabase
-    .from("family_crest")
-    .select("*")
-    .eq("user_id", data.user?.id)
+    .from('family_crest')
+    .select('*')
+    .eq('user_id', data.user?.id)
     .maybeSingle();
 
   return (
@@ -36,12 +36,12 @@ async function FamilyCrestWrapper() {
           </div>
           <FamilyCrestForm
             initialValues={{
-              name: crest?.name || "",
-              symbol: crest?.symbol || "",
-              color: crest?.color || "",
-              animal: crest?.animal || "",
-              motto: crest?.motto || "",
-              details: crest?.details || "",
+              name: crest?.name || '',
+              symbol: crest?.symbol || '',
+              color: crest?.color || '',
+              animal: crest?.animal || '',
+              motto: crest?.motto || '',
+              details: crest?.details || '',
             }}
           />
         </div>

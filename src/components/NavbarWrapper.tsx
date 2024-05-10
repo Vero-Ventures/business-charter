@@ -1,7 +1,7 @@
-import { createClient } from "@/lib/supabase/server";
-import NavBar from "./navbar";
-import Profile from "./profile";
-import { Separator } from "./ui/separator";
+import { createClient } from '@/lib/supabase/server';
+import NavBar from './navbar';
+import Profile from './profile';
+import { Separator } from './ui/separator';
 
 export default async function NavbarWrapper() {
   const supabase = createClient();

@@ -1,11 +1,11 @@
-"use server";
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
-import { InsertPerson } from "./person-form";
+'use server';
+import { createClient } from '@/lib/supabase/server';
+import { revalidatePath } from 'next/cache';
+import { InsertPerson } from './person-form';
 
 export async function addPerson(person: InsertPerson) {
   const supabase = createClient();
-  const { error } = await supabase.from("family_garden").insert([
+  const { error } = await supabase.from('family_garden').insert([
     {
       name: person.name,
       begin_amount: person.beginAmount,
@@ -17,16 +17,16 @@ export async function addPerson(person: InsertPerson) {
     return { message: error.message };
   }
 
-  revalidatePath("/family-garden");
+  revalidatePath('/family-garden');
 }
 
 export async function deletePerson(id: number) {
   const supabase = createClient();
-  const { error } = await supabase.from("family_garden").delete().eq("id", id);
+  const { error } = await supabase.from('family_garden').delete().eq('id', id);
 
   if (error) {
     return { message: error.message };
   }
 
-  revalidatePath("/family-garden");
+  revalidatePath('/family-garden');
 }

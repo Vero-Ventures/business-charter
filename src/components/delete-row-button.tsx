@@ -1,5 +1,5 @@
-"use client";
-import { Button } from "@/components/ui/button";
+'use client';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,7 +10,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
 export default function DeleteRowButton({
   handleDeleteRow,
@@ -34,8 +34,7 @@ export default function DeleteRowButton({
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive hover:bg-destructive/80"
-            onClick={handleDeleteRow}
-          >
+            onClick={handleDeleteRow}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

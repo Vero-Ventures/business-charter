@@ -1,10 +1,10 @@
-"use client";
-import { useFamilyTreeImageStore } from "../family-tree/family-tree-store";
-import PDFPage from "./pdf-page";
-import Image from "next/image";
+'use client';
+import { useFamilyTreeImageStore } from '../family-tree/family-tree-store';
+import PDFPage from './pdf-page';
+import Image from 'next/image';
 
 export default function FamilyTreePDF() {
-  const familyTreeImage = useFamilyTreeImageStore((s) => s.imgString);
+  const familyTreeImage = useFamilyTreeImageStore(s => s.imgString);
   return (
     <PDFPage>
       <h1>Family Tree</h1>

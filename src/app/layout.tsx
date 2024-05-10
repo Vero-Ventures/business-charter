@@ -1,16 +1,16 @@
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from '@/components/ui/sonner';
 
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Providers from "@/components/Providers";
-import NavbarWrapper from "@/components/NavbarWrapper";
-import NavBarSheetWrapper from "@/components/NavBarSheetWrapper";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import Providers from '@/components/Providers';
+import NavbarWrapper from '@/components/NavbarWrapper';
+import NavBarSheetWrapper from '@/components/NavBarSheetWrapper';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Intergenerational Family Code",
+  title: 'Intergenerational Family Code',
 };
 
 export default async function RootLayout({
