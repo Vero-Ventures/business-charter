@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import FormSubmitButton from "@/components/form-submit-button";
+import IconButton from "@/components/message-chatbot-button";
 
 const familyQuestionFormSchema = z.object({
   question: z
@@ -74,6 +75,11 @@ export default function FamilyQuestionForm() {
           defaultText="Add Question"
         />
       </form>
+
+      <div>
+            <IconButton />
+        </div>
+
     </Form>
   );
 }
