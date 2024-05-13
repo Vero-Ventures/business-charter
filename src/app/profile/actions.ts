@@ -8,23 +8,35 @@ interface ProfileData {
   title: string;
   email: string;
   phone: string;
-  userId: string;
 }
 
 export async function saveProfile(profile: ProfileData) {
-  const { name, title, email, phone, userId } = profile;
   const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  const { data: user, error: userError } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    console.error("Failed to get authenticated user:", userError?.message);
+    return { message: userError?.message || "No authenticated user available." };
+  }
+
+  const { name, title, email, phone } = profile;
   const { error } = await supabase
     .from("profiles")
     .upsert(
-      [{ name, title, email, phone, user_id: userId }],
+      [{ name, title, email, phone, user_id: data.user?.id }],
       { onConflict: "user_id" }
     );
+
   if (error) {
+    console.error("Failed to save profile:", error.message);
     return { message: error.message };
   }
+
   revalidatePath("/profile");
+  return { message: "Profile updated successfully" };
 }
+
 
 export async function getProfile(userId: string) {
   const supabase = createClient();
