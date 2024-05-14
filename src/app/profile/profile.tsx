@@ -55,7 +55,6 @@ export default function ProfileForm() {
         }
       }
     }
-
     loadProfile();
   }, [form, supabase]);
 
