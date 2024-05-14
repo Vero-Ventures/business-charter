@@ -1,8 +1,8 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+'use client';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import {
   Form,
@@ -10,38 +10,38 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { useState } from "react";
-import FormSubmitButton from "@/components/form-submit-button";
-import Link from "next/link";
-import { signup } from "../actions";
+} from '@/components/ui/form';
+import { useState } from 'react';
+import FormSubmitButton from '@/components/form-submit-button';
+import Link from 'next/link';
+import { signup } from '../actions';
 
 const signupFormSchema = z
   .object({
-    email: z.string().email({ message: "Please enter a valid email address." }),
+    email: z.string().email({ message: 'Please enter a valid email address.' }),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters long" }),
+      .min(8, { message: 'Password must be at least 8 characters long' }),
     confirmPassword: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters long" }),
+      .min(8, { message: 'Password must be at least 8 characters long' }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
   });
 
 type SignupFormSchema = z.infer<typeof signupFormSchema>;
 
 export default function SignupForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const form = useForm<SignupFormSchema>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
 
@@ -57,8 +57,7 @@ export default function SignupForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto grid w-full max-w-lg items-center gap-4"
-      >
+        className="mx-auto grid w-full max-w-lg items-center gap-4">
         <h1 className="mb-4 text-center text-3xl font-bold">Signup</h1>
         {error && (
           <p className="text-center text-destructive">

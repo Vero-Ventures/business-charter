@@ -1,9 +1,9 @@
-import { Suspense } from "react";
-import Guidelines from "./guidelines";
-import PhilanthropyGuidelineForm from "./philanthropy-guideline-form";
-import ImpactStatementSection from "./impact-statement-section";
-import Loading from "@/components/loading";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+import { Suspense } from 'react';
+import Guidelines from './guidelines';
+import PhilanthropyGuidelineForm from './philanthropy-guideline-form';
+import ImpactStatementSection from './impact-statement-section';
+import Loading from '@/components/loading';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function DecisionTreePage() {
   return (

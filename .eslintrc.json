@@ -1,8 +1,9 @@
 {
-  "globals": {
-    "React": "writable"
-  },
-  "extends": ["eslint:recommended", "next/core-web-vitals"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals"
+  ],
   "ignorePatterns": [
     "node_modules/",
     "dist/",
@@ -12,5 +13,7 @@
     "*.md"
     // Add other file types you want to ignore
   ],
-  "plugins": ["@next/eslint-plugin-next"]
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
 }

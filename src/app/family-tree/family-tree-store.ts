@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface FamilyTreeState {
   imgString: string;
@@ -8,10 +8,10 @@ interface FamilyTreeState {
 
 export const useFamilyTreeImageStore = create<FamilyTreeState>()(
   persist(
-    (set) => ({
-      imgString: "",
+    set => ({
+      imgString: '',
       saveImgString: (newImgString: string) => set({ imgString: newImgString }),
     }),
-    { name: "family-tree-image" }
+    { name: 'family-tree-image' }
   )
 );

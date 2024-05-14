@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { addFamilyValue } from "./actions";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { addFamilyValue } from './actions';
 
 import {
   Form,
@@ -13,28 +13,28 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
-import FormSubmitButton from "@/components/form-submit-button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import FormSubmitButton from '@/components/form-submit-button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 const familyValueFormSchema = z.object({
   title: z
     .string()
     .min(2, {
-      message: "Value must be greater than 2 characters.",
+      message: 'Value must be greater than 2 characters.',
     })
     .max(50, {
-      message: "Value must be less than 50 characters.",
+      message: 'Value must be less than 50 characters.',
     }),
   description: z
     .string()
     .min(2, {
-      message: "Description must be greater than 2 characters.",
+      message: 'Description must be greater than 2 characters.',
     })
     .max(250, {
-      message: "Description must be less than 250 characters.",
+      message: 'Description must be less than 250 characters.',
     }),
 });
 export type InsertFamilyValue = z.infer<typeof familyValueFormSchema>;
@@ -44,8 +44,8 @@ export default function FamilyValueForm() {
   const form = useForm<InsertFamilyValue>({
     resolver: zodResolver(familyValueFormSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: '',
+      description: '',
     },
   });
 

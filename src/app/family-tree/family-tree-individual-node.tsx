@@ -1,11 +1,11 @@
-import { Handle, Position, addEdge, useReactFlow } from "reactflow";
-import type { Connection, Node, NodeProps, XYPosition } from "reactflow";
-import { useDebouncedCallback } from "use-debounce";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMars, faVenus } from "@fortawesome/free-solid-svg-icons";
+import { Handle, Position, addEdge, useReactFlow } from 'reactflow';
+import type { Connection, Node, NodeProps, XYPosition } from 'reactflow';
+import { useDebouncedCallback } from 'use-debounce';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons';
 
-import { useCallback } from "react";
-import type { NodeData } from "./types";
+import { useCallback } from 'react';
+import type { NodeData } from './types';
 
 export default function FamilyTreeIndividualNode({
   id,
@@ -21,7 +21,7 @@ export default function FamilyTreeIndividualNode({
       const inputField = evt.target.name;
       const inputValue = evt.target.value;
       setNodes((nodes: Node<NodeData>[]) =>
-        nodes.map((node) => {
+        nodes.map(node => {
           if (node.id === id) {
             node.data = {
               ...node.data,
@@ -34,18 +34,18 @@ export default function FamilyTreeIndividualNode({
 
       // creates a JSON-compatible representation of the flow
       const flow = toObject();
-      localStorage.setItem("family-tree", JSON.stringify(flow));
+      localStorage.setItem('family-tree', JSON.stringify(flow));
     },
     300
   );
 
   const handleNodeGender = useCallback(() => {
     setNodes((nodes: Node<NodeData>[]) =>
-      nodes.map((node) => {
+      nodes.map(node => {
         if (node.id === id) {
           node.data = {
             ...node.data,
-            gender: node.data.gender === "Male" ? "Female" : "Male",
+            gender: node.data.gender === 'Male' ? 'Female' : 'Male',
           };
         }
         return node;
@@ -54,7 +54,7 @@ export default function FamilyTreeIndividualNode({
 
     // creates a JSON-compatible representation of the flow
     const flow = toObject();
-    localStorage.setItem("family-tree", JSON.stringify(flow));
+    localStorage.setItem('family-tree', JSON.stringify(flow));
   }, [setNodes, id, toObject]);
 
   const connectNodesWithJunction = useCallback(
@@ -68,7 +68,7 @@ export default function FamilyTreeIndividualNode({
       // this is the new junction node
       const newNode = {
         id: newNodeId,
-        type: "customJunction",
+        type: 'customJunction',
         data: {},
         position: {
           x,
@@ -81,7 +81,7 @@ export default function FamilyTreeIndividualNode({
         id: crypto.randomUUID(),
         source,
         target: newNodeId,
-        type: "straight",
+        type: 'straight',
         sourceHandle,
       };
       // edge between the new node to the target
@@ -89,11 +89,11 @@ export default function FamilyTreeIndividualNode({
         id: crypto.randomUUID(),
         source: newNodeId,
         target,
-        type: "straight",
+        type: 'straight',
         targetHandle,
       };
-      setNodes((nodes) => nodes.concat(newNode));
-      setEdges((edges) => addEdge(leftEdge, addEdge(rightEdge, edges)));
+      setNodes(nodes => nodes.concat(newNode));
+      setEdges(edges => addEdge(leftEdge, addEdge(rightEdge, edges)));
     },
     [setNodes, setEdges]
   );
@@ -102,7 +102,7 @@ export default function FamilyTreeIndividualNode({
     (
       sourceNode: Node<NodeData>,
       targetNode: Node<NodeData>,
-      dragFrom: "leftHandler" | "rightHandler",
+      dragFrom: 'leftHandler' | 'rightHandler',
       adjustYPosition: number = 0
     ): XYPosition | undefined => {
       // x position is the middle of the node
@@ -121,7 +121,7 @@ export default function FamilyTreeIndividualNode({
       const newX =
         sourceNodeX + width / 2 + widthBetweenSourceAndTargetNodes / 2;
       const newY =
-        dragFrom === "leftHandler"
+        dragFrom === 'leftHandler'
           ? targetNodeY + adjustYPosition
           : sourceNodeY + adjustYPosition;
       return { x: newX, y: newY };
@@ -132,8 +132,7 @@ export default function FamilyTreeIndividualNode({
   return (
     <div
       style={{ backgroundColor: genderColor[gender] }}
-      className="rounded-lg p-5"
-    >
+      className="rounded-lg p-5">
       <Handle
         type="target"
         id="top"
@@ -145,7 +144,7 @@ export default function FamilyTreeIndividualNode({
         id="left"
         position={Position.Left}
         isConnectable={true}
-        onConnect={(params) => {
+        onConnect={params => {
           const { source, target } = params;
           if (!source || !target) return;
 
@@ -154,32 +153,32 @@ export default function FamilyTreeIndividualNode({
           if (!sourceNode || !targetNode) return;
 
           if (
-            params.sourceHandle === "right" &&
-            sourceNode.type !== "customJunction"
+            params.sourceHandle === 'right' &&
+            sourceNode.type !== 'customJunction'
           ) {
             const newJunctionPosition = getNewJunctionPosition(
               sourceNode,
               targetNode,
-              "leftHandler",
+              'leftHandler',
               50
             );
             if (!newJunctionPosition) return;
             connectNodesWithJunction(params, newJunctionPosition);
-          } else if (params.sourceHandle === "right") {
+          } else if (params.sourceHandle === 'right') {
             const edge = {
               ...params,
-              type: "straight",
-              sourceHandle: "right",
+              type: 'straight',
+              sourceHandle: 'right',
             };
-            setEdges((edges) => addEdge(edge, edges));
+            setEdges(edges => addEdge(edge, edges));
           }
         }}
       />
 
       <div className="mb-3 flex items-center justify-center">
         <FontAwesomeIcon
-          icon={gender === "Male" ? (faMars as any) : (faVenus as any)}
-          className={`fa-lg cursor-pointer ${gender === "Male" ? "text-[#3daaee] hover:text-[#336889]" : "text-[#f26356] hover:text-[#aa483f]"}`}
+          icon={gender === 'Male' ? (faMars as any) : (faVenus as any)}
+          className={`fa-lg cursor-pointer ${gender === 'Male' ? 'text-[#3daaee] hover:text-[#336889]' : 'text-[#f26356] hover:text-[#aa483f]'}`}
           onClick={handleNodeGender}
         />
       </div>
@@ -220,7 +219,7 @@ export default function FamilyTreeIndividualNode({
         id="right"
         position={Position.Right}
         isConnectable={true}
-        onConnect={(params) => {
+        onConnect={params => {
           const { source, target } = params;
           if (!source || !target) return;
 
@@ -229,24 +228,24 @@ export default function FamilyTreeIndividualNode({
           if (!sourceNode || !targetNode) return;
 
           if (
-            params.targetHandle === "left" &&
-            targetNode.type !== "customJunction"
+            params.targetHandle === 'left' &&
+            targetNode.type !== 'customJunction'
           ) {
             const newJunctionPosition = getNewJunctionPosition(
               sourceNode,
               targetNode,
-              "rightHandler",
+              'rightHandler',
               50
             );
             if (!newJunctionPosition) return;
             connectNodesWithJunction(params, newJunctionPosition);
-          } else if (params.targetHandle === "left") {
+          } else if (params.targetHandle === 'left') {
             const edge = {
               ...params,
-              type: "straight",
-              targetHandle: "left",
+              type: 'straight',
+              targetHandle: 'left',
             };
-            setEdges((edges) => addEdge(edge, edges));
+            setEdges(edges => addEdge(edge, edges));
           }
         }}
       />

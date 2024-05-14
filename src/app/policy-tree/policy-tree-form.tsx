@@ -1,10 +1,10 @@
-"use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+'use client';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { addPolicy } from "./actions";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { addPolicy } from './actions';
 
 import {
   Form,
@@ -12,9 +12,9 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import FormSubmitButton from "@/components/form-submit-button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import FormSubmitButton from '@/components/form-submit-button';
 
 const policyTreeFormSchema = z.object({
   carrier: z.string(),
@@ -33,14 +33,14 @@ export default function PolicyTreeForm() {
   const form = useForm<InsertPolicyTree>({
     resolver: zodResolver(policyTreeFormSchema),
     defaultValues: {
-      carrier: "",
-      type: "",
-      amount: "",
-      owner: "",
-      beneficiary: "",
-      payor: "",
-      anniversary: "",
-      insured: "",
+      carrier: '',
+      type: '',
+      amount: '',
+      owner: '',
+      beneficiary: '',
+      payor: '',
+      anniversary: '',
+      insured: '',
     },
   });
   async function onSubmit(values: InsertPolicyTree) {

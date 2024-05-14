@@ -1,14 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
-import ImpactStatementForm from "./impact-statement-form";
-import ImpactStatement from "./impact-statement";
+import { createClient } from '@/lib/supabase/server';
+import ImpactStatementForm from './impact-statement-form';
+import ImpactStatement from './impact-statement';
 
 export default async function ImpactStatementSection() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();
-  let { data: impactStatement, error } = await supabase
-    .from("philanthropy_impact_statements")
-    .select("*")
-    .eq("user_id", data.user?.id)
+  const { data: impactStatement, error } = await supabase
+    .from('philanthropy_impact_statements')
+    .select('*')
+    .eq('user_id', data.user?.id)
     .limit(1)
     .maybeSingle();
 

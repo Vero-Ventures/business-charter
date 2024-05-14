@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import OpenAI from "openai";
+import { NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
 const openai = new OpenAI();
 
@@ -12,7 +12,7 @@ type Family = {
   details?: string;
 };
 
-export const runtime = "edge";
+export const runtime = 'edge';
 
 export async function POST(request: Request) {
   const family: Family = await request.json();
@@ -33,8 +33,8 @@ export async function POST(request: Request) {
   }
   const res = await openai.images.generate({
     prompt,
-    model: "dall-e-3",
-    response_format: "b64_json",
+    model: 'dall-e-3',
+    response_format: 'b64_json',
   });
   return NextResponse.json(res.data[0].b64_json);
 }

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 import {
   Dialog,
@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { wealthItems } from "./data";
-import AuthenticatedRoute from "../(auth)/authenticated-route";
+} from '@/components/ui/dialog';
+import { wealthItems } from './data';
+import AuthenticatedRoute from '../(auth)/authenticated-route';
 
 export default function WealthForestPage() {
   return (
@@ -23,8 +23,7 @@ export default function WealthForestPage() {
                 <div className="group relative cursor-pointer">
                   <div
                     className="relative h-auto w-full"
-                    style={{ aspectRatio: "1 / 1" }}
-                  >
+                    style={{ aspectRatio: '1 / 1' }}>
                     <Image
                       src={item.src}
                       alt={item.alt}

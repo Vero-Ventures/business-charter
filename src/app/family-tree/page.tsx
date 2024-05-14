@@ -1,5 +1,5 @@
-import AuthenticatedRoute from "../(auth)/authenticated-route";
-import FamilyTreeWrapper from "./family-tree-wrapper";
+import AuthenticatedRoute from '../(auth)/authenticated-route';
+import FamilyTreeWrapper from './family-tree-wrapper';
 
 export default function FamilyTreePage() {
   return (

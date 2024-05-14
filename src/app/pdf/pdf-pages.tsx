@@ -1,73 +1,73 @@
-import PDFPage from "./pdf-page";
-import { createClient } from "@/lib/supabase/server";
-import { policyTreeColumns } from "../policy-tree/columns";
-import { DataTable } from "@/components/data-table";
-import { PersonTable } from "../family-garden/person-table";
-import FamilyTreePDF from "./family-tree-pdf";
-import OrgChartPDF from "./org-chart-pdf";
-import { assetAllocationColumns } from "../asset-allocation/columns";
-import AssetPieChart from "../asset-allocation/asset-pie-chart";
-import { wealthItems } from "../wealth-forest/data";
+import PDFPage from './pdf-page';
+import { createClient } from '@/lib/supabase/server';
+import { policyTreeColumns } from '../policy-tree/columns';
+import { DataTable } from '@/components/data-table';
+import { PersonTable } from '../family-garden/person-table';
+import FamilyTreePDF from './family-tree-pdf';
+import OrgChartPDF from './org-chart-pdf';
+import { assetAllocationColumns } from '../asset-allocation/columns';
+import AssetPieChart from '../asset-allocation/asset-pie-chart';
+import { wealthItems } from '../wealth-forest/data';
 
 export default async function PDFPages() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();
   const { data: questions } = await supabase
-    .from("decision_tree")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('decision_tree')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: values } = await supabase
-    .from("family_values")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('family_values')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: familyCode } = await supabase
-    .from("family_code")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('family_code')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: contacts } = await supabase
-    .from("contacts")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('contacts')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: visionStatements } = await supabase
-    .from("family_vision")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('family_vision')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: policies } = await supabase
-    .from("policy_tree")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('policy_tree')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: impactStatement } = await supabase
-    .from("philanthropy_impact_statements")
-    .select("*")
-    .eq("user_id", data.user?.id)
+    .from('philanthropy_impact_statements')
+    .select('*')
+    .eq('user_id', data.user?.id)
     .maybeSingle();
 
   const { data: guidelines } = await supabase
-    .from("philanthropy_guidelines")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('philanthropy_guidelines')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: people } = await supabase
-    .from("family_garden")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('family_garden')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   const { data: familyCrest } = await supabase
-    .from("family_crest")
-    .select("*")
-    .eq("user_id", data.user?.id)
+    .from('family_crest')
+    .select('*')
+    .eq('user_id', data.user?.id)
     .maybeSingle();
 
   const { data: assetAllocations } = await supabase
-    .from("asset_allocation")
-    .select("*")
-    .eq("user_id", data.user?.id);
+    .from('asset_allocation')
+    .select('*')
+    .eq('user_id', data.user?.id);
 
   return (
     <div className="space-y-10 print:space-y-0">
@@ -85,7 +85,7 @@ export default async function PDFPages() {
         <h1>Decision Tree</h1>
         <ul>
           {questions && questions.length ? (
-            questions.map((question) => (
+            questions.map(question => (
               <li key={question.id}>{question.question}</li>
             ))
           ) : (
@@ -97,7 +97,7 @@ export default async function PDFPages() {
         <h1>Family Values</h1>
         <div>
           {values && values.length ? (
-            values.map((value) => (
+            values.map(value => (
               <p key={value.id}>
                 <span className="font-semibold">{value.title}: </span>
                 {value.description}
@@ -113,7 +113,7 @@ export default async function PDFPages() {
         {
           <ul>
             {familyCode && familyCode.length ? (
-              familyCode.map((statement) => (
+              familyCode.map(statement => (
                 <li key={statement.id}>{statement.statement}</li>
               ))
             ) : (
@@ -127,7 +127,7 @@ export default async function PDFPages() {
         {
           <ul>
             {visionStatements && visionStatements.length ? (
-              visionStatements.map((statement) => (
+              visionStatements.map(statement => (
                 <li key={statement.id}>{statement.statement}</li>
               ))
             ) : (
@@ -140,7 +140,7 @@ export default async function PDFPages() {
         <h1>Contacts</h1>
         <div>
           {contacts && contacts.length ? (
-            contacts.map((contact) => (
+            contacts.map(contact => (
               <div key={contact.id}>
                 <h2>{contact.name}</h2>
                 <p>{contact.title}</p>
@@ -166,7 +166,7 @@ export default async function PDFPages() {
           {
             <ul>
               {guidelines && guidelines.length ? (
-                guidelines.map((guideline) => (
+                guidelines.map(guideline => (
                   <li key={guideline.id}>{guideline.guideline}</li>
                 ))
               ) : (
@@ -183,7 +183,7 @@ export default async function PDFPages() {
         </div>
       </PDFPage>
       {people &&
-        people.map((person) => (
+        people.map(person => (
           <PDFPage key={person.name}>
             <h1>Family Garden</h1>
             <h2 className="">{person.name}</h2>

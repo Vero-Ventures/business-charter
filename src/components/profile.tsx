@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { User } from "@supabase/supabase-js";
+import { User } from '@supabase/supabase-js';
 
-import { signout } from "@/app/(auth)/actions";
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { signout } from '@/app/(auth)/actions';
+import Link from 'next/link';
+import { Button } from './ui/button';
 
 export default function Profile({ user }: { user: User | null }) {
   return (
@@ -15,8 +15,7 @@ export default function Profile({ user }: { user: User | null }) {
           <Button
             variant="secondary"
             className="cursor-pointer"
-            onClick={async () => await signout()}
-          >
+            onClick={async () => await signout()}>
             Logout
           </Button>
         </div>
