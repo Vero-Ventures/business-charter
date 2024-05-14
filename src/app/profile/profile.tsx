@@ -1,12 +1,11 @@
 "use client";
 
 import { z } from "zod";
-import { createClient } from '@/lib/supabase/client'; 
+import { createClient } from '@/lib/supabase/client';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { saveProfile, getProfile } from "./actions";
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -17,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import FormSubmitButton from "@/components/form-submit-button";
+import FormEditButton from "@/components/form-edit-button";
+
 
 const profileFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters long" }).max(50),
@@ -55,6 +56,7 @@ export default function ProfileForm() {
         }
       }
     }
+
     loadProfile();
   }, [form, supabase]);
 
@@ -70,7 +72,7 @@ export default function ProfileForm() {
     }
     setIsSubmitting(false);
   }
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-8">
@@ -81,7 +83,7 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your full name" {...field} disabled={!isEditable}/>
+                <Input placeholder="Enter your full name" {...field} disabled={!isEditable} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +96,7 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your title" {...field} disabled={!isEditable}/>
+                <Input placeholder="Enter your title" {...field} disabled={!isEditable} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,20 +127,21 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Phone</FormLabel>
               <FormControl>
-                <Input placeholder="123-456-7890" type="tel" {...field} disabled={!isEditable}/>
+                <Input placeholder="123-456-7890" type="tel" {...field} disabled={!isEditable} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button onClick={enableEdit} disabled={isEditable}>Edit</Button>
-        <FormSubmitButton
-          defaultText="Save Profile"
-          loadingText="Adding..."
-          disabled={ isSubmitting}
+        <div className="flex space-x-2 mt-4">
+          <FormEditButton onClick={enableEdit} disabled={isEditable}>Edit</FormEditButton>
+          <FormSubmitButton
+            defaultText="Save"
+            loadingText="Saving..."
+            disabled={isSubmitting}
           />
+        </div>
       </form>
     </Form>
   );
 }
-
