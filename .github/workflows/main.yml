@@ -1,9 +1,9 @@
 name: Format
 on:
   pull_request:
-    branches: [devops/actions]
+    branches: [main]
   push:
-    branches: [devops/actions]
+    branches: [main]
 
 jobs:
   format:
