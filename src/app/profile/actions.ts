@@ -35,17 +35,3 @@ export async function saveProfile(profile: ProfileData) {
   revalidatePath("/profile");
   return { message: "Profile updated successfully" };
 }
-
-
-export async function getProfile(userId: string) {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", userId)
-    .single();
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-}
