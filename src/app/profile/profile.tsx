@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { saveProfile, getProfile } from "./actions";
+import { saveProfile } from "./actions";
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,17 +19,16 @@ import { Input } from "@/components/ui/input";
 import FormSubmitButton from "@/components/form-submit-button";
 
 const profileFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters long" }).max(50),
-  title: z.string().min(5, { message: "Job title must be at least 5 characters long" }).max(50),
-  email: z.string().email({ message: "Invalid email" }),
-  phone: z.string().min(10, { message: "Phone number must be at least 10 characters long" }).max(15),
+  name: z.string().min(2, { message: "Name must be at least 2 characters long" }).max(50).or(z.literal('')),
+  title: z.string().min(5, { message: "Job title must be at least 5 characters long" }).max(50).or(z.literal('')),
+  phone: z.string().min(10, { message: "Phone number must be at least 10 characters long" }).max(15).or(z.literal('')),
 });
 
 type InsertProfile = z.infer<typeof profileFormSchema>;
 
 export default function ProfileForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isEditable, setIsEditable] = useState(false); // State to manage editability
+  const [isEditable, setIsEditable] = useState(false); 
   const form = useForm<InsertProfile>({
     resolver: zodResolver(profileFormSchema),
   });
@@ -59,7 +58,7 @@ export default function ProfileForm() {
     loadProfile();
   }, [form, supabase]);
 
-  const enableEdit = () => setIsEditable(true); // Function to enable editing
+  const enableEdit = () => setIsEditable(true);
 
   async function onSubmit(values: InsertProfile) {
     setIsSubmitting(true);
@@ -67,7 +66,7 @@ export default function ProfileForm() {
     if (response && response.message) {
       console.error("Failed to save profile:", response.message);
     } else {
-      setIsEditable(false); // Lock the fields again after saving
+      setIsEditable(false);
     }
     setIsSubmitting(false);
   }
@@ -100,25 +99,7 @@ export default function ProfileForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter your email address"
-                  type="email"
-                  {...field}
-                  disabled={!isEditable}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        /> 
         <FormField
           control={form.control}
           name="phone"

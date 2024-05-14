@@ -6,7 +6,6 @@ import { revalidatePath } from "next/cache";
 interface ProfileData {
   name: string;
   title: string;
-  email: string;
   phone: string;
 }
 
@@ -20,11 +19,11 @@ export async function saveProfile(profile: ProfileData) {
     return { message: userError?.message || "No authenticated user available." };
   }
 
-  const { name, title, email, phone } = profile;
+  const { name, title, phone } = profile;
   const { error } = await supabase
     .from("profiles")
     .upsert(
-      [{ name, title, email, phone, user_id: data.user?.id }],
+      [{ name, title, phone, user_id: data.user?.id }],
       { onConflict: "user_id" }
     );
 
