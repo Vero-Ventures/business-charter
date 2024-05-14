@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { saveProfile, getProfile } from "./actions";
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -16,8 +17,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import FormSubmitButton from "@/components/form-submit-button";
-import FormEditButton from "@/components/form-edit-button";
-
 
 const profileFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters long" }).max(50),
@@ -134,7 +133,10 @@ export default function ProfileForm() {
           )}
         />
         <div className="flex space-x-2 mt-4">
-          <FormEditButton onClick={enableEdit} disabled={isEditable}>Edit</FormEditButton>
+          <Button size="lg"
+            className="w-full"
+            type="button"
+            onClick={enableEdit}>Edit</Button>
           <FormSubmitButton
             defaultText="Save"
             loadingText="Saving..."
