@@ -69,6 +69,7 @@ export default function ProfileForm() {
       setIsEditable(false);
     }
     setIsSubmitting(false);
+    setIsEditable(false);
   }
 
   return (
