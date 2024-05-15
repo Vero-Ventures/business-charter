@@ -6,12 +6,13 @@ import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
 import { User, Users } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUsers, faUserCog } from '@fortawesome/free-solid-svg-icons';
 
 
 const mainLinks = [
   { href: '/profile', label: 'Your Profile', icon: faUser },
   { href: '/family', label: 'Your Family', icon: faUsers },
+  { href: '/family-management', label: 'Family Management', icon: faUserCog },
 ];
 
 const familySublinks = [
