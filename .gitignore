@@ -39,3 +39,7 @@ bun.lockb
 
 # virtual environment
 venv
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
