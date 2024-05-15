@@ -20,6 +20,7 @@ const links = [
   { href: '/family-crest', label: 'Family Crest' },
   { href: '/pdf', label: 'Print PDF' },
   { href: '/video', label: 'Videos' },
+  { href: '/chat', label: 'Chat' }
 ];
 
 export default function NavBar() {
