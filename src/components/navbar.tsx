@@ -20,19 +20,37 @@ const links = [
   { href: '/family-crest', label: 'Family Crest' },
   { href: '/pdf', label: 'Print PDF' },
   { href: '/video', label: 'Videos' },
+  { href: '/chatbot', label: 'ChatBot Assistant'},
 ];
+
+// export default function NavBar() {
+//   const pathname = usePathname();
+//   return (
+//     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
+//       {links.map(link => (
+//         <Link
+//           key={link.label}
+//           className="w-full cursor-pointer"
+//           href={link.href}>
+//           <Button
+//             variant={pathname === link.href ? 'default' : 'ghost'}
+//             className="w-full">
+//             {link.label}
+//           </Button>
+//         </Link>
+//       ))}
+//     </nav>
+//   );
+// }
 
 export default function NavBar() {
   const pathname = usePathname();
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
       {links.map(link => (
-        <Link
-          key={link.label}
-          className="w-full cursor-pointer"
-          href={link.href}>
+        <Link key={link.label} href={link.href} passHref>
           <Button
-            variant={pathname === link.href ? 'default' : 'ghost'}
+            variant={link.label === 'ChatBot Assistant' ? 'chatbot' : (pathname === link.href ? 'default' : 'ghost')}
             className="w-full">
             {link.label}
           </Button>
