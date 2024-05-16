@@ -8,7 +8,9 @@ export default function ContactPage() {
     <AuthenticatedRoute>
       <main className="min-h-screen px-6 pt-5">
         <Suspense fallback={<Loading />}>
-          <ChatbotComponent />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <ChatbotComponent />
+          </div>
         </Suspense>
       </main>
     </AuthenticatedRoute>
