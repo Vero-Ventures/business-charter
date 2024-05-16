@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect, FC } from 'react';
 import Chatbot from 'react-chatbot-kit';
-// import 'react-chatbot-kit/build/main.css';
-// import './chatbotStyles.css';
+// import './'
 import config from './config';
 import ActionProvider from './ActionProvider';
 import MessageParser from './MessageParser';

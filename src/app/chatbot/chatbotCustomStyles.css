@@ -1,0 +1,13 @@
+/* chatbotCustomStyles.css */
+.react-chatbot-kit-user-avatar-icon {
+    background-image: url('path/to/your/custom-avatar.png');
+    /* Set a custom image */
+    background-size: cover;
+    /* Cover the entire area of the icon */
+    border-radius: 50%;
+    /* Make it round */
+    width: 40px;
+    /* Set a specific width */
+    height: 40px;
+    /* Set a specific height */
+}
