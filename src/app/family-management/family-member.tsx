@@ -4,20 +4,17 @@ import { deleteContact } from './actions';
 import { Loader2, Trash2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function Contact({ contact }: { contact: any }) {
+export default function Family ({ families }: { families: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteContact(contact.id);
+    await deleteContact(families.id);
     setIsDeleting(false);
   };
 
   return (
     <tr>
-      <td>{contact.name}</td>
-      <td>{contact.title}</td>
-      <td>{contact.email}</td>
-      <td>{contact.phone}</td>
+      <td>{families.family_name}</td>
       <td>
         <Button
           variant="destructive"

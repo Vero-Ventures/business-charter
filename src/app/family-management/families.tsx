@@ -1,25 +1,25 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import Contact from './family-member';
+import Family from './family-member';
 
 export default function Families() {
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [families, setFamilies] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadContacts() {
       const supabase = createClient();
       const { data: userData } = await supabase.auth.getUser();
-      const { data: contactsData, error } = await supabase
-        .from('contacts')
-        .select('*')
-        .eq('user_id', userData.user?.id);
+      const { data: familiesData, error } = await supabase
+        .from('families')
+        .select('*');
+        // .eq('user_id', userData.user?.id);
 
       if (error) {
         setError(error.message);
       } else {
-        setContacts(contactsData);
+        setFamilies(familiesData);
       }
     }
 
@@ -36,16 +36,13 @@ export default function Families() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Title</th>
-            <th>Email</th>
-            <th>Phone</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {contacts.length > 0 ? (
-            contacts.map(contact => (
-              <Contact key={contact.email} contact={contact} />
+          {families.length > 0 ? (
+            families.map(families => (
+              <Family key={families.family_name} families={families} />
             ))
           ) : (
             <tr>
