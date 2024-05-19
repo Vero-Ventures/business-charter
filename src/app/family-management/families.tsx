@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import Contact from './family-member';
 
-export default function Contacts() {
+export default function Families() {
   const [contacts, setContacts] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
