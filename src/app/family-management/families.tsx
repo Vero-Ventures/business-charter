@@ -3,27 +3,17 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import Family from './family';
 
-export default function Families() {
-  const [families, setFamilies] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+export default async function Families() {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  const { data: families, error } = await supabase
+    .from('families')
+    .select('*');
+    // .eq('user_id', data.user?.id);
 
-  useEffect(() => {
-    async function loadFamilies() {
-      const supabase = createClient();
-      const { data: familiesData, error } = await supabase
-        .from('families')
-        .select('*');
-        // .eq('user_id', userData.user?.id);
-
-      if (error) {
-        setError(error.message);
-      } else {
-        setFamilies(familiesData);
-      }
-    }
-
-    loadFamilies();
-  }, []);
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   if (error) {
     return <div>{error}</div>;
