@@ -18,10 +18,10 @@ export async function addFamily(contact: InsertContact) {
 
 export async function deleteFamily(id: number) {
   const supabase = createClient();
-  const { error } = await supabase.from('contacts').delete().eq('id', id);
+  const { error } = await supabase.from('families').delete().eq('id', id);
   if (error) {
-    console.error("Error deleting contact:", error.message);
-    throw new Error(`Failed to delete contact: ${error.message}`);
+    console.error("Error deleting family:", error.message);
+    throw new Error(`Failed to delete family: ${error.message}`);
   }
 
   revalidatePath('/contacts');

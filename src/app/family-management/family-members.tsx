@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import Family from './family-member';
+import Family from './family';
 
 export default function FamilyMembers() {
   const [families, setFamilies] = useState<any[]>([]);
