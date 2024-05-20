@@ -20,7 +20,7 @@ import { Input } from '@/components/ui/input';
 import FormSubmitButton from '@/components/form-submit-button';
 
 const formSchema = z.object({
-  email: z.string().email({ message: 'Invalid email' }),
+  name: z.string({ message: 'Invalid email' }),
 });
 
 export type InsertContact = z.infer<typeof formSchema>;
@@ -30,7 +30,7 @@ export function FamilyForm() {
   const form = useForm<InsertContact>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      name: '',
     },
   });
 
@@ -46,13 +46,13 @@ export function FamilyForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-8">
       <FormField
           control={form.control}
-          name="email"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add family member by email:</FormLabel>
+              <FormLabel>Create new family:</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="contact@videre.com"
+                  placeholder="Enter new family name here"
                   type="email"
                   {...field}
                 />
@@ -63,7 +63,7 @@ export function FamilyForm() {
           )}
         />
         <FormSubmitButton
-          defaultText="Add Family Member"
+          defaultText="Add family"
           loadingText="Adding..."
           disabled={isSubmitting}
         />

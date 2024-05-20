@@ -15,7 +15,8 @@ export default function ContactPage() {
         <Suspense fallback={<Loading />}>
           <Families />
         </Suspense>
-        {/* <FamilyForm /> */}
+        <br></br>
+        <FamilyForm />
       </main>
     </AuthenticatedRoute>
   );
