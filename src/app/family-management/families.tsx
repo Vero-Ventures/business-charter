@@ -10,7 +10,6 @@ export default function Families() {
   useEffect(() => {
     async function loadFamilies() {
       const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
       const { data: familiesData, error } = await supabase
         .from('families')
         .select('*');
@@ -42,7 +41,7 @@ export default function Families() {
         <tbody>
           {families.length > 0 ? (
             families.map(families => (
-              <Family key={families.family_name} families={families} />
+              <Family key={families.name} families={families} />
             ))
           ) : (
             <tr>

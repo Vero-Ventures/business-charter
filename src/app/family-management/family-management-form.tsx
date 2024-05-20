@@ -23,18 +23,18 @@ const formSchema = z.object({
   name: z.string({ message: 'Invalid email' }),
 });
 
-export type InsertContact = z.infer<typeof formSchema>;
+export type InsertFamily = z.infer<typeof formSchema>;
 
 export function FamilyForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const form = useForm<InsertContact>({
+  const form = useForm<InsertFamily>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
     },
   });
 
-  async function onSubmit(values: InsertContact) {
+  async function onSubmit(values: InsertFamily) {
     setIsSubmitting(true);
     await addFamily(values);
     form.reset();
@@ -53,7 +53,7 @@ export function FamilyForm() {
               <FormControl>
                 <Input
                   placeholder="Enter new family name here"
-                  type="email"
+                  type="name"
                   {...field}
                 />
               </FormControl>

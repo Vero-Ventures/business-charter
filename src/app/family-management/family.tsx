@@ -14,7 +14,7 @@ export default function Family ({ families }: { families: any }) {
 
   return (
     <tr>
-      <td>{families.family_name}</td>
+      <td>{families.name}</td>
       <td>
         <Button
           variant="destructive"

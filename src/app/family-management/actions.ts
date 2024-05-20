@@ -2,17 +2,17 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { InsertContact } from './family-management-form';
+import { InsertFamily } from './family-management-form';
 
-export async function addFamily(contact: InsertContact) {
+export async function addFamily(contact: InsertFamily) {
   const supabase = createClient();
-  const { error } = await supabase.from('contacts').insert(contact);
+  const { error } = await supabase.from('families').insert(contact);
   if (error) {
-    console.error("Error inserting contact:", error.message);
-    throw new Error(`Failed to add contact: ${error.message}`);
+    console.error("Error inserting family:", error.message);
+    throw new Error(`Failed to add family: ${error.message}`);
   }
 
-  revalidatePath('/contacts');
+  revalidatePath('/families');
   return { success: true };
 }
 
@@ -24,11 +24,11 @@ export async function deleteFamily(id: number) {
     throw new Error(`Failed to delete family: ${error.message}`);
   }
 
-  revalidatePath('/contacts');
+  revalidatePath('/families');
   return { success: true };
 }
 
-export async function addFamilyMember(contact: InsertContact) {
+export async function addFamilyMember(contact: InsertFamily) {
   const supabase = createClient();
   const { error } = await supabase.from('contacts').insert(contact);
   if (error) {
