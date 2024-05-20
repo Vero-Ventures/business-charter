@@ -5,7 +5,7 @@ import { FamilyForm } from './family-management-form';
 import Families from './families';
 import AuthenticatedRoute from '../(auth)/authenticated-route';
 
-export default function ContactPage() {
+export default function FamilyPage() {
   return (
     <AuthenticatedRoute>
       <main className="min-h-screen px-6 pt-5">

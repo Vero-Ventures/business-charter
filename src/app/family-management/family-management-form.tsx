@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { addContact } from './actions';
+import { addFamily } from './actions';
 
 import {
   Form,
@@ -36,7 +36,7 @@ export function FamilyForm() {
 
   async function onSubmit(values: InsertContact) {
     setIsSubmitting(true);
-    await addContact(values);
+    await addFamily(values);
     form.reset();
     setIsSubmitting(false);
   }

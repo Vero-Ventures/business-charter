@@ -8,7 +8,7 @@ export default function Families() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadContacts() {
+    async function loadFamilies() {
       const supabase = createClient();
       const { data: userData } = await supabase.auth.getUser();
       const { data: familiesData, error } = await supabase
@@ -23,7 +23,7 @@ export default function Families() {
       }
     }
 
-    loadContacts();
+    loadFamilies();
   }, []);
 
   if (error) {
@@ -46,7 +46,7 @@ export default function Families() {
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center">You have no contacts yet.</td>
+              <td colSpan={5} className="text-center">You have no family members yet.</td>
             </tr>
           )}
         </tbody>

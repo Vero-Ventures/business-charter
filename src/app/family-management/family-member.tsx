@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { deleteContact } from './actions';
+import { deleteFamilyMember } from './actions';
 import { Loader2, Trash2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -8,7 +8,7 @@ export default function Family ({ families }: { families: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteContact(families.id);
+    await deleteFamilyMember(families.id);
     setIsDeleting(false);
   };
 

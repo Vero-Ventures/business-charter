@@ -8,7 +8,7 @@ export default function FamilyMembers() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadContacts() {
+    async function loadFamilyMembers() {
       const supabase = createClient();
       // const { data: userData } = await supabase.auth.getUser();
       const { data: familiesData, error } = await supabase
@@ -23,7 +23,7 @@ export default function FamilyMembers() {
       }
     }
 
-    loadContacts();
+    loadFamilyMembers();
   }, []);
 
   if (error) {
