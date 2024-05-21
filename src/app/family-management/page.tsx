@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import Loading from '@/components/loading';
 import FamilyMembers from './family-members';
-import { FamilyForm } from './family-management-form';
+import { FamilyForm } from './family-form';
 import Families from './families';
 import AuthenticatedRoute from '../(auth)/authenticated-route';
 
