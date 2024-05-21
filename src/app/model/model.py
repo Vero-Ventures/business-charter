@@ -20,7 +20,7 @@ try:
     faiss_index = Path("C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/vector_store/index.faiss")
     if faiss_index.is_file():
         embeddings = OpenAIEmbeddings()
-        vector_store = FAISS.load_local("faiss_index", embeddings=embeddings, allow_dangerous_deserialization=True)
+        vector_store = FAISS.load_local("C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/vector_store/", embeddings=embeddings, allow_dangerous_deserialization=True)
     else:
         print("Vector store not found. Please run 'update_vector_store.py' to create the vector store.")
         exit(1)
@@ -69,7 +69,7 @@ try:
             break
         elif query.lower() == 'start':
             user_responses = ask_questions(questions)
-            print("I have recorded all of your responses. Thank you for providing the information. If you would like to update your responses, please type 'start' again.")
+            print("Videre AI: I have recorded all of your responses. Thank you for providing the information. If you would like to update your responses, please type 'start' again.")
         else:
             result = conversation_chain.invoke({"question": query})
             answer = result["answer"]
