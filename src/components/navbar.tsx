@@ -35,24 +35,28 @@ const familySublinks = [
 
 export default function NavBar() {
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const pathname = usePathname();
 
   useEffect(() => {
     async function getUserRole() {
       const profile = await fetchUserProfile();
       setUserRole(profile.role);
+      setLoading(false);
     }
 
     getUserRole();
   }, []);
 
+  if (loading) {
+    return null; // or a loading spinner/placeholder
+  }
+
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
-      {mainLinks.map(({ href, label, icon, role }) => {
-        if ((role === 'admin' && userRole !== 'admin') || (role === 'user' && userRole !== 'user')) {
-          return null;
-        }
-        return (
+      {mainLinks
+        .filter(({ role }) => role === undefined || role === userRole)
+        .map(({ href, label, icon }) => (
           <Link key={label} className="w-full cursor-pointer" href={href}>
             <Button
               variant={pathname === href ? "default" : "ghost"}
@@ -62,8 +66,7 @@ export default function NavBar() {
               {label}
             </Button>
           </Link>
-        );
-      })}
+        ))}
       <Separator className="mx-auto mt-2 w-[90%]" />
       {familySublinks.map((link) => (
         <Link
