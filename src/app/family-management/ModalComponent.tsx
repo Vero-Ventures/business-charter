@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-const supabase = createClient('https://your-project.supabase.co', 'public-anon-key');
+import { createClient } from '@/lib/supabase/client';
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -29,22 +26,34 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
 
   const handleAddFamilyMember = async () => {
     try {
-      const { data, error } = await supabase
-        .from('auth.users')
+      const supabase = createClient();
+      const { data: userData } = await supabase.auth.getUser();
+      const { data: contactsData, error } = await supabase
+        .from('profiles')
         .update({ family_id: family.id })
-        .eq('email', email);
-
+        .eq('email', userData.user?.email);
+  
       if (error) {
         console.error('Error updating user:', error);
+        alert('Error updating user: ' + error.message);
       } else {
-        console.log('User updated:', data);
+        console.log('User updated:');
         alert('Family member added successfully');
       }
     } catch (err) {
-      console.error('Unexpected error:', err);
+      if (err instanceof Error) {
+        console.error('Unexpected error:', err);
+        alert('Unexpected error occurred: ' + err.message);
+      } else {
+        console.error('Unexpected error:', err);
+        alert('Unexpected error occurred');
+      }
     }
     onRequestClose();
   };
+  
+  
+  
 
   return (
     <Modal
