@@ -4,15 +4,15 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
-import { User, Users } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUsers, faUserCog } from '@fortawesome/free-solid-svg-icons';
-
+import { fetchUserProfile } from '@/lib/utils'; // Adjust the import path as needed
 
 const mainLinks = [
   { href: '/profile', label: 'Your Profile', icon: faUser },
-  { href: '/family', label: 'Your Family', icon: faUsers },
-  { href: '/family-management', label: 'Family Management', icon: faUserCog },
+  { href: '/family', label: 'Your Family', icon: faUsers, role: 'user' },
+  { href: '/family-management', label: 'Family Management', icon: faUserCog, role: 'admin' },
 ];
 
 const familySublinks = [
@@ -34,20 +34,36 @@ const familySublinks = [
 ];
 
 export default function NavBar() {
+  const [userRole, setUserRole] = useState<string | null>(null);
   const pathname = usePathname();
+
+  useEffect(() => {
+    async function getUserRole() {
+      const profile = await fetchUserProfile();
+      setUserRole(profile.role);
+    }
+
+    getUserRole();
+  }, []);
+
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
-      {mainLinks.map(({ href, label, icon }) => (
-        <Link key={label} className="w-full cursor-pointer" href={href}>
-          <Button
-            variant={pathname === href ? "default" : "ghost"}
-            className="w-full flex items-center gap-2"
-          >
-            <FontAwesomeIcon icon={icon} className="h-4 w-4" />
-            {label}
-          </Button>
-        </Link>
-      ))}
+      {mainLinks.map(({ href, label, icon, role }) => {
+        if ((role === 'admin' && userRole !== 'admin') || (role === 'user' && userRole !== 'user')) {
+          return null;
+        }
+        return (
+          <Link key={label} className="w-full cursor-pointer" href={href}>
+            <Button
+              variant={pathname === href ? "default" : "ghost"}
+              className="w-full flex items-center gap-2"
+            >
+              <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+              {label}
+            </Button>
+          </Link>
+        );
+      })}
       <Separator className="mx-auto mt-2 w-[90%]" />
       {familySublinks.map((link) => (
         <Link
