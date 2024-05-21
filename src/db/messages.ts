@@ -1,104 +1,127 @@
-import { supabase } from "@/lib/supabase/browser-client"
-import { TablesInsert, TablesUpdate } from "@/supabase/types"
+import { supabase } from '@/lib/supabase/browser-client';
+import { TablesInsert, TablesUpdate } from '@/supabase/types';
+import { revalidatePath } from 'next/cache';
 
 export const getMessageById = async (messageId: string) => {
-    const { data: message } = await supabase
-        .from("messages")
-        .select("*")
-        .eq("id", messageId)
-        .single()
+  const { data: message } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('id', messageId)
+    .single();
 
-    if (!message) {
-        throw new Error("Message not found")
-    }
+  if (!message) {
+    throw new Error('Message not found');
+  }
 
-    return message
-}
+  return message;
+};
 
 export const getMessagesByChatId = async (chatId: string) => {
-    const { data: messages } = await supabase
-        .from("messages")
-        .select("*")
-        .eq("chat_id", chatId)
+  const { data: messages } = await supabase
+    .from('messages')
+    .select('*')
+    .eq('chat_id', chatId);
 
-    if (!messages) {
-        throw new Error("Messages not found")
-    }
+  if (!messages) {
+    throw new Error('Messages not found');
+  }
 
-    return messages
-}
+  return messages;
+};
 
-export const createMessage = async (message: TablesInsert<"messages">) => {
-    const { data: createdMessage, error } = await supabase
-        .from("messages")
-        .insert([message])
-        .select("*")
-        .single()
+export const createMessage = async (message: TablesInsert<'messages'>) => {
+  const { data: createdMessage, error } = await supabase
+    .from('messages')
+    .insert([message])
+    .select('*')
+    .single();
 
-    if (error) {
-        throw new Error(error.message)
-    }
+  if (error) {
+    throw new Error(error.message);
+  }
 
-    return createdMessage
-}
+  revalidatePath(`/chat/${message.chat_id}/messages`);
 
-export const createMessages = async (messages: TablesInsert<"messages">[]) => {
-    const { data: createdMessages, error } = await supabase
-        .from("messages")
-        .insert(messages)
-        .select("*")
+  return createdMessage;
+};
 
-    if (error) {
-        throw new Error(error.message)
-    }
+export const createMessages = async (messages: TablesInsert<'messages'>[]) => {
+  const { data: createdMessages, error } = await supabase
+    .from('messages')
+    .insert(messages)
+    .select('*');
 
-    return createdMessages
-}
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return createdMessages;
+};
 
 export const updateMessage = async (
-    messageId: string,
-    message: TablesUpdate<"messages">
-    ) => {
-    const { data: updatedMessage, error } = await supabase
-        .from("messages")
-        .update(message)
-        .eq("id", messageId)
-        .select("*")
-        .single()
+  messageId: string,
+  message: TablesUpdate<'messages'>
+) => {
+  const { data: updatedMessage, error } = await supabase
+    .from('messages')
+    .update(message)
+    .eq('id', messageId)
+    .select('*')
+    .single();
 
-    if (error) {
-        throw new Error(error.message)
-    }
+  if (error) {
+    throw new Error(error.message);
+  }
 
-    return updatedMessage
-}
+  revalidatePath(`/chat/${updatedMessage.chat_id}/messages`);
+
+  return updatedMessage;
+};
 
 export const deleteMessage = async (messageId: string) => {
-    const { error } = await supabase.from("messages").delete().eq("id", messageId)
+  // Fetch the message to get the chat_id
+  const { data: message, error: fetchError } = await supabase
+    .from('messages')
+    .select('chat_id')
+    .eq('id', messageId)
+    .single();
 
-    if (error) {
-        throw new Error(error.message)
-    }
+  if (fetchError || !message) {
+    throw new Error(fetchError ? fetchError.message : 'Message not found');
+  }
 
-    return true
-}
+  const { error } = await supabase
+    .from('messages')
+    .delete()
+    .eq('id', messageId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath(`/chat/${message.chat_id}/messages`);
+
+  return true;
+};
 
 export async function deleteMessagesIncludingAndAfter(
-    userId: string,
-    chatId: string,
-    sequenceNumber: number
-    ) {
-    const { error } = await supabase.rpc("delete_messages_including_and_after", {
-        p_user_id: userId,
-        p_chat_id: chatId,
-        p_sequence_number: sequenceNumber
-    })
+  userId: string,
+  chatId: string,
+  sequenceNumber: number
+) {
+  const { error } = await supabase.rpc('delete_messages_including_and_after', {
+    p_user_id: userId,
+    p_chat_id: chatId,
+    p_sequence_number: sequenceNumber,
+  });
 
-    if (error) {
-        return {
-        error: "Failed to delete messages."
-        }
-    }
+  if (error) {
+    return {
+      error: 'Failed to delete messages.',
+    };
+  }
 
-    return true
+  revalidatePath(`/chat/${chatId}/messages`);
+
+  return true;
 }
