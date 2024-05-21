@@ -18,13 +18,25 @@ export async function login(email: string, password: string) {
   redirect('/decision-tree');
 }
 
-export async function signup(email: string, password: string) {
+export async function signup(email: string, password: string, role: string) {
   const supabase = createClient();
 
-  const { error } = await supabase.auth.signUp({ email, password });
+  const { error, data } = await supabase.auth.signUp({ email, password });
 
   if (error) {
     return { message: error.message };
+  }
+
+  const userId = data.user?.id;
+  if (userId) {
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({ role })
+      .eq('user_id', userId);
+
+    if (profileError) {
+      return { message: profileError.message };
+    }
   }
 
   revalidatePath('/', 'layout');

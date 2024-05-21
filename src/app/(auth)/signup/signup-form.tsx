@@ -25,6 +25,9 @@ const signupFormSchema = z
     confirmPassword: z
       .string()
       .min(8, { message: 'Password must be at least 8 characters long' }),
+    role: z.enum(['admin', 'user'], {
+      required_error: 'Please select a role',
+    }),
   })
   .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -42,12 +45,13 @@ export default function SignupForm() {
       email: '',
       password: '',
       confirmPassword: '',
+      role: 'user',
     },
   });
 
-  async function onSubmit({ email, password }: SignupFormSchema) {
+  async function onSubmit({ email, password, role }: SignupFormSchema) {
     setIsSubmitting(true);
-    const error = await signup(email, password);
+    const error = await signup(email, password, role);
     if (error.message) {
       console.error('Signup Error:', error.message);
       setError(error.message);
@@ -108,6 +112,24 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="admin"
+              {...form.register("role")}
+            />
+            Advisor
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="user"
+              {...form.register("role")}
+            />
+            Family Member
+          </label>
+        </div>
         <FormSubmitButton
           disabled={isSubmitting}
           defaultText="Create Account"
