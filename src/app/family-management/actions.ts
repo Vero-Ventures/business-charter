@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
-import { InsertFamily } from './family-management-form';
+import { InsertFamily } from './family-form';
 
 export async function addFamily(contact: InsertFamily) {
   const supabase = createClient();
