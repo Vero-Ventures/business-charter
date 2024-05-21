@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Modal from 'react-modal';
 import { createClient } from '@/lib/supabase/client';
+import FamilyMembers from './family-members';
+import Loading from '@/components/loading';
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -52,18 +54,17 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
     onRequestClose();
   };
   
-  
-  
-
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Family"
     >
-      <h2>Edit Family</h2>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Family Name" />
-      <button onClick={handleSave}>Save</button>
+      <button onClick={onRequestClose}>Close</button>
+      <h1 className="text-3xl font-bold"> {name} Family</h1>
+      <Suspense fallback={<Loading />}>
+        <FamilyMembers />
+      </Suspense>v
       <h2>Add Family Member</h2>
       <input
         type="email"
@@ -72,7 +73,9 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
         placeholder="User Email"
       />
       <button onClick={handleAddFamilyMember}>Add Family Member</button>
-      <button onClick={onRequestClose}>Close</button>
+      <h2>Edit Family Name</h2>
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Family Name" />
+      <button onClick={handleSave}>Save</button>
     </Modal>
   );
 };
