@@ -25,16 +25,3 @@ jobs:
         with:
           commit_message: Apply formatting changes
           branch: ${{ github.head_ref }}
-
-      # - name: Notify failure
-      #   if: failure()
-      #   uses: actions/github-script@v4
-      #   with:
-      #     github-token: ${{ secrets.ACTIONS_TOKEN }}
-      #     script: |
-      #       github.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: 'Formatting failed. Please check the logs.'
-      #       })
