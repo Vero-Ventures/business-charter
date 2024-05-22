@@ -54,7 +54,7 @@ export const useSelectFileHandler = () => {
         if (file) {
         let simplifiedFileType = file.type.split("/")[1]
 
-        let reader = new FileReader()
+        const reader = new FileReader()
 
         if (file.type.includes("image")) {
             reader.readAsDataURL(file)

@@ -7,7 +7,7 @@ import { getCollectionFilesByCollectionId } from "@/db/collection-files";
 import { deleteMessagesIncludingAndAfter } from "@/db/messages";
 import { buildFinalMessages } from "@/lib/build-prompt";
 import { Tables } from "@/supabase/types";
-import { ChatMessage, ChatPayload, LLMID, ModelProvider } from "@/types";
+import { ChatMessage, ChatPayload, LLMID, ModelProvider, ChatFile } from "@/types";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useRef } from "react";
 import { LLM_LIST } from "../../../lib/models/llm/llm-list";
@@ -21,7 +21,6 @@ import {
     processResponse,
     validateChatSettings
 } from "../chat-helpers";
-import { ChatFile } from "@/types/chat-file"; // Adjust the import path accordingly
 
 export const useChatHandler = () => {
     const router = useRouter();
