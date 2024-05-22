@@ -17,10 +17,10 @@ if api_key is None:
 os.environ["OPENAI_API_KEY"] = api_key
 
 try:
-    faiss_index = Path("C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/vector_store/index.faiss")
+    faiss_index = Path("src/app/model/vector_store/index.faiss")
     if faiss_index.is_file():
         embeddings = OpenAIEmbeddings()
-        vector_store = FAISS.load_local("C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/vector_store/", embeddings=embeddings, allow_dangerous_deserialization=True)
+        vector_store = FAISS.load_local("src/app/model/vector_store/", embeddings=embeddings, allow_dangerous_deserialization=True)
     else:
         print("Vector store not found. Please run 'update_vector_store.py' to create the vector store.")
         exit(1)
