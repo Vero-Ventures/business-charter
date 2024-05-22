@@ -42,7 +42,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         setPrompts,
         setTools,
         setModels,
-        selectedWorkspace,
         setSelectedWorkspace,
         setSelectedChat,
         setChatMessages,
@@ -59,7 +58,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        ;(async () => {
+        (async () => {
         const session = (await supabase.auth.getSession()).data.session
 
         if (!session) {
@@ -71,7 +70,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     }, [])
 
     useEffect(() => {
-        ;(async () => await fetchWorkspaceData(workspaceId))()
+        (async () => await fetchWorkspaceData(workspaceId))()
 
         setUserInput("")
         setChatMessages([])
@@ -133,8 +132,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         const chats = await getChatsByWorkspaceId(workspaceId)
         setChats(chats)
 
-        const collectionData =
-            await getCollectionWorkspacesByWorkspaceId(workspaceId)   
+        const collectionData = await getCollectionWorkspacesByWorkspaceId(workspaceId)   
         setCollections(collectionData.collections)
 
         const folders = await getFoldersByWorkspaceId(workspaceId)
