@@ -10,6 +10,8 @@ load_dotenv(env_path)
 # Get the environment variables
 supabase_url = os.getenv('NEXT_PUBLIC_SUPABASE_URL')
 supabase_key = os.getenv('NEXT_PUBLIC_SUPABASE_ANON_KEY')
+e_mail = os.getenv('IFC_EMAIL')
+password = os.getenv('IFC_PASSWORD')
 
 # Check if the environment variables are loaded correctly
 if not supabase_url or not supabase_key:
@@ -37,7 +39,7 @@ def add_entry_from_json(file_path: str, keys: dict):
     
     # Sign in the user
     try:
-        auth_response = supabase.auth.sign_in_with_password({"email": "test-email@gmail.com", "password": "********"})
+        auth_response = supabase.auth.sign_in_with_password({"email": e_mail, "password": password})
         session = auth_response.session
         if not session:
             raise ValueError("Failed to sign in user.")
