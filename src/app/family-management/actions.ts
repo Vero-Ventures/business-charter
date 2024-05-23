@@ -29,6 +29,17 @@ export async function addFamily(contact: InsertFamily) {
 
 export async function deleteFamily(id: number) {
   const supabase = createClient();
+
+  const { error: updateError } = await supabase
+    .from('profiles')
+    .update({ family_id: null })
+    .eq('family_id', id);
+
+  if (updateError) {
+    console.error("Error updating profiles:", updateError.message);
+    throw new Error(`Failed to update profiles: ${updateError.message}`);
+  }
+
   const { error } = await supabase.from('families').delete().eq('id', id);
   if (error) {
     console.error("Error deleting family:", error.message);
