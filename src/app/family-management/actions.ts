@@ -6,7 +6,18 @@ import { InsertFamily } from './family-form';
 
 export async function addFamily(contact: InsertFamily) {
   const supabase = createClient();
-  const { error } = await supabase.from('families').insert(contact);
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error('User not authenticated');
+  }
+
+  const familyData = {
+    ...contact,
+    admin_id: user.id,
+  };
+
+  const { error } = await supabase.from('families').insert(familyData);
   if (error) {
     console.error("Error inserting family:", error.message);
     throw new Error(`Failed to add family: ${error.message}`);
