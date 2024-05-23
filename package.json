@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"npm run dev-next\" \"npm run dev-flask\"",
+    "dev-next": "next dev",
+    "dev-flask": "cd src/app/mobile_chat_api && python app.py",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -87,6 +89,7 @@
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "husky": "^9.0.11",
