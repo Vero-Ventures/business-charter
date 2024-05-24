@@ -38,12 +38,13 @@ const Family: React.FC<FamilyProps> = ({ family }) => {
 
   return (
     <tr>
-      <td>{family.name}</td>
-      <td>
+      <td className="text-left">{family.name}</td>
+      <td className="text-center">
         <Button
           variant="destructive"
           disabled={isDeleting}
           onClick={handleDelete}
+          className="mr-2"
         >
           {isDeleting ? (
             <Loader2 className="animate-spin" size={24}>

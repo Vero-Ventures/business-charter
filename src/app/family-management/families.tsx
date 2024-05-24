@@ -44,11 +44,11 @@ const Families = () => {
 
   return (
     <div className="prose mt-8">
-      <table className="w-full">
+      <table className="w-full table-auto">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Actions</th>
+            <th className="w-auto text-left">Name</th>
+            <th className="w-1/4 text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
