@@ -2,9 +2,20 @@
 
 import Link from 'next/link';
 import { Button } from './ui/button';
+import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faUsers, faUserCog } from '@fortawesome/free-solid-svg-icons';
+import { fetchUserProfile } from '@/lib/utils'; // Adjust the import path as needed
 
-const links = [
+const mainLinks = [
+  { href: '/profile', label: 'Your Profile', icon: faUser },
+  { href: '/family', label: 'Your Family', icon: faUsers, role: 'user' },
+  { href: '/family-management', label: 'Family Management', icon: faUserCog, role: 'admin' },
+];
+
+const familySublinks = [
   { href: '/decision-tree', label: 'Decision Tree' },
   { href: '/family-values', label: 'Family Values' },
   { href: '/family-code', label: 'Family Code' },
@@ -23,10 +34,41 @@ const links = [
 ];
 
 export default function NavBar() {
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const pathname = usePathname();
+
+  useEffect(() => {
+    async function getUserRole() {
+      const profile = await fetchUserProfile();
+      setUserRole(profile.role);
+      setLoading(false);
+    }
+
+    getUserRole();
+  }, []);
+
+  if (loading) {
+    return null; // or a loading spinner/placeholder
+  }
+
   return (
     <nav className="grid items-start px-2 text-sm font-medium md:mt-5 lg:mt-1 lg:px-4 print:hidden">
-      {links.map(link => (
+      {mainLinks
+        .filter(({ role }) => role === undefined || role === userRole)
+        .map(({ href, label, icon }) => (
+          <Link key={label} className="w-full cursor-pointer" href={href}>
+            <Button
+              variant={pathname === href ? "default" : "ghost"}
+              className="w-full flex items-center gap-2"
+            >
+              <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+              {label}
+            </Button>
+          </Link>
+        ))}
+      <Separator className="mx-auto mt-2 w-[90%]" />
+      {familySublinks.map((link) => (
         <Link
           key={link.label}
           className="w-full cursor-pointer"
