@@ -49,7 +49,7 @@ export default function Contacts() {
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center">You have no contacts yet.</td>
+              <td colSpan={5} className="text-center">You have no family members yet.</td>
             </tr>
           )}
         </tbody>
