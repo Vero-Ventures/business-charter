@@ -6,29 +6,42 @@ import FamilyMember from './family-member';
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     async function loadContacts() {
       const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
-      const { data: contactsData, error } = await supabase
-        .from('contacts')
-        .select('*')
-        .eq('user_id', userData.user?.id);
+      const { data: userData, error: userError } = await supabase.auth.getUser();
 
-      if (error) {
-        setError(error.message);
+      if (userError) {
+        setError(userError.message);
+        return;
+      }
+
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('family_id')
+        .eq('user_id', userData.user?.id)
+        .single();
+
+      if (profileError) {
+        setError(profileError.message);
+        return;
+      }
+
+      const { data: familyMembers, error: familyError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('family_id', profileData?.family_id);
+
+      if (familyError) {
+        setError(familyError.message);
       } else {
-        setContacts(contactsData);
+        setContacts(familyMembers);
       }
     }
 
     loadContacts();
   }, []);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div className="prose mt-8">
