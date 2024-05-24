@@ -4,7 +4,7 @@ import { deleteFamilyMember } from './actions';
 import { Loader2, Trash2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function FamilyMember({ contact }: { contact: any }) {
+export default function FamilyMember({ member: contact }: { member: any }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const handleDelete = async () => {
     setIsDeleting(true);

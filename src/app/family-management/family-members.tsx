@@ -2,28 +2,27 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import FamilyMember from './family-member';
+import { loadFamilyMembers } from './actions';
 
 export default function Contacts() {
-  const [contacts, setContacts] = useState<any[]>([]);
+  const [members, setFamilyMembers] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadContacts() {
-      const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
-      const { data: contactsData, error } = await supabase
-        .from('contacts')
-        .select('*')
-        .eq('user_id', userData.user?.id);
-
-      if (error) {
-        setError(error.message);
-      } else {
-        setContacts(contactsData);
+    async function loadTable() {
+      try {
+        const familyMembers = await loadFamilyMembers();
+        setFamilyMembers(familyMembers);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Unexpected error occurred');
+        }
       }
     }
 
-    loadContacts();
+    loadTable();
   }, []);
 
   if (error) {
@@ -43,9 +42,9 @@ export default function Contacts() {
           </tr>
         </thead>
         <tbody>
-          {contacts.length > 0 ? (
-            contacts.map(contact => (
-              <FamilyMember key={contact.email} contact={contact} />
+          {members.length > 0 ? (
+            members.map(member => (
+              <FamilyMember key={member.email} member={member} />
             ))
           ) : (
             <tr>
