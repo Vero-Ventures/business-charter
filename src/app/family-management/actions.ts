@@ -50,11 +50,15 @@ export async function deleteFamily(id: number) {
   return { success: true };
 }
 
-export async function addFamilyMember(contact: InsertFamily) {
+export async function addFamilyMember(contact: { email: string; family_id: number; }) {
   const supabase = createClient();
-  const { error } = await supabase.from('contacts').insert(contact);
+  const { error } = await supabase
+    .from('profiles')
+    .update({ family_id: contact.family_id })
+    .eq('email', contact.email);
+
   if (error) {
-    console.error("Error inserting contact:", error.message);
+    console.error("Error updating user:", error.message);
     throw new Error(`Failed to add contact: ${error.message}`);
   }
 

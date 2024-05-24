@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import Modal from 'react-modal';
-import { createClient } from '@/lib/supabase/client';
 import FamilyMembers from './family-members';
 import Loading from '@/components/loading';
+import { addFamilyMember } from './actions';
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -28,19 +28,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
 
   const handleAddFamilyMember = async () => {
     try {
-      const supabase = createClient();
-      const { data: contactsData, error } = await supabase
-        .from('profiles')
-        .update({ family_id: family.id })
-        .eq('email', email); // Use the entered email directly
-  
-      if (error) {
-        console.error('Error updating user:', error);
-        alert('Error updating user: ' + error.message);
-      } else {
-        console.log('User updated:', contactsData);
-        alert('Family member added successfully');
-      }
+      await addFamilyMember({ email, family_id: family.id });
+      alert('Family member added successfully');
     } catch (err) {
       if (err instanceof Error) {
         console.error('Unexpected error:', err);
