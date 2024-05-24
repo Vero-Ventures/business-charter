@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
 import Modal from 'react-modal';
 import FamilyMembers from './family-members';
 import Loading from '@/components/loading';
@@ -15,6 +15,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
   const [name, setName] = useState(family?.name || '');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const familyMembersRef = useRef<any>(null);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -26,10 +27,6 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
     if (family) {
       setName(family.name);
     }
-  }, [family]);
-
-  useEffect(() => {
-    console.log('Family object:', family);
   }, [family]);
 
   const handleSave = () => {
@@ -46,6 +43,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
     try {
       await addFamilyMember({ email, family_id: family.id });
       alert('Family member added successfully');
+      familyMembersRef.current.reloadMembers();
     } catch (err) {
       if (err instanceof Error) {
         console.error('Unexpected error:', err);
@@ -68,7 +66,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
       <h1 className="text-3xl font-bold">{name} Family</h1>
       {family && (
         <Suspense fallback={<Loading />}>
-          <FamilyMembers familyId={family.id} />
+          <FamilyMembers ref={familyMembersRef} familyId={family.id} />
         </Suspense>
       )}
       <h2>Add Family Member</h2>

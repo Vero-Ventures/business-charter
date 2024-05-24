@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import FamilyMember from './family-member';
 import { loadFamilyMembers } from './actions';
 
@@ -7,28 +7,32 @@ interface FamilyMembersProps {
   familyId: number;
 }
 
-const FamilyMembers: React.FC<FamilyMembersProps> = ({ familyId }) => {
+const FamilyMembers = forwardRef(({ familyId }: FamilyMembersProps, ref) => {
   const [members, setFamilyMembers] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function loadTable() {
-      try {
-        const familyMembers = await loadFamilyMembers(familyId);
-        setFamilyMembers(familyMembers);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Unexpected error occurred');
-        }
+  const loadTable = async () => {
+    try {
+      const familyMembers = await loadFamilyMembers(familyId);
+      setFamilyMembers(familyMembers);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Unexpected error occurred');
       }
     }
+  };
 
+  useEffect(() => {
     if (familyId) {
       loadTable();
     }
   }, [familyId]);
+
+  useImperativeHandle(ref, () => ({
+    reloadMembers: loadTable
+  }));
 
   if (error) {
     return <div>{error}</div>;
@@ -49,7 +53,7 @@ const FamilyMembers: React.FC<FamilyMembersProps> = ({ familyId }) => {
         <tbody>
           {members.length > 0 ? (
             members.map(member => (
-              <FamilyMember key={member.email} member={member} />
+              <FamilyMember key={member.email} member={member} onRemove={loadTable} />
             ))
           ) : (
             <tr>
@@ -60,6 +64,8 @@ const FamilyMembers: React.FC<FamilyMembersProps> = ({ familyId }) => {
       </table>
     </div>
   );
-}
+});
+
+FamilyMembers.displayName = 'FamilyMembers';
 
 export default FamilyMembers;
