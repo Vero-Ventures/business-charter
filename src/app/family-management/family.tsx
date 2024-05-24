@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { deleteFamily } from './actions';
 import { Loader2, Trash2Icon, Edit2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import ModalComponent from './ModalComponent'; // Adjust the import path
+import ModalComponent from './ModalComponent';
 
 export default function Family({ families }: { families: any }) {
   const [isDeleting, setIsDeleting] = useState(false);

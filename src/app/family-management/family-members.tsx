@@ -1,17 +1,20 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
 import FamilyMember from './family-member';
 import { loadFamilyMembers } from './actions';
 
-export default function Contacts() {
+interface FamilyMembersProps {
+  familyId: number;
+}
+
+const FamilyMembers: React.FC<FamilyMembersProps> = ({ familyId }) => {
   const [members, setFamilyMembers] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadTable() {
       try {
-        const familyMembers = await loadFamilyMembers();
+        const familyMembers = await loadFamilyMembers(familyId);
         setFamilyMembers(familyMembers);
       } catch (err) {
         if (err instanceof Error) {
@@ -22,8 +25,10 @@ export default function Contacts() {
       }
     }
 
-    loadTable();
-  }, []);
+    if (familyId) {
+      loadTable();
+    }
+  }, [familyId]);
 
   if (error) {
     return <div>{error}</div>;
@@ -56,3 +61,5 @@ export default function Contacts() {
     </div>
   );
 }
+
+export default FamilyMembers;

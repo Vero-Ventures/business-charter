@@ -50,28 +50,13 @@ export async function deleteFamily(id: number) {
   return { success: true };
 }
 
-export async function loadFamilyMembers() {
+export async function loadFamilyMembers(family_id: number) {
   const supabase = createClient();
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-
-  if (userError) {
-    throw new Error(userError.message);
-  }
-
-  const { data: profileData, error: profileError } = await supabase
-    .from('profiles')
-    .select('family_id')
-    .eq('user_id', userData.user?.id)
-    .single();
-
-  if (profileError) {
-    throw new Error(profileError.message);
-  }
 
   const { data: familyMembers, error: familyError } = await supabase
     .from('profiles')
     .select('*')
-    .eq('family_id', profileData?.family_id);
+    .eq('family_id', family_id);
 
   if (familyError) {
     throw new Error(familyError.message);
