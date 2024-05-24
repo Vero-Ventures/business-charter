@@ -3,13 +3,18 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-export async function loadFamilyMembers(user_id: string) {
+export async function loadFamilyMembers() {
   const supabase = createClient();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) {
+    throw new Error(userError.message);
+  }
 
   const { data: profileData, error: profileError } = await supabase
     .from('profiles')
     .select('family_id')
-    .eq('user_id', user_id)
+    .eq('user_id', userData.user?.id)
     .single();
 
   if (profileError) {

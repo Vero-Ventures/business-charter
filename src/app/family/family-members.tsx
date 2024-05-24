@@ -1,26 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
 import FamilyMember from './family-member';
 import { loadFamilyMembers } from './actions';
 
-export default function Contacts() {
-  const [contacts, setContacts] = useState<any[]>([]);
+export default function FamilyMembers() {
+  const [members, setFamilyMembers] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function loadContacts() {
-      const supabase = createClient();
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-
-      if (userError) {
-        setError(userError.message);
-        return;
-      }
-
+    async function loadTable() {
       try {
-        const familyMembers = await loadFamilyMembers(userData.user?.id);
-        setContacts(familyMembers);
+        const familyMembers = await loadFamilyMembers();
+        setFamilyMembers(familyMembers);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -30,11 +21,12 @@ export default function Contacts() {
       }
     }
 
-    loadContacts();
+    loadTable();
   }, []);
 
   return (
     <div className="prose mt-8">
+      {error && <div className="error">{error}</div>}
       <table className="w-full">
         <thead>
           <tr>
@@ -45,13 +37,13 @@ export default function Contacts() {
           </tr>
         </thead>
         <tbody>
-          {contacts.length > 0 ? (
-            contacts.map(contact => (
-              <FamilyMember key={contact.email} contact={contact} />
+          {members.length > 0 ? (
+            members.map(member => (
+              <FamilyMember key={member.email} member={member} />
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center">You have no family members yet.</td>
+              <td colSpan={4} className="text-center">You have no family members yet.</td>
             </tr>
           )}
         </tbody>
