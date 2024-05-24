@@ -4,20 +4,24 @@ import { createClient } from '@/lib/supabase/server';
 export async function middleware(request: NextRequest) {
   const supabase = createClient();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-  if (session && session.user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('user_id', session.user.id)
-      .single();
+  if (userError || !user) {
+    return NextResponse.redirect(new URL('/unauthorized', request.url));
+  }
 
-    if (request.nextUrl.pathname.startsWith('/family-management') && profile?.role !== 'admin') {
-      return NextResponse.redirect(new URL('/unauthorized', request.url));
-    }
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('user_id', user.id)
+    .single();
+
+  if (profileError || !profile) {
+    return NextResponse.redirect(new URL('/unauthorized', request.url));
+  }
+
+  if (request.nextUrl.pathname.startsWith('/family-management') && profile.role !== 'admin') {
+    return NextResponse.redirect(new URL('/unauthorized', request.url));
   }
 
   return NextResponse.next();
