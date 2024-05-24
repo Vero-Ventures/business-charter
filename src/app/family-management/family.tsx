@@ -5,13 +5,21 @@ import { Loader2, Trash2Icon, Edit2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ModalComponent from './ModalComponent';
 
-export default function Family({ families }: { families: any }) {
+interface FamilyProps {
+  family: {
+    id: number;
+    name: string;
+    // Add other relevant fields here
+  };
+}
+
+const Family: React.FC<FamilyProps> = ({ family }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteFamily(families.id);
+    await deleteFamily(family.id);
     setIsDeleting(false);
   };
 
@@ -30,7 +38,7 @@ export default function Family({ families }: { families: any }) {
 
   return (
     <tr>
-      <td>{families.name}</td>
+      <td>{family.name}</td>
       <td>
         <Button
           variant="destructive"
@@ -55,10 +63,12 @@ export default function Family({ families }: { families: any }) {
         <ModalComponent
           isOpen={isModalOpen}
           onRequestClose={closeModal}
-          family={families}
+          family={family}
           onSave={handleSave}
         />
       </td>
     </tr>
   );
-}
+};
+
+export default Family;
