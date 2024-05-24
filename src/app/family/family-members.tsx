@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import Contact from './family-member';
+import FamilyMember from './family-member';
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
@@ -39,17 +39,16 @@ export default function Contacts() {
             <th>Title</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {contacts.length > 0 ? (
             contacts.map(contact => (
-              <Contact key={contact.email} contact={contact} />
+              <FamilyMember key={contact.email} contact={contact} />
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="text-center">You have no contacts yet.</td>
+              <td colSpan={5} className="text-center">You have no family members yet.</td>
             </tr>
           )}
         </tbody>
