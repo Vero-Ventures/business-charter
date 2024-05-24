@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import FamilyMember from './family-member';
+import { loadFamilyMembers } from './actions';
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     async function loadContacts() {
       const supabase = createClient();
@@ -17,26 +18,15 @@ export default function Contacts() {
         return;
       }
 
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('family_id')
-        .eq('user_id', userData.user?.id)
-        .single();
-
-      if (profileError) {
-        setError(profileError.message);
-        return;
-      }
-
-      const { data: familyMembers, error: familyError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('family_id', profileData?.family_id);
-
-      if (familyError) {
-        setError(familyError.message);
-      } else {
+      try {
+        const familyMembers = await loadFamilyMembers(userData.user?.id);
         setContacts(familyMembers);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Unexpected error occurred');
+        }
       }
     }
 
