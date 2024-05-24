@@ -23,7 +23,7 @@ export async function addFamily(contact: InsertFamily) {
     throw new Error(`Failed to add family: ${error.message}`);
   }
 
-  revalidatePath('/families');
+  revalidatePath('/family-management');
   return { success: true };
 }
 
@@ -46,7 +46,7 @@ export async function deleteFamily(id: number) {
     throw new Error(`Failed to delete family: ${error.message}`);
   }
 
-  revalidatePath('/families');
+  revalidatePath('/family-management');
   return { success: true };
 }
 
@@ -77,18 +77,21 @@ export async function addFamilyMember(contact: { email: string; family_id: numbe
     throw new Error(`Failed to add contact: ${error.message}`);
   }
 
-  revalidatePath('/contacts');
+  revalidatePath('/family-management');
   return { success: true };
 }
 
-export async function deleteFamilyMember(id: number) {
+export async function removeFamilyMember(id: number) {
   const supabase = createClient();
-  const { error } = await supabase.from('contacts').delete().eq('id', id);
+  const { error } = await supabase
+  .from('profiles')
+  .update( {'family_id': null })
+  .eq('id', id);
   if (error) {
-    console.error("Error deleting contact:", error.message);
-    throw new Error(`Failed to delete contact: ${error.message}`);
+    console.error("Error removing family member:", error.message);
+    throw new Error(`Failed to remove family member: ${error.message}`);
   }
 
-  revalidatePath('/contacts');
+  revalidatePath('/family-management');
   return { success: true };
 }
