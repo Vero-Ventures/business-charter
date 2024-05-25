@@ -9,7 +9,6 @@ interface FamilyProps {
   family: {
     id: number;
     name: string;
-    // Add other relevant fields here
   };
 }
 
