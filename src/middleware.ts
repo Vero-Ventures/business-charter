@@ -6,12 +6,14 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user }, error: userError } = await supabase.auth.getUser();
 
+  // Allow access to login and signup pages without authentication
+  const unauthenticatedPaths = ['/login', '/signup'];
+  if (unauthenticatedPaths.includes(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   if (userError || !user) {
-    if (request.nextUrl.pathname !== '/login') {
-      return NextResponse.redirect(new URL('/login', request.url));
-    } else {
-      return NextResponse.next();
-    }
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   const { data: profile, error: profileError } = await supabase
@@ -21,19 +23,11 @@ export async function middleware(request: NextRequest) {
     .single();
 
   if (profileError || !profile) {
-    if (request.nextUrl.pathname !== '/login') {
-      return NextResponse.redirect(new URL('/login', request.url));
-    } else {
-      return NextResponse.next();
-    }
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   if (request.nextUrl.pathname.startsWith('/family-management') && profile.role !== 'admin') {
-    if (request.nextUrl.pathname !== '/login') {
-      return NextResponse.redirect(new URL('/login', request.url));
-    } else {
-      return NextResponse.next();
-    }
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();
