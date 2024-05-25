@@ -52,7 +52,7 @@ export default function SignupForm() {
   async function onSubmit({ email, password, role }: SignupFormSchema) {
     setIsSubmitting(true);
     const error = await signup(email, password, role);
-    if (error.message) {
+    if (error) {
       console.error('Signup Error:', error.message);
       setError(error.message);
     } else {
