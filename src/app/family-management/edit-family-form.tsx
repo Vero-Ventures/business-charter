@@ -45,7 +45,6 @@ export function EditFamilyForm({ family, onSuccess }: EditFamilyFormProps) {
       onSuccess({ id: family.id, name: values.name });
     } catch (err) {
       console.error('Unexpected error:', err);
-      alert('Unexpected error occurred');
     } finally {
       setIsSubmitting(false);
     }

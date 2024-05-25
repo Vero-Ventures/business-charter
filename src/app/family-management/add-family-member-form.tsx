@@ -44,7 +44,6 @@ export function AddFamilyMemberForm({ familyId, onSuccess }: AddFamilyMemberForm
       onSuccess();
     } catch (err) {
       console.error('Unexpected error:', err);
-      alert('Unexpected error occurred');
     } finally {
       setIsSubmitting(false);
     }
