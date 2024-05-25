@@ -112,30 +112,36 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
-        <div>
-          <label>
-            <input
-              type="radio"
-              value="admin"
-              {...form.register("role")}
-            />
-            Advisor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="user"
-              {...form.register("role")}
-            />
-            Family Member
-          </label>
+        <div className="text-center">
+          <label className="block mb-2 text-lg font-medium text-gray-700">I am a(n):</label>
+          <div className="flex justify-center gap-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="user"
+                {...form.register("role")}
+                className="form-radio text-indigo-600 transition duration-150 ease-in-out"
+                defaultChecked
+              />
+              <span className="ml-2">Family Member</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                value="admin"
+                {...form.register("role")}
+                className="form-radio text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <span className="ml-2">Advisor</span>
+            </label>
+          </div>
         </div>
         <FormSubmitButton
           disabled={isSubmitting}
           defaultText="Create Account"
           loadingText="Please Wait..."
         />
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex gap-2 justify-center">
           <p>Already have an account?</p>
           <Link className="text-blue-500 hover:underline" href="/login">
             Login
