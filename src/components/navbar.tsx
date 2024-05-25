@@ -31,6 +31,7 @@ const familySublinks = [
   { href: '/family-crest', label: 'Family Crest' },
   { href: '/pdf', label: 'Print PDF' },
   { href: '/video', label: 'Videos' },
+  { href: '/chatbot', label: 'ChatBot Assistant'},
   { href: '/chat', label: 'Chat' }
 ];
 
@@ -75,7 +76,7 @@ export default function NavBar() {
           className="w-full cursor-pointer"
           href={link.href}>
           <Button
-            variant={pathname === link.href ? 'default' : 'ghost'}
+            variant={link.label === 'ChatBot Assistant' ? 'chatbot' : (pathname === link.href ? 'default' : 'ghost')}
             className="w-full">
             {link.label}
           </Button>
