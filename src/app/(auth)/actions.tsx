@@ -14,7 +14,7 @@ export async function login(email: string, password: string) {
     return { message: error.message };
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath('/');
   redirect('/decision-tree');
 }
 
@@ -39,13 +39,13 @@ export async function signup(email: string, password: string, role: string) {
     }
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath('/');
   redirect('/decision-tree');
 }
 
 export async function signout() {
   const supabase = createClient();
   await supabase.auth.signOut();
-  revalidatePath('/', 'layout');
+  revalidatePath('/');
   redirect('/login');
 }
