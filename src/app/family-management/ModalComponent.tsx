@@ -39,9 +39,11 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Family"
+      className="fixed inset-0 flex items-center justify-center p-4"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-75"
     >
-      <div className="prose mt-8">
-        <button onClick={onRequestClose}>Close</button>
+      <div className="bg-white rounded-lg max-w-3xl w-full max-h-full overflow-auto p-6">
+        <button onClick={onRequestClose} className="mb-4">Close</button>
         <h1 className="text-3xl font-bold">{family?.name} Family</h1>
         {family && (
           <Suspense fallback={<Loading />}>
@@ -50,9 +52,9 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
         )}
         {family && (
           <>
-              <Separator className="mx-auto mt-2 w-[100%]" />
-              <AddFamilyMemberForm familyId={family.id} onSuccess={handleMemberAddSuccess} />
-              <EditFamilyForm family={family} onSuccess={handleFamilyEditSuccess} />
+            <Separator className="mx-auto mt-2 w-[100%]" />
+            <AddFamilyMemberForm familyId={family.id} onSuccess={handleMemberAddSuccess} />
+            <EditFamilyForm family={family} onSuccess={handleFamilyEditSuccess} />
           </>
         )}
       </div>
@@ -61,3 +63,4 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
 };
 
 export default ModalComponent;
+
