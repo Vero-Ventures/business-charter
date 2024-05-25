@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import FormSubmitButton from '@/components/form-submit-button';
 
 const editFamilySchema = z.object({
-  name: z.string().nonempty({ message: 'Family name cannot be empty' }),
+  name: z.string({ message: 'Family name cannot be empty' }),
 });
 
 export type EditFamily = z.infer<typeof editFamilySchema>;

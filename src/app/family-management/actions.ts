@@ -51,25 +51,20 @@ export async function deleteFamily(id: number) {
 }
 
 export async function updateFamily(id: number, data: { name: string }) {
-  try {
-    const response = await fetch(`/api/family/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+  const supabase = createClient();
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
-    }
+  const { error: updateError } = await supabase
+    .from('families')
+    .update({ name: data.name })
+    .eq('id', id);
 
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error('Failed to update family:', error);
-    throw error;
+  if (updateError) {
+    console.error("Error updating family name:", updateError.message);
+    throw new Error(`Failed to update family name: ${updateError.message}`);
   }
+
+  revalidatePath('/family-management');
+  return { success: true };
 }
 
 export async function loadFamilyMembers(family_id: number) {
