@@ -58,7 +58,7 @@ export function AddFamilyMemberForm({ familyId, onSuccess }: AddFamilyMemberForm
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>User Email:</FormLabel>
+              <FormLabel>Add a new family member:</FormLabel>
               <FormControl>
                 <Input placeholder="Enter user email here" type="email" {...field} />
               </FormControl>

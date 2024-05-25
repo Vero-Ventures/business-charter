@@ -59,7 +59,7 @@ export function EditFamilyForm({ family, onSuccess }: EditFamilyFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Edit Family Name:</FormLabel>
+              <FormLabel>Edit family name:</FormLabel>
               <FormControl>
                 <Input placeholder="Enter family name" type="text" {...field} />
               </FormControl>
