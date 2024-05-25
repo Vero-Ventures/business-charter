@@ -42,7 +42,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
       className="fixed inset-0 flex items-center justify-center p-4"
       overlayClassName="fixed inset-0 bg-black bg-opacity-75"
     >
-      <div className="relative bg-white rounded-lg max-w-3xl w-full max-h-full overflow-auto p-6">
+      <div className="relative bg-white rounded-lg max-w-3xl w-full max-h-full overflow-hidden">
         <button
           onClick={onRequestClose}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -63,19 +63,21 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
             />
           </svg>
         </button>
-        <h1 className="text-3xl font-bold">{family?.name} Family</h1>
-        {family && (
-          <Suspense fallback={<Loading />}>
-            <FamilyMembers ref={familyMembersRef} familyId={family.id} />
-          </Suspense>
-        )}
-        {family && (
-          <>
-            <Separator className="mx-auto mt-2 w-[100%]" />
-            <AddFamilyMemberForm familyId={family.id} onSuccess={handleMemberAddSuccess} />
-            <EditFamilyForm family={family} onSuccess={handleFamilyEditSuccess} />
-          </>
-        )}
+        <div className="overflow-auto max-h-[calc(100vh-50px)] p-6">
+          <h1 className="text-3xl font-bold">{family?.name} Family</h1>
+          {family && (
+            <Suspense fallback={<Loading />}>
+              <FamilyMembers ref={familyMembersRef} familyId={family.id} />
+            </Suspense>
+          )}
+          {family && (
+            <>
+              <Separator className="mx-auto mt-2 w-[100%]" />
+              <AddFamilyMemberForm familyId={family.id} onSuccess={handleMemberAddSuccess} />
+              <EditFamilyForm family={family} onSuccess={handleFamilyEditSuccess} />
+            </>
+          )}
+        </div>
       </div>
     </Modal>
   );
