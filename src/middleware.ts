@@ -7,7 +7,11 @@ export async function middleware(request: NextRequest) {
   const { data: { user }, error: userError } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (request.nextUrl.pathname !== '/login') {
+      return NextResponse.redirect(new URL('/login', request.url));
+    } else {
+      return NextResponse.next();
+    }
   }
 
   const { data: profile, error: profileError } = await supabase
@@ -17,11 +21,19 @@ export async function middleware(request: NextRequest) {
     .single();
 
   if (profileError || !profile) {
-    return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (request.nextUrl.pathname !== '/login') {
+      return NextResponse.redirect(new URL('/login', request.url));
+    } else {
+      return NextResponse.next();
+    }
   }
 
   if (request.nextUrl.pathname.startsWith('/family-management') && profile.role !== 'admin') {
-    return NextResponse.redirect(new URL('/unauthorized', request.url));
+    if (request.nextUrl.pathname !== '/login') {
+      return NextResponse.redirect(new URL('/login', request.url));
+    } else {
+      return NextResponse.next();
+    }
   }
 
   return NextResponse.next();
