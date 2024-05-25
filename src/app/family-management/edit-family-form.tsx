@@ -15,14 +15,14 @@ import { Input } from '@/components/ui/input';
 import FormSubmitButton from '@/components/form-submit-button';
 
 const editFamilySchema = z.object({
-  name: z.string({ message: 'Family name cannot be empty' }),
+  name: z.string().nonempty({ message: 'Family name cannot be empty' }),
 });
 
 export type EditFamily = z.infer<typeof editFamilySchema>;
 
 interface EditFamilyFormProps {
   family: { id: number; name: string };
-  onSuccess: () => void;
+  onSuccess: (updatedFamily: { id: number; name: string }) => void;
 }
 
 export function EditFamilyForm({ family, onSuccess }: EditFamilyFormProps) {
@@ -42,7 +42,7 @@ export function EditFamilyForm({ family, onSuccess }: EditFamilyFormProps) {
     setIsSubmitting(true);
     try {
       await updateFamily(family.id, values);
-      onSuccess();
+      onSuccess({ id: family.id, name: values.name });
     } catch (err) {
       console.error('Unexpected error:', err);
       alert('Unexpected error occurred');
@@ -76,3 +76,4 @@ export function EditFamilyForm({ family, onSuccess }: EditFamilyFormProps) {
     </Form>
   );
 }
+

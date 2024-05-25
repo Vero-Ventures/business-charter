@@ -16,10 +16,11 @@ interface FamilyProps {
 const Family: React.FC<FamilyProps> = ({ family }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [familyData, setFamilyData] = useState(family);
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteFamily(family.id);
+    await deleteFamily(familyData.id);
     setIsDeleting(false);
   };
 
@@ -31,9 +32,15 @@ const Family: React.FC<FamilyProps> = ({ family }) => {
     setIsModalOpen(false);
   };
 
+  const handleSave = (updatedFamily: { id: number; name: string }) => {
+    // Update the family state
+    setFamilyData(updatedFamily);
+    setIsModalOpen(false);
+  };
+
   return (
     <tr>
-      <td className="text-left">{family.name}</td>
+      <td className="text-left">{familyData.name}</td>
       <td className="text-center">
         <Button
           variant="destructive"
@@ -59,7 +66,8 @@ const Family: React.FC<FamilyProps> = ({ family }) => {
         <ModalComponent
           isOpen={isModalOpen}
           onRequestClose={closeModal}
-          family={family}
+          family={familyData}
+          onSave={handleSave}
         />
       </td>
     </tr>

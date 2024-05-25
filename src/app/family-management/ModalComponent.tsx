@@ -10,9 +10,10 @@ interface ModalComponentProps {
   isOpen: boolean;
   onRequestClose: () => void;
   family: { id: number; name: string } | null;
+  onSave: (updatedFamily: { id: number; name: string }) => void;
 }
 
-const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose, family }) => {
+const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose, family, onSave }) => {
   const familyMembersRef = useRef<any>(null);
 
   useEffect(() => {
@@ -27,10 +28,8 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
     }
   };
 
-  const handleFamilyEditSuccess = () => {
-    if (familyMembersRef.current) {
-      familyMembersRef.current.reloadMembers();
-    }
+  const handleFamilyEditSuccess = (updatedFamily: { id: number; name: string }) => {
+    onSave(updatedFamily);
     onRequestClose();
   };
 
