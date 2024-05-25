@@ -50,6 +50,28 @@ export async function deleteFamily(id: number) {
   return { success: true };
 }
 
+export async function updateFamily(id: number, data: { name: string }) {
+  try {
+    const response = await fetch(`/api/family/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Failed to update family:', error);
+    throw error;
+  }
+}
+
 export async function loadFamilyMembers(family_id: number) {
   const supabase = createClient();
 

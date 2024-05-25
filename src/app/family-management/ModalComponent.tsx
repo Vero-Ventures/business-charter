@@ -1,20 +1,17 @@
-import React, { useState, useEffect, Suspense, useRef } from 'react';
+import React, { useEffect, Suspense, useRef } from 'react';
 import Modal from 'react-modal';
 import FamilyMembers from './family-members';
 import Loading from '@/components/loading';
-import { addFamilyMember } from './actions';
+import { AddFamilyMemberForm } from './add-family-member-form';
+import { EditFamilyForm } from './edit-family-form';
 
 interface ModalComponentProps {
   isOpen: boolean;
   onRequestClose: () => void;
   family: { id: number; name: string } | null;
-  onSave: (name: string) => void;
 }
 
-const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose, family, onSave }) => {
-  const [name, setName] = useState(family?.name || '');
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState<string | null>(null);
+const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose, family }) => {
   const familyMembersRef = useRef<any>(null);
 
   useEffect(() => {
@@ -23,39 +20,19 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
     }
   }, []);
 
-  useEffect(() => {
-    if (family) {
-      setName(family.name);
-    }
-  }, [family]);
-
-  const handleSave = () => {
-    onSave(name);
-    onRequestClose();
-  };
-
-  const handleAddFamilyMember = async () => {
-    if (!family?.id) {
-      alert('Invalid family ID');
-      return;
-    }
-
-    try {
-      await addFamilyMember({ email, family_id: family.id });
-      alert('Family member added successfully');
+  const handleMemberAddSuccess = () => {
+    if (familyMembersRef.current) {
       familyMembersRef.current.reloadMembers();
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error('Unexpected error:', err);
-        alert('Unexpected error occurred: ' + err.message);
-      } else {
-        console.error('Unexpected error:', err);
-        alert('Unexpected error occurred');
-      }
+    }
+  };
+
+  const handleFamilyEditSuccess = () => {
+    if (familyMembersRef.current) {
+      familyMembersRef.current.reloadMembers();
     }
     onRequestClose();
   };
-  
+
   return (
     <Modal
       isOpen={isOpen}
@@ -63,24 +40,20 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onRequestClose,
       contentLabel="Edit Family"
     >
       <button onClick={onRequestClose}>Close</button>
-      <h1 className="text-3xl font-bold">{name} Family</h1>
+      <h1 className="text-3xl font-bold">{family?.name} Family</h1>
       {family && (
         <Suspense fallback={<Loading />}>
           <FamilyMembers ref={familyMembersRef} familyId={family.id} />
         </Suspense>
       )}
-      <h2>Add Family Member</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="User Email"
-      />
-      <button onClick={handleAddFamilyMember}>Add Family Member</button>
-      <h2>Edit Family Name</h2>
-      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Family Name" />
-      <button onClick={handleSave}>Save</button>
-      {error && <p className="error">{error}</p>}
+      {family && (
+        <>
+          <h2>Add Family Member</h2>
+          <AddFamilyMemberForm familyId={family.id} onSuccess={handleMemberAddSuccess} />
+          <h2>Edit Family Name</h2>
+          <EditFamilyForm family={family} onSuccess={handleFamilyEditSuccess} />
+        </>
+      )}
     </Modal>
   );
 };

@@ -31,11 +31,6 @@ const Family: React.FC<FamilyProps> = ({ family }) => {
     setIsModalOpen(false);
   };
 
-  const handleSave = (name: string) => {
-    // Implement the save logic here, e.g., update the family name
-    console.log('Saved name:', name);
-  };
-
   return (
     <tr>
       <td className="text-left">{family.name}</td>
@@ -65,7 +60,6 @@ const Family: React.FC<FamilyProps> = ({ family }) => {
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           family={family}
-          onSave={handleSave}
         />
       </td>
     </tr>
