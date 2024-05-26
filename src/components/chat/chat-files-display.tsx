@@ -1,8 +1,8 @@
-import { ChatbotUIContext } from "@/context/context"
+import { ChatbotUIContext } from "@/app/chat/context"
 import { getFileFromStorage } from "@/db/storage/files"
 import useHotkey from "@/lib/hooks/use-hotkey"
 import { cn } from "@/lib/utils"
-import { ChatFile, MessageImage } from "@/types"
+import { ChatFile, MessageImage } from "@/app/chat/types/types"
 import {
     IconCircleFilled,
     IconFileFilled,
@@ -20,7 +20,6 @@ import { FC, useContext, useState } from "react"
 import { Button } from "../ui/button"
 import { FilePreview } from "../ui/file-preview"
 import { WithTooltip } from "../ui/with-tooltip"
-import { ChatRetrievalSettings } from "./chat-retrieval-settings"
 
 interface ChatFilesDisplayProps {}
 
@@ -109,7 +108,6 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
                 <div>Hide files</div>
 
                 <div onClick={e => e.stopPropagation()}>
-                <ChatRetrievalSettings />
                 </div>
             </Button>
             </div>
@@ -180,7 +178,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
                     >
                     <div className="rounded bg-blue-500 p-2">
                         {(() => {
-                        let fileExtension = file.type.includes("/")
+                        const fileExtension = file.type.includes("/")
                             ? file.type.split("/")[1]
                             : file.type
 
@@ -240,7 +238,6 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
             </div>
 
             <div onClick={e => e.stopPropagation()}>
-                <ChatRetrievalSettings />
             </div>
             </Button>
         </div>

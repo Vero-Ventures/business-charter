@@ -3,11 +3,10 @@ import { useParams } from 'next/navigation';
 import { ChatbotUIContext } from '@/app/chat/context';
 import { useChatHandler } from '@/app/chat/hooks/use-chat-handler';
 import useHotkey from '@/lib/hooks/use-hotkey';
-import { useScroll } from '@/components/chat/chat-hooks/use-scroll';
+import { useScroll } from '@/app/chat/hooks/use-scroll';
 import { ChatInput } from '@/app/chat/chat-input';
 import { ChatMessages } from '@/app/chat/chat-messages';
 import { ChatScrollButtons } from '@/components/chat/chat-scroll-buttons';
-// import { ChatSecondaryButtons } from '@/components/chat/chat-secondary-buttons';
 import Loading from '@/app/chat/loading';
 
 interface ChatUIProps {}

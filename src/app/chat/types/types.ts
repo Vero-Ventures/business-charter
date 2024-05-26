@@ -24,8 +24,7 @@ export interface MessageProps {
 
 export interface ChatMessage {
     id: string;
-    user: string;
-    bot: string;
+    type: 'user' | 'bot';
     message: string;
     fileItems: ChatFile[];
 }

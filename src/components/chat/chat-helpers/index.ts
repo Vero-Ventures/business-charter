@@ -6,7 +6,8 @@ import { uploadMessageImage } from "@/db/storage/message-images";
 import { buildFinalMessages, buildGoogleGeminiFinalMessages } from "@/lib/build-prompt";
 import { consumeReadableStream } from "@/lib/consume-stream";
 import { Tables, TablesInsert } from "@/supabase/types";
-import { ChatFile, ChatMessage, ChatPayload, ChatSettings, LLM, MessageImage } from "@/types";
+import { ChatMessage, ChatPayload, ChatSettings, LLM, MessageImage } from "@/types";
+import { ChatFile } from "@/app/chat/types/types";
 import React from "react";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
@@ -40,29 +41,44 @@ export const validateChatSettings = (
     };
 
     export const handleRetrieval = async (
-    userInput: string,
-    newMessageFiles: ChatFile[],
-    chatFiles: ChatFile[],
-    embeddingsProvider: "openai" | "local",
-    sourceCount: number
-    ): Promise<Tables<"file_items">[]> => {
-    const response = await fetch("/api/retrieval/retrieve", {
-        method: "POST",
-        body: JSON.stringify({
-        userInput,
-        fileIds: [...newMessageFiles, ...chatFiles].map(file => file.id),
-        embeddingsProvider,
-        sourceCount
-        })
-    });
-
-    if (!response.ok) {
-        console.error("Error retrieving:", response);
-    }
-
-    const { results } = (await response.json()) as { results: Tables<"file_items">[] };
-
-    return results;
+        userInput: string,
+        newMessageFiles: ChatFile[],
+        chatFiles: ChatFile[],
+        embeddingsProvider: "openai" | "local",
+        sourceCount: number
+    ): Promise<ChatFile[]> => {
+        const response = await fetch("/api/retrieval/retrieve", {
+            method: "POST",
+            body: JSON.stringify({
+                userInput,
+                fileIds: [...newMessageFiles, ...chatFiles].map(file => file.id),
+                embeddingsProvider,
+                sourceCount
+            })
+        });
+    
+        if (!response.ok) {
+            console.error("Error retrieving:", response);
+            return [];
+        }
+    
+        const { results } = await response.json();
+    
+        return results.map((file: any) => ({
+            id: file.id,
+            name: file.name || "unknown",
+            type: file.type || "unknown",
+            file: new File([], file.name || "unknown"), // Ensure this is appropriately handled
+            content: file.content,
+            created_at: file.created_at,
+            file_id: file.file_id,
+            local_embedding: file.local_embedding,
+            openai_embedding: file.openai_embedding,
+            sharing: file.sharing,
+            tokens: file.tokens,
+            updated_at: file.updated_at,
+            user_id: file.user_id
+        })) as ChatFile[];
     };
 
     export const createTempMessages = (
@@ -411,7 +427,7 @@ export const validateChatSettings = (
         const uploadPromises = newMessageImages
         .filter(obj => obj.file !== null)
         .map(obj => {
-            let filePath = `${profile.user_id}/${currentChat.id}/${createdMessages[0].id}/${uuidv4()}`;
+            const filePath = `${profile.user_id}/${currentChat.id}/${createdMessages[0].id}/${uuidv4()}`;
 
             return uploadMessageImage(filePath, obj.file as File).catch(error => {
             console.error(`Failed to upload image at ${filePath}:`, error);

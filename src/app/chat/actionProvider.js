@@ -4,7 +4,6 @@ class ActionProvider {
         this.setChatMessages = setChatMessages;
         this.latestUserMessage = null;
     }
-
     handleMessage = async (message) => {
         console.log("handleMessage called with message:", message); // Debug log
         if (message.toLowerCase() === 'start') {

@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
-import { ChatFilesDisplay } from '@/components/chat/chat-files-display';
+// import { ChatFilesDisplay } from '@/components/chat/chat-files-display';
 
 interface ChatInputProps {}
 
@@ -51,7 +51,7 @@ export const ChatInput: FC<ChatInputProps> = () => {
     return (
         <>
             <div className="flex flex-col flex-wrap justify-center gap-2">
-                <ChatFilesDisplay />
+                {/* <ChatFilesDisplay /> */}
             </div>
 
             <div className="border-input relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border-2">

@@ -108,11 +108,11 @@ import ActionProvider from './actionProvider';
 import MessageParser from './messageParser';
 import { setChatbotSize, autoResizeInput } from './utils';
 
-const CustomHeader = () => (
-  <div style={{ backgroundColor: 'blue', color: 'red', padding: '10px' }}>
-    My Custom Header
-  </div>
-);
+// const CustomHeader = () => (
+//   <div style={{ backgroundColor: 'blue', color: 'red', padding: '10px' }}>
+//     My Custom Header
+//   </div>
+// );
 
 const ChatbotComponent = () => {
   const textareaRef = useRef(null);

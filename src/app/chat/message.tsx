@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageProps } from '@/app/chat/types/types'; // Adjust imports
+import { MessageProps } from '@/app/chat/types/types'; 
 
 export const Message: React.FC<MessageProps> = ({
     message,

@@ -13,11 +13,14 @@ CORS(app)  # This will enable CORS for all routes
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('message', '')
+    data = request.json
+    user_message = data.get('message', '')
+    
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
-
-    response_message = f"Echo: {user_message}"
+    
+    response_message = process_message(user_message)
+    
     return jsonify({"answer": response_message})
 
 if __name__ == '__main__':

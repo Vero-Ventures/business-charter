@@ -1,10 +1,10 @@
 class MessageParser {
-constructor(actionProvider) {
-    this.actionProvider = actionProvider;
-}
+    constructor(actionProvider) {
+        this.actionProvider = actionProvider;
+    }
 
-parse(message) {
-    this.actionProvider.handleMessage(message);
+    parse(message) {
+        this.actionProvider.handleMessage(message);
 }
 }
 
