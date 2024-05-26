@@ -1,29 +1,37 @@
 'use client';
 import { useState } from 'react';
-import { deleteFamilyMember } from './actions';
+import { removeFamilyMember } from './actions';
 import { Loader2, Trash2Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function FamilyMember({ member: contact }: { member: any }) {
-  const [isDeleting, setIsDeleting] = useState(false);
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    await deleteFamilyMember(contact.id);
-    setIsDeleting(false);
+interface FamilyMemberProps {
+  member: any;
+  onRemove: () => void;
+}
+
+const FamilyMember: React.FC<FamilyMemberProps> = ({ member, onRemove }) => {
+  const [isRemoving, setIsRemoving] = useState(false);
+
+  const handleRemoval = async () => {
+    setIsRemoving(true);
+    await removeFamilyMember(member.id);
+    setIsRemoving(false);
+    onRemove();
   };
 
   return (
     <tr>
-      <td>{contact.name}</td>
-      <td>{contact.title}</td>
-      <td>{contact.email}</td>
-      <td>{contact.phone}</td>
+      <td>{member.name}</td>
+      <td>{member.title}</td>
+      <td>{member.email}</td>
+      <td>{member.phone}</td>
       <td>
         <Button
           variant="destructive"
-          disabled={isDeleting}
-          onClick={handleDelete}>
-          {isDeleting ? (
+          disabled={isRemoving}
+          onClick={handleRemoval}
+        >
+          {isRemoving ? (
             <Loader2 className="animate-spin" size={24}>
               <title className="sr-only">Delete</title>
             </Loader2>
@@ -36,4 +44,6 @@ export default function FamilyMember({ member: contact }: { member: any }) {
       </td>
     </tr>
   );
-}
+};
+
+export default FamilyMember;
