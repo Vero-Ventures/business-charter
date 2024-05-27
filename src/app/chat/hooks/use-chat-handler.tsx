@@ -36,6 +36,7 @@ export const useChatHandler = () => {
     const handleSendMessage = useCallback(async (message) => {
         setIsGenerating(true);
         try {
+            actionProvider.setLatestUserMessage(message);
             await actionProvider.handleMessage(message);
         } catch (error) {
             console.error("Failed to handle message:", error);

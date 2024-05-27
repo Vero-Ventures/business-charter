@@ -12,16 +12,6 @@ export const ChatMessages = () => {
         console.log("Updated messages:", chatMessages)
     }, [chatMessages]);
 
-    // return (
-    //     <div className="chat-messages-container">
-    //         {chatMessages.map((msg, index) => (
-    //             <div key={index} className="message">
-    //                 <p>{msg.message}</p>
-    //             </div>
-    //         ))}
-    //         <div ref={messagesEndRef} />
-    //     </div>
-    // );
     return (
         <div className="chat-messages">
             {chatMessages.map((msg, index) => {

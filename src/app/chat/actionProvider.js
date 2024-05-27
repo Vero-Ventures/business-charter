@@ -35,6 +35,7 @@ class ActionProvider {
             const botReply = this.createChatBotMessage(friendlyMessage);
 
             this.setChatMessages(prevMessages => [...prevMessages, botReply]);
+            console.log("Initial messages set:", this.createChatBotMessage(question));
         }
     };
 
