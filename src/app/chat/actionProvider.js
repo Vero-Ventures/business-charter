@@ -78,7 +78,9 @@ class ActionProvider {
 
     waitForUserResponse = () => new Promise((resolve) => {
         const interval = setInterval(() => {
+            console.log("Checking for user response:", this.latestUserMessage);  // Additional logging
             if (this.latestUserMessage) {
+                console.log("User responded with:", this.latestUserMessage); 
                 clearInterval(interval);
                 resolve(this.latestUserMessage);
                 this.latestUserMessage = null;
@@ -87,9 +89,10 @@ class ActionProvider {
     });
 
     setLatestUserMessage = (message) => {
-        console.log("Latest user message set to:", message); // Debug log
+        console.log("Attempting to set latest user message:", message);
         this.latestUserMessage = message;
-    };
+        console.log("Latest user message now set to:", this.latestUserMessage);
+    };    
 }
 
 export default ActionProvider;
