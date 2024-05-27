@@ -41,6 +41,7 @@ CORS(app)  # This will enable CORS for all routes
 def chat():
     data = request.json
     user_message = data.get('message', '')
+    print("user_message received: " + user_message)
 
     if not user_message:
         return jsonify({"error": "No message provided"}), 400
@@ -53,4 +54,5 @@ def chat():
         return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == '__main__':
+    print("app.py started listening on 5000")
     app.run(host='0.0.0.0', port=5000, debug=True)
