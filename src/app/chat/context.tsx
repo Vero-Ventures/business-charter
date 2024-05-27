@@ -1,13 +1,11 @@
 import React, { useState, createContext, Dispatch, SetStateAction, ReactNode, FC } from 'react';
-import { ChatMessage, ChatFile, Message, MessageImage } from "@/app/chat/types/types";
+import { ChatMessage, ChatFile, MessageImage } from "@/app/chat/types/types";
 
 interface ChatbotUIContextType {
     userInput: string;
     setUserInput: Dispatch<SetStateAction<string>>;
     chatMessages: ChatMessage[];
     setChatMessages: Dispatch<SetStateAction<ChatMessage[]>>;
-    selectedChat: Message | null;
-    setSelectedChat: Dispatch<SetStateAction<Message | null>>;
     chatFileItems: ChatFile[];
     setChatFileItems: Dispatch<SetStateAction<ChatFile[]>>;
 
@@ -35,13 +33,12 @@ interface ChatbotUIContextType {
     setSourceCount: Dispatch<SetStateAction<number>>;
 }
 
+
 export const ChatbotUIContext = createContext<ChatbotUIContextType>({
     userInput: "",
     setUserInput: () => {},
     chatMessages: [],
     setChatMessages: () => {},
-    selectedChat: null,
-    setSelectedChat: () => {},
     chatFileItems: [],
     setChatFileItems: () => {},
 
@@ -76,7 +73,6 @@ interface ChatbotUIProviderProps {
 export const ChatbotUIProvider: FC<ChatbotUIProviderProps> = ({ children }) => {
     const [userInput, setUserInput] = useState<string>("");
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-    const [selectedChat, setSelectedChat] = useState<Message | null>(null);
     const [chatFileItems, setChatFileItems] = useState<ChatFile[]>([]);
     const [abortController, setAbortController] = useState<AbortController | null>(null);
     const [firstTokenReceived, setFirstTokenReceived] = useState<boolean>(false);
@@ -88,6 +84,7 @@ export const ChatbotUIProvider: FC<ChatbotUIProviderProps> = ({ children }) => {
     const [showFilesDisplay, setShowFilesDisplay] = useState<boolean>(false);
     const [useRetrieval, setUseRetrieval] = useState<boolean>(false);
     const [sourceCount, setSourceCount] = useState<number>(4);
+
 
     // useEffect(() => {
     //     // Simulate fetching from an API
@@ -105,34 +102,19 @@ export const ChatbotUIProvider: FC<ChatbotUIProviderProps> = ({ children }) => {
     return (
         <ChatbotUIContext.Provider
             value={{
-                userInput,
-                setUserInput,
-                chatMessages,
-                setChatMessages,
-                selectedChat,
-                setSelectedChat,
-                chatFileItems,
-                setChatFileItems,
-                abortController,
-                setAbortController,
-                firstTokenReceived,
-                setFirstTokenReceived,
-                isGenerating,
-                setIsGenerating,
-                chatFiles,
-                setChatFiles,
-                chatImages,
-                setChatImages,
-                newMessageFiles,
-                setNewMessageFiles,
-                newMessageImages,
-                setNewMessageImages,
-                showFilesDisplay,
-                setShowFilesDisplay,
-                useRetrieval,
-                setUseRetrieval,
-                sourceCount,
-                setSourceCount,
+                userInput, setUserInput,
+                chatMessages, setChatMessages,
+                chatFileItems, setChatFileItems,
+                abortController, setAbortController,
+                firstTokenReceived, setFirstTokenReceived,
+                isGenerating, setIsGenerating,
+                chatFiles, setChatFiles,
+                chatImages, setChatImages,
+                newMessageFiles, setNewMessageFiles,
+                newMessageImages, setNewMessageImages,
+                showFilesDisplay, setShowFilesDisplay,
+                useRetrieval, setUseRetrieval,
+                sourceCount, setSourceCount,
             }}
         >
             {children}

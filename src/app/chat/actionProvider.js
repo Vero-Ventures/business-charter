@@ -78,7 +78,7 @@ class ActionProvider {
 
     waitForUserResponse = () => new Promise((resolve) => {
         const interval = setInterval(() => {
-            console.log("Checking for user response:", this.latestUserMessage);  // Additional logging
+            // console.log("Checking for user response:", this.latestUserMessage);  // Additional logging
             if (this.latestUserMessage) {
                 console.log("User responded with:", this.latestUserMessage); 
                 clearInterval(interval);

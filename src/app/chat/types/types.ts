@@ -1,19 +1,19 @@
-export interface Message {
-    assistant_id: string | null;
-    chat_id: string;
-    content: string;
-    created_at: string;
-    id: string;
-    image_paths: string[];
-    model: string;
-    role: string;
-    sequence_number: number;
-    updated_at: string | null;
-    user_id: string;
-}
+// export interface Message {
+//     assistant_id: string | null;
+//     chat_id: string;
+//     content: string;
+//     created_at: string;
+//     id: string;
+//     image_paths: string[];
+//     model: string;
+//     role: string;
+//     sequence_number: number;
+//     updated_at: string | null;
+//     user_id: string;
+// }
 
 export interface MessageProps {
-    message: Message;
+    message: ChatMessage;
     fileItems: ChatFile[];
     isEditing: boolean;
     isLast: boolean;
