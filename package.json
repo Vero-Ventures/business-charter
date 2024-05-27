@@ -47,7 +47,7 @@
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.1",
     "@tabler/icons-react": "^3.3.0",
-    "@tanstack/react-query": "^5.28.6",
+    "@tanstack/react-query": "^5.39.0",
     "@tanstack/react-query-devtools": "^5.28.6",
     "@tanstack/react-table": "^8.15.0",
     "@testing-library/user-event": "^14.5.2",
