@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faUsers, faUserCog } from '@fortawesome/free-solid-svg-icons';
-import { fetchUserProfile } from '@/lib/utils'; // Adjust the import path as needed
+import { fetchUserProfile } from '@/lib/utils';
 
 const mainLinks = [
   { href: '/profile', label: 'Your Profile', icon: faUser },
@@ -47,12 +47,12 @@ export default function NavBar() {
       setUserRole(profile.role);
       setLoading(false);
     }
-
     getUserRole();
-  }, []);
+
+  }, [pathname]);
 
   if (loading) {
-    return null; // or a loading spinner/placeholder
+    return null;
   }
 
   return (

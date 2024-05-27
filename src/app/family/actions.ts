@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { revalidatePath } from 'next/cache';
 
 export async function loadFamilyMembers() {
   const supabase = createClient();
@@ -19,6 +18,10 @@ export async function loadFamilyMembers() {
 
   if (profileError) {
     throw new Error(profileError.message);
+  }
+
+  if (profileData?.family_id === null) {
+    return []; 
   }
 
   const { data: familyMembers, error: familyError } = await supabase

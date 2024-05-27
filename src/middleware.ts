@@ -2,7 +2,35 @@ import { type NextRequest } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const supabase = createClient();
+
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+  // Allow access to login and signup pages without authentication
+  const unauthenticatedPaths = ['/login', '/signup'];
+  if (unauthenticatedPaths.includes(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
+  if (userError || !user) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('user_id', user.id)
+    .single();
+
+  if (profileError || !profile) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (request.nextUrl.pathname.startsWith('/family-management') && profile.role !== 'admin') {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
