@@ -12,6 +12,8 @@ const CustomInput = forwardRef((props, ref) => (
   />
 ));
 
+CustomInput.displayName = 'CustomInput';
+
 const chatbotConfig = {
   botName: 'MyBot',
   initialMessages: [createChatBotMessage('Hi! How can I help you today?')],

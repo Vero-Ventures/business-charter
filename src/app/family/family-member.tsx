@@ -1,7 +1,4 @@
 'use client';
-import { useState } from 'react';
-import { Loader2, Trash2Icon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export default function FamilyMember({ member: member }: { member: any }) {
   return (
