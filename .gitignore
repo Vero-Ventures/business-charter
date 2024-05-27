@@ -46,3 +46,6 @@ venv
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# code coverage
+.nyc_output/
