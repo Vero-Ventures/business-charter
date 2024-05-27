@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noImplicitAny": false,
     "plugins": [
       {
         "name": "next"
@@ -30,6 +31,6 @@
     "family-tree.d.ts",
     "jest.setup.ts",
     "vitest.config.mjs"
-  ],
+, "src/app/chat/actionProvider.js"  ],
   "exclude": ["node_modules"]
 }

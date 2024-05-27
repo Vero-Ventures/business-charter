@@ -2,17 +2,17 @@
 
 import os
 from dotenv import load_dotenv
-from pathlib2 import Path
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader
+from pathlib2 import Path
 
-# Load environment variables from .env.local
-# load_dotenv('.env.local')
+# Construct the path to the .env file in the main directory
 env_path = Path(__file__).resolve().parents[3] / '.env.local'
 
-load_dotenv(env_path)
+# Load environment variables from .env.local
+load_dotenv(dotenv_path=env_path)
 
 # Get the API key from the environment
 api_key = os.getenv("OPENAI_API_KEY")
@@ -53,11 +53,9 @@ def update_vector_store(pdf_dir, vector_store_dir):
 
     except Exception as e:
         print(f"An error occurred: {e}")
-
+# Made a change to the code below to make the path relative
 if __name__ == "__main__":
-    # pdf_dir = "C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/books/"
-    pdf_dir = "C:/Users/danie/Documents/BCIT/Semester4/ProjectsPracticum2/Project2/business-charter/src/app/model/books/"
-    # vector_store_dir = "C:/Users/jasra/Documents/COMP 4800/final-model/business-charter/src/app/model/vector_store/"
-    vector_store_dir = "C:/Users/danie/Documents/BCIT/Semester4/ProjectsPracticum2/Project2/business-charter/src/app/model/vector_store/"
+    pdf_dir = "src/app/model/books/"
+    vector_store_dir = "src/app/model/vector_store/"
 
     update_vector_store(pdf_dir, vector_store_dir)

@@ -29,9 +29,11 @@ const familySublinks = [
   { href: '/family-tree', label: 'Family Tree' },
   { href: '/org-chart', label: 'Organizational Chart' },
   { href: '/family-crest', label: 'Family Crest' },
+  { href: '/family-charter', label: 'Family Charter' },
   { href: '/pdf', label: 'Print PDF' },
   { href: '/video', label: 'Videos' },
   { href: '/chatbot', label: 'ChatBot Assistant'},
+  { href: '/chat', label: 'Chat' }
 ];
 
 export default function NavBar() {
