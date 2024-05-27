@@ -39,3 +39,39 @@ bun.lockb
 
 # virtual environment
 venv
+
+# books
+src/app/model/books/ALU 101 TEXTBOOK BASIC LIFE INSURANCE UNDERWRITING (Academy of Life Underwriting).pdf
+src/app/model/books/ALU 201 Intermediate Medical Life Insurance Underwriting (Academy of Life Underwriting).pdf
+src/app/model/books/Awaken the Giant Within - Robbins, Anthony.pdf
+src/app/model/books/Becoming Your Own Banker, 6th Ed. (R. Nelson Nash).pdf
+src/app/model/books/Client Bio Redacted - Unknown.pdf
+src/app/model/books/Cover Letter Redacted - Unknown.pdf
+src/app/model/books/I Will Teach You to Be Rich, Se - Ramit Sethi.pdf
+src/app/model/books/In Defence of Wealth - Derek Bullen.pdf
+src/app/model/books/Investing Grow Your Financial Future One Easy Step At A Time With Trading, Investing, Stock Market,  Mutual Funds... (McClain, Walden).pdf
+src/app/model/books/Investing Money in Your Retirem - Robert Lewis II.pdf
+src/app/model/books/Investing Money in Your Retirement The Secret Way that the Super Wealthy Use Life Insurance as a Tax Free Retirement Fund (Brent Tycksen  Robert Lewis).pdf
+src/app/model/books/Mod1_LifeInsur-E311-2022-10-9ED.pdf
+src/app/model/books/Life Insurance, Annuities  Pensions A Canadian Text (3rd Edition) (Arthur Pedoe Colin E. Jack).pdf
+src/app/model/books/Mod2_Sickness-E312-2022-11-9ED_R.pdf
+src/app/model/books/Mod3_Segfunds-E313-2022-10-9ED.pdf
+src/app/model/books/Mod4_EthicsCanada-E112-2022-10-9ED.pdf
+src/app/model/books/Money. Wealth. Life Insurance._ - Jake Thompson.pdf
+src/app/model/books/Reasons Why Redacted - Unknown.pdf
+src/app/model/books/The Canadian Guide to Will and - Douglas Gray.pdf
+src/app/model/books/The Intelligent Investor (Benjamin Graham).pdf
+src/app/model/books/The Next Millionaire Next Door_ - Thomas J. Stanley.pdf
+src/app/model/books/The Psychology of Money_ Timele - Morgan Housel.pdf
+src/app/model/books/THE TRUSTED ADVISOR - Maister, David H_.pdf
+src/app/model/books/Think Wealthy - Havens, Todd.pdf
+src/app/model/books/Understand Wealth_ What You Hav - Todd Havens.pdf
+src/app/model/books/Wealth of Wisdom - Tom McCullough.pdf
+src/app/model/books/What Would the Rockefellers Do How the Wealthy Get and Stay That Way, And How You Can Too (Garrett B. Gunderson).pdf
+
+# vector store
+src/app/model/vector_store/index.faiss
+src/app/model/vector_store/index.pkl
+
+# family charter responses
+family_charter_responses.json
