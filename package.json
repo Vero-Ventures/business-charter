@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev-next\" \"npm run dev-flask\"",
     "dev-next": "next dev",
-    "dev-flask": "cd src/app/api/chat && /opt/homebrew/opt/python@3.11/bin/python3.11 app.py",
+    "dev-flask": "cd src/app/api/chat && /opt/homebrew/opt/python@3.11/bin/python3.11 main.py",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
