@@ -7,15 +7,17 @@ export const useChatHandler = () => {
     const [chatInput, setChatInput] = useState('');
     const [isGenerating, setIsGenerating] = useState(false);
 
-    const createChatBotMessage = (message) => ({
+    const createChatBotMessage = useCallback((message) => ({
         type: 'bot',
         text: message
-    });
+    }), []);
 
     const actionProvider = useMemo(() => new ActionProvider(
         createChatBotMessage,
-        (update) => setChatMessages(prev => [...prev, ...(update.messages || [])])
-    ), [setChatMessages]);    
+        (update) => {
+            setChatMessages(prev => [...prev, ...(update.messages || [])]);
+        }
+    ), [setChatMessages, createChatBotMessage]);
 
     // Handling new chat sessions
     const handleNewChat = useCallback(() => {
@@ -33,7 +35,11 @@ export const useChatHandler = () => {
 
     const handleSendMessage = useCallback(async (message) => {
         setIsGenerating(true);
-        await actionProvider.handleMessage(message);
+        try {
+            await actionProvider.handleMessage(message);
+        } catch (error) {
+            console.error("Failed to handle message:", error);
+        }
         setIsGenerating(false);
     }, [actionProvider]);
 

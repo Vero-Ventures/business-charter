@@ -16,7 +16,7 @@ export const ChatUI: FC<ChatUIProps> = () => {
     useHotkey("o", handleNewChat);
 
     const params = useParams();
-    const { selectedChat } = useContext(ChatbotUIContext);
+    const { isGenerating } = useContext(ChatbotUIContext); // Updated context hook usage
 
     const {
         messagesStartRef, 
@@ -32,12 +32,12 @@ export const ChatUI: FC<ChatUIProps> = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // This ensures that loading state is updated regardless of chatid presence
-        setLoading(!params.chatid);
+        // Adjusting loading logic based on the presence of a chat ID and isGenerating status
+        setLoading(!params.chatid || isGenerating);
         if (params.chatid) {
             handleFocusChatInput();
         }
-    }, [params.chatid, handleFocusChatInput]);
+    }, [params.chatid, handleFocusChatInput, isGenerating]);
 
     if (loading) {
         return <Loading />;
@@ -57,8 +57,9 @@ export const ChatUI: FC<ChatUIProps> = () => {
             <div className="absolute right-4 top-1 flex h-[40px] items-center space-x-2">
             </div>
             <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-center border-b-2 font-bold">
+                {/* Removing selectedChat and replacing it with a generic title */}
                 <div className="max-w-[200px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
-                    {selectedChat?.content || "Chat"} {/* Displaying the content if available or default to "Chat" */}
+                    Current Chat Session
                 </div>
             </div>
             <div className="flex size-full flex-col overflow-auto border-b" onScroll={handleScroll}>

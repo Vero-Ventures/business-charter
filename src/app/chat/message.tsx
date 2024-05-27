@@ -3,14 +3,13 @@ import { MessageProps } from '@/app/chat/types/types';
 
 export const Message: React.FC<MessageProps> = ({
     message,
-    fileItems,
     isEditing,
     isLast,
     onStartEdit,  
     onCancelEdit,
     onSubmitEdit,
 }) => {
-    const [editContent, setEditContent] = useState(message.content);
+    const [editContent, setEditContent] = useState(message.message);
 
     const handleEditSubmit = () => {
         onSubmitEdit?.(editContent); 
@@ -30,14 +29,14 @@ export const Message: React.FC<MessageProps> = ({
                 </div>
             ) : (
                 <div>
-                    <p>{message.content}</p> 
+                    <p>{message.message}</p>
                     <button onClick={onStartEdit}>Edit</button>
+                    {/* Optionally render file items if they exist */}
+                    {message.fileItems && message.fileItems.map((fileItem) => (
+                        <div key={fileItem.id}>{fileItem.name}</div>
+                    ))}
                 </div>
             )}
-            {/* Render file items if needed */}
-            {fileItems.map((fileItem) => (
-                <div key={fileItem.id}>{fileItem.name}</div>
-            ))}
         </div>
     );
 };
