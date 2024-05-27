@@ -1,27 +1,19 @@
-import { test, chromium, expect } from '@playwright/test';
-import { config } from './config';
+import { test, expect } from '@playwright/test';
+import { config } from './setup/config';
 
-// For testing existing email
-const testData = {
-  email: 'jyoon72@my.bcit.ca',
-  password: '12345678',
-};
-
-test('Login with registered email and correct password', async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+test('Login with registered email and correct password', async ({
+  browser,
+}) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
   try {
     await page.goto(`${config.BASE_URL}/login`);
-
-    const signInEmail = await page.$('input[name="email"]');
-    const signInPassword = await page.$('input[name="password"]');
-
-    await signInEmail?.fill(testData.email);
-    await signInPassword?.fill(testData.password);
-
-    const signInButton = await page.$('button[type="submit"]');
-    await signInButton?.click();
+    const signInEmail = await page.getByPlaceholder('Email');
+    const signInPassword = await page.getByPlaceholder('Password');
+    await signInEmail?.fill(config.TEST_EMAIL);
+    await signInPassword?.fill(config.TEST_PASSWORD);
+    await page.locator('form').getByRole('button', { name: 'Login' }).click();
     await page.waitForURL('**/decision-tree');
     await expect(page).toHaveURL(/.*\/decision-tree/, { timeout: 5000 });
     console.log('Login with registered email and correct password passed');
@@ -29,63 +21,102 @@ test('Login with registered email and correct password', async () => {
     console.error('Login with registered email and correct password failed');
     throw error;
   } finally {
-    await browser.close();
+    await context.close();
   }
 });
 
-test('Login with unregistered email', async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+test('Login with unregistered email', async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
   try {
     await page.goto(`${config.BASE_URL}/login`);
-
-    const signInEmail = await page.$('input[name="email"]');
-    const signInPassword = await page.$('input[name="password"]');
-
-    // TODO: Replace this with a test email and password
-    await signInEmail?.fill('');
-    await signInPassword?.fill('');
-
-    const signInButton = await page.$('button[type="submit"]');
-    await signInButton?.click();
-    await page.waitForSelector(
-      'text="You entered the wrong email or password."',
-      { state: 'visible' }
-    );
+    const signInEmail = await page.getByPlaceholder('Email');
+    const signInPassword = await page.getByPlaceholder('Password');
+    await signInEmail?.fill(config.TEST_EMAIL + 'a');
+    await signInPassword?.fill(config.TEST_PASSWORD);
+    await page.locator('form').getByRole('button', { name: 'Login' }).click();
+    await page.waitForTimeout(1000);
+    await expect(
+      page.getByText('You entered the wrong email or password')
+    ).toBeVisible();
     console.log('Sign-in with unregistered email passed');
   } catch (error) {
     console.error('Sign-in with unregistered email failed');
     throw error;
   } finally {
-    await browser.close();
+    await context.close();
   }
 });
 
-test('Login with registered email and incorrect password', async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
+test('Login with registered email and incorrect password', async ({
+  browser,
+}) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
 
   try {
     await page.goto(`${config.BASE_URL}/login`);
-
-    const signInEmail = await page.$('input[name="email"]');
-    const signInPassword = await page.$('input[name="password"]');
-
-    await signInEmail?.fill(testData.email);
-    await signInPassword?.fill(testData.password + '1');
-
-    const signInButton = await page.$('button[type="submit"]');
-    await signInButton?.click();
-    await page.waitForSelector(
-      'text="You entered the wrong email or password."',
-      { state: 'visible' }
-    );
+    const signInEmail = await page.getByPlaceholder('Email');
+    const signInPassword = await page.getByPlaceholder('Password');
+    await signInEmail?.fill(config.TEST_EMAIL);
+    await signInPassword?.fill(config.TEST_PASSWORD + '1');
+    await page.locator('form').getByRole('button', { name: 'Login' }).click();
+    await page.waitForTimeout(1000);
+    await expect(
+      page.getByText('You entered the wrong email or password')
+    ).toBeVisible();
     console.log('Login with registered email and incorrect password passed');
   } catch (error) {
     console.error('Login with registered email and incorrect password failed');
     throw error;
   } finally {
-    await browser.close();
+    await context.close();
+  }
+});
+
+test('Login with invalid email', async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  try {
+    await page.goto(`${config.BASE_URL}/login`);
+    const signInEmail = await page.getByPlaceholder('Email');
+    const signInPassword = await page.getByPlaceholder('Password');
+    await signInEmail?.fill(config.TEST_EMAIL + '1');
+    await signInPassword?.fill(config.TEST_PASSWORD);
+    await page.locator('form').getByRole('button', { name: 'Login' }).click();
+    await page.waitForTimeout(1000);
+    await expect(page.getByText('Please enter a valid email')).toBeVisible();
+    console.log('Login with invalid email passed');
+  } catch (error) {
+    console.error('Login with invalid email failed');
+    throw error;
+  } finally {
+    await context.close();
+  }
+});
+
+test('Password field with less than 8 characters displays error', async ({
+  browser,
+}) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  try {
+    await page.goto(`${config.BASE_URL}/login`);
+    const signInEmail = await page.getByPlaceholder('Email');
+    const signInPassword = await page.getByPlaceholder('Password');
+    await signInEmail?.fill(config.TEST_EMAIL);
+    await signInPassword?.fill('1234567');
+    await page.locator('form').getByRole('button', { name: 'Login' }).click();
+    await page.waitForTimeout(1000);
+    await expect(page.getByText('Password must be at least 8')).toBeVisible();
+    console.log('Fill password field with less than 8 characters passed');
+  } catch (error) {
+    console.error('Fill password field with less than 8 characters failed');
+    throw error;
+  } finally {
+    await context.close();
   }
 });
