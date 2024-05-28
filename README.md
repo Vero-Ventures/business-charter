@@ -95,17 +95,18 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
 - `src/app/family-garden/`: Contains the family garden store and related components.
 - `src/app/family-management/`: Includes components for managing family members.
 - `src/app/family-tree/`: Manages the family tree structure.
+- `src/app/model/`: Contains all the model code and handles inserting the chat output into Supabase using their auth token. Within the model folder, there is a `vector-store` folder which holds the vector store for all the content it was trained on.
 - `src/components/`: Reusable UI components.
 - `src/utils/`: Utility functions and helpers.
 - `src/styles/`: CSS and styling files.
 
 # **Architecture and Design**
 
-- **System Overview:**
+## **System Overview:**
 - High-level architecture diagram (to be provided).
 - Database Diagrams and ERDs (to be provided).
 
-- **Technologies Used:**
+## **Technologies Used:**
 - **Programming Languages:** Python, TypeScript
 - **Frameworks/Libraries:** Next.js, React, PyTorch, Selenium (potentially), Pandas
 - **APIs:** Existing LLM APIs for model interaction
@@ -127,9 +128,6 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
   2. Answer the questions prompted by the chatbot.
   3. Review and edit the generated charter.
 
-- **Screenshots:**
-- (Include screenshots of key features, if available)
-
 # **Testing**
 
 - **Test Setup:**
@@ -145,7 +143,7 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
 - **Test Coverage:**
 - Coverage reports can be generated using Jest:
   ```bash
-  npm run test:coverage
+  npm run coverage
   ```
 
 # **Deployment**
@@ -162,4 +160,4 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
    ```
 
 - **Environment Configurations:**
-- Ensure the `.env` file is configured for the target environment (development, staging, production).
+- Ensure the `.env.local` file is configured for the target environment (development, staging, production).
