@@ -54,7 +54,7 @@ export const useChatHandler = () => {
             addMessage(message);
             setCurrentQuestionIndex(current => current + 1);
         } else {
-            addMessage(createChatBotMessage("You may type exit to finish creating your charter.", 'bot'));
+            addMessage(createChatBotMessage("Please type exit to finish creating your charter.", 'bot'));
             setQuestionsCompleted(true);
         }
     }, [addMessage, createChatBotMessage, currentQuestionIndex]);
