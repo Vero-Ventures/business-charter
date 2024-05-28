@@ -121,16 +121,4 @@ def add_entry_to_supabase(entries, user_id):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
-    json_file_path = 'src/app/api/chat/responses.json'
-    keys = {
-        'question': "Enter up to three questions that guide your family's decision making.",
-        'family_value': "What are your family values?",
-        'family_statement': "What is a statement or commitment that your family lives by?",
-        'family_vision': "What statement defines your family's vision?",
-        'impact_statement': "What is your family's impact statement?"
-    }
-    try:
-        result = add_entry_to_supabase(json_file_path, keys)
-        print(result)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+
