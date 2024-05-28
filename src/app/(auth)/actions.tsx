@@ -2,16 +2,35 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 import { createClient } from '@/lib/supabase/server';
+
+interface JWTToken {
+  sub: string;
+}
 
 export async function login(email: string, password: string) {
   const supabase = createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error, data } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { message: error.message };
+  }
+
+  const token = data?.session?.access_token;
+  if (token) {
+    const decodedToken = jwt.decode(token) as JWTToken;
+    const userId = decodedToken.sub;
+
+    // Write the user ID to a file
+    const userIdFilePath = path.resolve(process.cwd(), 'user_id.txt');
+    fs.writeFileSync(userIdFilePath, userId);
+
+    console.log('User ID:', userId);
   }
 
   revalidatePath('/');
@@ -27,7 +46,7 @@ export async function signup(email: string, password: string, role: string) {
     return { message: error.message };
   }
 
-  const userId = data.user?.id;
+  const userId = data?.user?.id;
   if (userId) {
     const { error: profileError } = await supabase
       .from('profiles')

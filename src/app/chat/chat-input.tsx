@@ -216,7 +216,7 @@ export const ChatInput: FC<ChatInputProps> = () => {
 
                 <TextareaAutosize
                     className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                    placeholder={t('Type start to begin creating your family charter...')}
+                    placeholder={t('Type start to begin creating your family charter... Ask me anything!')}
                     onChange={handleInputChange}
                     value={chatInput}
                     minRows={1}

@@ -19,7 +19,7 @@ export interface MessageProps {
     isLast: boolean;
     onStartEdit?: () => void; 
     onCancelEdit?: () => void;
-    onSubmitEdit?: (content: string) => void;
+    onSubmitEdit?: () => void;
 }
 
 export interface ChatMessage {
