@@ -23,10 +23,10 @@ export interface MessageProps {
 }
 
 export interface ChatMessage {
-    id: string;
+    id?: string;
     type: 'user' | 'bot';
-    message: string;
-    fileItems: ChatFile[];
+    message?: string;
+    fileItems?: ChatFile[];
 }
 
 export interface ChatFile {
