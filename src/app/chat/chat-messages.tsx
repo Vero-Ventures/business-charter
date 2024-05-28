@@ -1,10 +1,11 @@
 
-import React, { useContext, useEffect, useRef } from 'react';
-import { ChatbotUIContext } from '@/app/chat/context'; 
-import { Message } from '@/app/chat/message';
+import React, { useEffect, useRef } from 'react';
+import { useChatbotUI } from '@/app/chat/context'; 
+import './styles.css';
 
 export const ChatMessages = () => {
-    const { chatMessages } = useContext(ChatbotUIContext);
+    // const { chatMessages } = useContext(ChatbotUIContext);
+    const { chatMessages } = useChatbotUI();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -13,25 +14,14 @@ export const ChatMessages = () => {
     }, [chatMessages]);
 
     return (
-        <div className="chat-messages">
-            {chatMessages.map((msg, index) => {
-                console.log("Rendering message:", msg);
-                return (
-                    <Message
-                        key={msg.id}
-                        message={msg}
-                        fileItems={msg.fileItems || []}
-                        isEditing={false}  // Assuming default values, adjust as necessary
-                        isLast={index === chatMessages.length - 1}
-                        onStartEdit={() => {}}
-                        onCancelEdit={() => {}}
-                        onSubmitEdit={(newContent) => {
-                            console.log("Edit submitted:", newContent);
-                            // Update logic here
-                        }}
-                    />
-                );
-            })}
+        <div className="chat-container">
+            {chatMessages.map((msg, index) => (
+                <div key={msg.id || index} className={`message ${msg.type === 'bot' ? 'bot-message' : 'user-message'}`}>
+                    <div className={`${msg.type}-text`}>
+                        {msg.message}
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

@@ -1,22 +1,32 @@
-import { FC, useContext, useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { ChatbotUIContext } from '@/app/chat/context';
+// import { FC, useContext, useEffect, useState } from 'react';
+// import { FC, useContext, useEffect } from 'react';
+import { FC, useEffect } from 'react';
+
+// import { useParams } from 'next/navigation';
+// import { ChatbotUIContext } from '@/app/chat/context';
+import { useChatbotUI } from '@/app/chat/context';
 import { useChatHandler } from '@/app/chat/hooks/use-chat-handler';
-import useHotkey from '@/lib/hooks/use-hotkey';
+// import useHotkey from '@/lib/hooks/use-hotkey';
 import { useScroll } from '@/app/chat/hooks/use-scroll';
 import { ChatInput } from '@/app/chat/chat-input';
 import { ChatMessages } from '@/app/chat/chat-messages';
 import { ChatScrollButtons } from '@/components/chat/chat-scroll-buttons';
-import Loading from '@/app/chat/loading';
+// import Loading from '@/app/chat/loading';
 
 interface ChatUIProps {}
 
 export const ChatUI: FC<ChatUIProps> = () => {
-    const { handleNewChat, handleFocusChatInput } = useChatHandler();
-    useHotkey("o", handleNewChat);
+    // const { handleStart, handleFocusChatInput } = useChatHandler();
+    // const { handleNewChat } = useChatHandler();
+    const { handleNewChat } = useChatHandler();
+    // useHotkey("o", handleStart);
 
-    const params = useParams();
-    const { isGenerating } = useContext(ChatbotUIContext); // Updated context hook usage
+    // const params = useParams();
+    // const { isGenerating, chatMessages } = useContext(ChatbotUIContext); // Updated context hook usage
+
+    console.log("ChatUI Component Rendering");
+    // console.log("Context State - isGenerating:", isGenerating);
+    // console.log("Context State - chatMessages:", chatMessages);
 
     const {
         messagesStartRef, 
@@ -29,19 +39,37 @@ export const ChatUI: FC<ChatUIProps> = () => {
         scrollToTop
     } = useScroll();
 
-    const [loading, setLoading] = useState(true);
-
     useEffect(() => {
-        // Adjusting loading logic based on the presence of a chat ID and isGenerating status
-        setLoading(!params.chatid || isGenerating);
-        if (params.chatid) {
-            handleFocusChatInput();
-        }
-    }, [params.chatid, handleFocusChatInput, isGenerating]);
+        console.log("ChatUI mounted, initializing chat session...");
+            handleNewChat();  // Safely call handleStart if it's defined
+    }, [handleNewChat]);
 
-    if (loading) {
-        return <Loading />;
-    }
+    // const [loading, setLoading] = useState(true);
+
+    // useEffect(() => {
+    //     console.log("Params chatid:", params.chatid, "isGenerating:", isGenerating);
+    //     setLoading(!params.chatid || isGenerating);
+    //     if (params.chatid) {
+    //         handleFocusChatInput();
+    //     }
+    //     console.log("Loading status:", loading);
+
+    // }, [params.chatid, handleFocusChatInput, isGenerating, loading]);
+
+    // console.log("Final Check - Loading:", loading);
+
+    // if (loading) {
+    //     return <Loading />;
+    // }
+
+    const { chatMessages } = useChatbotUI();
+    useEffect(() => {
+        console.log("Chat messages in consumer updated:", chatMessages);
+    }, [chatMessages]);
+
+    // if (isGenerating || !params.chatid) {
+    //     return <Loading />;
+    // }
 
     return (
         <div className="relative flex h-full flex-col items-center">
@@ -56,12 +84,13 @@ export const ChatUI: FC<ChatUIProps> = () => {
             </div>
             <div className="absolute right-4 top-1 flex h-[40px] items-center space-x-2">
             </div>
-            <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-center border-b-2 font-bold">
-                {/* Removing selectedChat and replacing it with a generic title */}
-                <div className="max-w-[200px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
-                    Current Chat Session
+    
+            <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-left border-b-2 font-bold p-6">
+                <div className="max-w-[200px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px] text-3xl">
+                    Videre Chatbot
                 </div>
             </div>
+
             <div className="flex size-full flex-col overflow-auto border-b" onScroll={handleScroll}>
                 <div ref={messagesStartRef} />
                 <ChatMessages />

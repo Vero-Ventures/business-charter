@@ -1,4 +1,4 @@
-import React, { useState, createContext, Dispatch, SetStateAction, ReactNode, FC } from 'react';
+import React, { createContext, useContext, useState, Dispatch, SetStateAction, ReactNode, FC } from 'react';
 import { ChatMessage, ChatFile, MessageImage } from "@/app/chat/types/types";
 
 interface ChatbotUIContextType {
@@ -10,7 +10,6 @@ interface ChatbotUIContextType {
     setChatFileItems: Dispatch<SetStateAction<ChatFile[]>>;
     isGenerating: boolean;
     setIsGenerating: Dispatch<SetStateAction<boolean>>;
-
     chatFiles: ChatFile[];
     setChatFiles: Dispatch<SetStateAction<ChatFile[]>>;
     chatImages: MessageImage[];
@@ -23,7 +22,7 @@ interface ChatbotUIContextType {
     setShowFilesDisplay: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ChatbotUIContext = createContext<ChatbotUIContextType>({
+const defaultValue: ChatbotUIContextType = {
     userInput: "",
     setUserInput: () => {},
     chatMessages: [],
@@ -32,7 +31,6 @@ export const ChatbotUIContext = createContext<ChatbotUIContextType>({
     setChatFileItems: () => {},
     isGenerating: false,
     setIsGenerating: () => {},
-
     chatFiles: [],
     setChatFiles: () => {},
     chatImages: [],
@@ -43,7 +41,9 @@ export const ChatbotUIContext = createContext<ChatbotUIContextType>({
     setNewMessageImages: () => {},
     showFilesDisplay: false,
     setShowFilesDisplay: () => {},
-});
+};
+
+export const ChatbotUIContext = createContext<ChatbotUIContextType>(defaultValue);
 
 interface ChatbotUIProviderProps {
     children: ReactNode;
@@ -61,20 +61,20 @@ export const ChatbotUIProvider: FC<ChatbotUIProviderProps> = ({ children }) => {
     const [showFilesDisplay, setShowFilesDisplay] = useState<boolean>(false);
 
     return (
-        <ChatbotUIContext.Provider
-            value={{
-                userInput, setUserInput,
-                chatMessages, setChatMessages,
-                chatFileItems, setChatFileItems,
-                isGenerating, setIsGenerating,
-                chatFiles, setChatFiles,
-                chatImages, setChatImages,
-                newMessageFiles, setNewMessageFiles,
-                newMessageImages, setNewMessageImages,
-                showFilesDisplay, setShowFilesDisplay,
-            }}
-        >
+        <ChatbotUIContext.Provider value={{
+            userInput, setUserInput,
+            chatMessages, setChatMessages,
+            chatFileItems, setChatFileItems,
+            isGenerating, setIsGenerating,
+            chatFiles, setChatFiles,
+            chatImages, setChatImages,
+            newMessageFiles, setNewMessageFiles,
+            newMessageImages, setNewMessageImages,
+            showFilesDisplay, setShowFilesDisplay,
+        }}>
             {children}
         </ChatbotUIContext.Provider>
     );
 };
+
+export const useChatbotUI = () => useContext(ChatbotUIContext);
