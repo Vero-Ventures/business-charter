@@ -1,7 +1,0 @@
-{
-    "functions": {
-        "src/app/api/chat/main.py": {
-            "runtime": "python3.11"
-        }
-    }
-}

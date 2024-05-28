@@ -1,6 +1,4 @@
 import ProfileForm from "./profile";
-import { Suspense } from "react";
-import Loading from "@/components/loading";
 import AuthenticatedRoute from "../(auth)/authenticated-route";
 
 export default function ProfilePage() {

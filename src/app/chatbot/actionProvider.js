@@ -81,6 +81,7 @@ class ActionProvider {
   sendMessageToAPI = async message => {
     try {
       const response = await fetch('http://localhost:5000/api/chat', {
+        // const response = await fetch('http://192.168.1.185:5000/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,8 +96,8 @@ class ActionProvider {
         return data.answer;
       }
     } catch (error) {
-      console.error('Error:', error);
-      return "I'm sorry, something went wrong.";
+      console.error('Error22:', error);
+      return "I'm sorry, something went wrong";
     }
   };
 
