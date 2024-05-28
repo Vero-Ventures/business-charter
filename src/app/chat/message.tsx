@@ -9,12 +9,15 @@ export const Message: React.FC<MessageProps> = ({
     onCancelEdit,
     onSubmitEdit,
 }) => {
-    const [editContent, setEditContent] = useState(message.message);
+    const [editContent, setEditContent] = useState<string>(message.message || '');
 
     const handleEditSubmit = () => {
-        onSubmitEdit?.(editContent); 
-        onCancelEdit?.(); 
+        if (editContent !== undefined) {
+            onSubmitEdit?.(editContent);
+        }
+        onCancelEdit?.();
     };
+    
 
     return (
         <div className={`message ${isLast ? 'last-message' : ''}`}>
