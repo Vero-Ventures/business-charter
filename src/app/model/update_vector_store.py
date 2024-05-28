@@ -55,7 +55,8 @@ def update_vector_store(pdf_dir, vector_store_dir):
         print(f"An error occurred: {e}")
 # Made a change to the code below to make the path relative
 if __name__ == "__main__":
-    pdf_dir = "src/app/model/books/"
-    vector_store_dir = "src/app/model/vector_store/"
+    
+    pdf_dir = "C:/Users/danie/Documents/BCIT/Semester4/ProjectsPracticum2/Project2/business-charter/src/app/model/books/"
+    vector_store_dir = "C:/Users/danie/Documents/BCIT/Semester4/ProjectsPracticum2/Project2/business-charter/src/app/model/vector_store/"
 
     update_vector_store(pdf_dir, vector_store_dir)

@@ -2,12 +2,15 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    max-width: 800px; /* Adjusted from a fixed pixel width to a percentage */
+    width: 100%;
+    max-width: 800px;
+    /* Adjusted from a fixed pixel width to a percentage */
     margin: auto;
     padding: 25px;
-    /* background: #f9f9f9; */ 
+    /* background: #f9f9f9; */
     height: 500px;
-    overflow-y: scroll;
+    /* Use a viewport height to make it more responsive */
+    overflow-y: auto;
     /* border: 1px solid #ccc; Optional: adds a border for better visibility */
 }
 
@@ -16,26 +19,51 @@
     margin-bottom: 10px;
     padding: 8px 15px;
     border-radius: 10px;
-    max-width: 100%; /* Allow messages to take full width of the container */
+    max-width: 100%;
+    /* Allow messages to take full width of the container */
     word-wrap: break-word;
+}
+
+.bot-content {
+    display: flex;
+    align-items: center;
+    /* Center items vertically within the bot content */
 }
 
 /* Bot message styling */
 .bot-message {
-    align-self: flex-start;
+    align-self: flex-end;
     /* background-color: #e0e0e0; */
-    width: auto; /* Ensure messages can grow as needed */
+    width: auto;
+    /* Ensure messages can grow as needed */
 }
 
 .bot-text {
     color: #333;
 }
 
+.bot-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    /* Adjust size as needed */
+    height: 40px;
+    /* Adjust size as needed */
+    border-radius: 50%;
+    /* Makes the icon circular */
+    background-color: white;
+    /* Optional: background color for the icon */
+    margin-right: 20px;
+    /* Space between the icon and the message */
+}
+
 /* User message styling */
 .user-message {
     align-self: flex-end;
     background-color: #474a4d;
-    width: auto; /* Ensure messages can grow as needed */
+    width: auto;
+    /* Ensure messages can grow as needed */
 }
 
 .user-text {

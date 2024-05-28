@@ -20,16 +20,23 @@ export default function ChatPage() {
 
     useEffect(() => {
         console.log("Chat messages changed:", chatMessages.map(m => m.message)); // Confirm messages are present
-    
+
         const lastMessageText = chatMessages[chatMessages.length - 1]?.message?.toLowerCase() ?? "";
-    
+
         console.log("Last message text:", lastMessageText); // Should show the actual last message or an empty string
-    
+
         if (!chatStarted && lastMessageText === "start") {
             console.log("Start conditions met. Starting chat.");
             setChatStarted(true);
         }
     }, [chatMessages, chatStarted]);  // Keep chatStarted to avoid unnecessary re-renders when it changes
+
+    // const handleInputSubmit = (messageText) => {
+    //     if (messageText.trim().toLowerCase() === "start" && !chatStarted) {
+    //         setChatStarted(true);
+    //     }
+    //     handleSendMessage(messageText);
+    // };
 
     console.log("Rendering ChatPage, Chat Started:", chatStarted);
 

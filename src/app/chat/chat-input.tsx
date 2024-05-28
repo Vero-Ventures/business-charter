@@ -159,6 +159,9 @@
 //     );
 // };
 
+//######################################################################################################
+// WORKING VERSION
+
 import { FC, useState, KeyboardEvent, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useChatHandler } from '@/app/chat/hooks/use-chat-handler';
@@ -244,3 +247,6 @@ export const ChatInput: FC<ChatInputProps> = () => {
         </>
     );
 };
+
+// WORKING VERSION ^^
+//######################################################################################################
