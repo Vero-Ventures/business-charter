@@ -32,7 +32,6 @@ const familySublinks = [
   { href: '/family-charter', label: 'Family Charter' },
   { href: '/pdf', label: 'Print PDF' },
   { href: '/video', label: 'Videos' },
-  { href: '/chatbot', label: 'ChatBot Assistant'},
   { href: '/chat', label: 'Chat' }
 ];
 
