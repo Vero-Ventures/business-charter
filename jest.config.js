@@ -6,4 +6,14 @@ module.exports = {
     "/node_modules/",
     "/playwright_tests/"
   ],
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    'src/**/*.tsx',
+    '!src/**/*.d.ts',
+    '!src/**/*.test.ts',
+    '!src/**/*.spec.ts',
+  ],
 };
