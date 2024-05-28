@@ -17,7 +17,8 @@ describe('cn function', () => {
 
 describe('moneyFormatter function', () => {
   it('should format money correctly', () => {
+    const expected = '$1,000.00';
     const result = moneyFormatter.format(1000);
-    expect(result).toEqual('$1,000.00');
+    expect(result).toEqual(expected);
   });
 });
