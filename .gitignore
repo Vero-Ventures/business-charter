@@ -69,9 +69,5 @@ src/app/model/books/Understand Wealth_ What You Hav - Todd Havens.pdf
 src/app/model/books/Wealth of Wisdom - Tom McCullough.pdf
 src/app/model/books/What Would the Rockefellers Do How the Wealthy Get and Stay That Way, And How You Can Too (Garrett B. Gunderson).pdf
 
-# vector store
-src/app/model/vector_store/index.faiss
-src/app/model/vector_store/index.pkl
-
 # family charter responses
 family_charter_responses.json
