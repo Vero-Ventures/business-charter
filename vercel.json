@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "builds": [
+    {
+    "src": "api/**/*.py",
+    "use": "@vercel/python"
+    },
+    {
+    "src": "src/**/*",
+    "use": "@vercel/static-build",
+    "config": { "distDir": "build" }
+    }
+],
+"routes": [
+    {
+    "src": "/api/chat/send_message",
+    "dest": "/api/chat/send_message.py"
+    },
+    {
+    "src": "/api/chat/submit_responses",
+    "dest": "/api/chat/submit_responses.py"
+    },
+    {
+    "src": "/(.*)",
+    "dest": "/src/$1"
+    }
+]
+}
