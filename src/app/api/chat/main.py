@@ -59,6 +59,16 @@ def submit_responses():
     if not user_id:
         return jsonify({"error": "User ID is missing"}), 400
     
+    entries = {
+        'question': responses.get("What questions help guide your family's decision-making?"),
+        'family_value': responses.get("What are your family values?"),
+        'family_statement': responses.get("What is a statement or commitment that your family lives by?"),
+        'family_vision': responses.get("What statement defines your family's vision?"),
+        'impact_statement': responses.get("What is your family's impact statement?")
+    }
+
+    print("Entries to insert:", entries)  # Debug print
+
     # Process responses after saving
     result = add_entry_to_supabase(responses, user_id)
     app.logger.info(f"Insertion result: {result}")
@@ -68,82 +78,46 @@ def revalidate_path(path: str):
     pass
 
 def add_entry_to_supabase(entries, user_id):
-    # try:
-    #     with open(user_id_file_path, 'r') as file:
-    #         user_id = file.read().strip()
-    #         if not user_id:
-    #             raise ValueError("User ID is empty.")
-    #         print(f"User ID: {user_id}")
-    # except Exception as e:
-    #     return {'message': f"Error reading user ID file: {e}"}
+    entry_map = {
+        "Enter up to three questions that guide your family's decision making.": {
+            'table': 'decision_tree',
+            'data': lambda entry: {'question': entry, 'user_id': user_id}
+        },
+        "What are your family values?": {
+            'table': 'family_values',
+            'data': lambda entry: {'description': entry, 'user_id': user_id, 'title': 'Created by VidereAI'}
+        },
+        "What is a statement or commitment that your family lives by?": {
+            'table': 'family_code',
+            'data': lambda entry: {'statement': entry, 'user_id': user_id}
+        },
+        "What statement defines your family's vision?": {
+            'table': 'family_vision',
+            'data': lambda entry: {'statement': entry, 'user_id': user_id}
+        },
+        "What is your family's impact statement?": {
+            'table': 'philanthropy_impact_statements',
+            'data': lambda entry: {'statement': entry, 'user_id': user_id}
+        }
+    }
 
-    # # Insert the question with the user_id into decision_tree
-    try:
-        app.logger.debug(f"Attempting to insert: {entries}")
-        response_question = supabase.table('decision_tree').insert({'question': entries['question'], 'user_id': user_id}).execute()
-        
-        if 'error' in response_question.data:
-            raise ValueError(f"Error inserting question: {response_question.data['error']['message']}")
-        else:
-            app.logger.debug(f"Successfully inserted question: {response_question.data}")
-    except Exception as e:
-        return {'message': f"Error inserting question: {e}"}
+    for key, entry_info in entry_map.items():
+        if key in entries:
+            try:
+                app.logger.debug(f"Attempting to insert into {entry_info['table']}: {entries[key]}")
+                response = supabase.table(entry_info['table']).insert(entry_info['data'](entries[key])).execute()
 
-    # Insert the family value with the user_id into family_values
-    try:
-        response_value = supabase.table('family_values').insert({
-            'title': 'Created by VidereAI',
-            'description': entries['family_value'],
-            'user_id': user_id
-        }).execute()
-        print(response_value)
-        if 'error' in response_value.data:
-            raise ValueError(f"Error inserting family value: {response_value.data['error']['message']}")
-    except Exception as e:
-        return {'message': f"Error inserting family value: {e}"}
+                if 'error' in response.data:
+                    raise ValueError(f"Error inserting into {entry_info['table']}: {response.data['error']['message']}")
+                else:
+                    app.logger.debug(f"Successfully inserted into {entry_info['table']}: {response.data}")
 
-    # Insert the family code statement with the user_id into family_code
-    try:
-        response_statement = supabase.table('family_code').insert({
-            'statement': entries['family_statement'],
-            'user_id': user_id
-        }).execute()
-        print(response_statement)
-        if 'error' in response_statement.data:
-            raise ValueError(f"Error inserting family statement: {response_statement.data['error']['message']}")
-    except Exception as e:
-        return {'message': f"Error inserting family statement: {e}"}
+            except Exception as e:
+                app.logger.error(f"Exception while inserting into {entry_info['table']}: {e}")
+                return {'message': f"Error inserting into {entry_info['table']}: {e}"}
 
-    # Insert the family vision statement with the user_id into family_vision
-    try:
-        response_vision = supabase.table('family_vision').insert({
-            'statement': entries['family_vision'],
-            'user_id': user_id
-        }).execute()
-        print(response_vision)
-        if 'error' in response_vision.data:
-            raise ValueError(f"Error inserting family vision: {response_vision.data['error']['message']}")
-    except Exception as e:
-        return {'message': f"Error inserting family vision: {e}"}
+    return {'message': 'All entries added successfully'}
 
-    # Insert the impact statement with the user_id into philanthropy_impact_statements
-    try:
-        response_impact = supabase.table('philanthropy_impact_statements').insert({
-            'statement': entries['impact_statement'],
-            'user_id': user_id
-        }).execute()
-        print(response_impact)
-        if 'error' in response_impact.data:
-            raise ValueError(f"Error inserting impact statement: {response_impact.data['error']['message']}")
-    except Exception as e:
-        return {'message': f"Error inserting impact statement: {e}"}
-
-    revalidate_path('/decision-tree')
-    revalidate_path('/family-values')
-    revalidate_path('/family-code')
-    revalidate_path('/family-vision')
-    revalidate_path('/philanthropy')
-    return {'message': 'Question, family value, family statement, family vision, and impact statement added successfully'}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
