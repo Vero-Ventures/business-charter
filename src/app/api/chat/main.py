@@ -42,7 +42,7 @@ def submit_responses():
     responses = data.get('responses', {})
 
     with open('responses.json', 'w') as file:
-        json.dump(responses, file)
+        json.dump(responses, file, indent=4)
     
     return jsonify({"status": "Success", "message": "Data saved successfully"})
 

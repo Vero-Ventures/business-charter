@@ -224,13 +224,157 @@
 //     };
 // };
 
+// import { useState, useCallback, useContext } from 'react';
+// import { ChatbotUIContext } from '@/app/chat/context';
+// import { ChatMessage } from '@/app/chat/types/types';
+// import { v4 as uuidv4 } from 'uuid';
+
+// const questions = [
+//     "Enter up to three questions that guide your family’s decision making.",
+//     "What are your family values?",
+//     "What is a statement or commitment that your family lives by?",
+//     "What statement defines your family's vision?",
+//     "What is your family's impact statement?",
+// ];
+
+// export const useChatHandler = () => {
+//     const { chatMessages, setChatMessages } = useContext(ChatbotUIContext);
+//     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+//     const [isGenerating, setIsGenerating] = useState(false);
+//     const [questionsCompleted, setQuestionsCompleted] = useState(false);
+//     const [responses, setResponses] = useState([]);
+
+//     const createChatBotMessage = useCallback((text, messageType): ChatMessage => ({
+//         id: uuidv4(),
+//         type: messageType,
+//         message: text
+//     }), []);
+
+//     const addMessage = useCallback((message: ChatMessage) => {
+//         setChatMessages(prevMessages => [...prevMessages, message]);
+//     }, [setChatMessages]);
+
+//     const handleResponse = (response, questionIndex) => {
+//         const newResponses = [...responses];
+//         newResponses[questionIndex] = { question: questions[questionIndex], answer: response };
+//         setResponses(newResponses);
+//     };
+
+//     const handleQuestions = useCallback(() => {
+//         if (currentQuestionIndex < questions.length) {
+//             addMessage(createChatBotMessage(questions[currentQuestionIndex], 'bot'));
+//             setCurrentQuestionIndex(current => current + 1);
+//         } else {
+//             addMessage(createChatBotMessage("You may type exit to finish creating your charter.", 'bot'));
+//             setQuestionsCompleted(true);  // Mark the completion of questions
+//         }
+//     }, [addMessage, createChatBotMessage, currentQuestionIndex]);
+
+//     const submitResponses = useCallback(async () => {
+//         const responsesObject = responses.reduce((acc, curr) => {
+//             if (curr) {
+//                 acc[curr.question] = curr.answer;
+//             }
+//             return acc;
+//         }, {});
+
+//         questions.forEach((question, index) => {
+//             const userResponse = chatMessages.find(msg => msg.isResponse && msg.questionIndex === index);
+//             if (userResponse) {
+//                 handleResponse(userResponse.message, index);
+//             }
+//         });
+
+
+//         try {
+//             const response = await fetch('http://localhost:8000/api/chat/submit_responses', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ responses }),
+//                 credentials: 'include'
+//             });
+//             if (!response.ok) {
+//                 throw new Error(`HTTP error ${response.status}`);
+//             }
+//             const result = await response.json();
+//             console.log("Responses submitted successfully:", result);
+//         } catch (error) {
+//             console.error("Failed to submit responses:", error);
+//         }
+//     }, [chatMessages]);
+
+//     const sendMessageToAPI = useCallback(async (message) => {
+//         try {
+//             const response = await fetch('http://localhost:8000/api/chat/send_message', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ message }),
+//                 credentials: 'include'
+//             });
+//             if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+//             const { answer } = await response.json();
+//             return answer;
+//         } catch (error) {
+//             console.error("Error during fetch or parsing:", error);
+//             return "Sorry, there was an error processing your message.";
+//         }
+//     }, []);
+
+//     const handleSendMessage = useCallback(async (messageText: string) => {
+//         setIsGenerating(true);
+//         const normalizedText = messageText.trim().toLowerCase();
+//         try {
+//             addMessage(createChatBotMessage(messageText, 'user'));
+    
+//             // Start the questionnaire if "start" is input and it's the first interaction.
+//             if (normalizedText === "start" && currentQuestionIndex === 0) {
+//                 handleQuestions();
+//             } else if (normalizedText === "exit" && questionsCompleted) {
+//                 // Allow exiting only if the questionnaire has been completed.
+//                 await submitResponses(); 
+//                 setChatMessages([]);
+//                 setCurrentQuestionIndex(0);
+//                 setQuestionsCompleted(false);
+//                 addMessage(createChatBotMessage("Thank you, I have recorded your responses. Goodbye!", 'bot'));
+//             } else {
+//                 // Handle general inquiries or continue with questions if the session has started.
+//                 if (currentQuestionIndex > 0 && currentQuestionIndex <= questions.length) {
+//                     handleQuestions();
+//                 } else {
+//                     // If no questionnaire is active or needed, handle as a general inquiry.
+//                     if (questionsCompleted || currentQuestionIndex === 0) {
+//                         const apiResponse = await sendMessageToAPI(messageText);
+//                         addMessage(createChatBotMessage(apiResponse, 'bot'));
+//                     } else {
+//                         // Prompt to continue or start the questionnaire if not yet started.
+//                         addMessage(createChatBotMessage("Please type 'start' to begin the questionnaire, or ask anything else.", 'bot'));
+//                     }
+//                 }
+//             }
+//         } finally {
+//             setIsGenerating(false);
+//         }
+//     }, [addMessage, handleQuestions, createChatBotMessage, currentQuestionIndex, setChatMessages, submitResponses, sendMessageToAPI, questionsCompleted]);
+    
+//     const handleNewChat = useCallback(() => {
+//         setChatMessages([]);
+//         setCurrentQuestionIndex(0);
+//         setQuestionsCompleted(false);  // Reset the question completion status
+//     }, [setChatMessages]);
+
+//     return {
+//         chatMessages,
+//         handleSendMessage,
+//         handleNewChat,
+//         isGenerating,
+//     };
+// };
 import { useState, useCallback, useContext } from 'react';
 import { ChatbotUIContext } from '@/app/chat/context';
-import { ChatMessage } from '@/app/chat/types/types';
 import { v4 as uuidv4 } from 'uuid';
 
 const questions = [
-    "Enter up to three questions that guide your family’s decision making.",
+    "Enter up to three questions that guide your family's decision making.",
     "What are your family values?",
     "What is a statement or commitment that your family lives by?",
     "What statement defines your family's vision?",
@@ -242,36 +386,38 @@ export const useChatHandler = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [isGenerating, setIsGenerating] = useState(false);
     const [questionsCompleted, setQuestionsCompleted] = useState(false);
+    const [responses, setResponses] = useState({});
 
-    const createChatBotMessage = useCallback((text, messageType): ChatMessage => ({
-        id: uuidv4(),
-        type: messageType,
-        message: text
-    }), []);
+    // Helper function to create chat messages
+    const createChatBotMessage = useCallback((text, messageType) => {
+        const id = uuidv4();
+        return { id, type: messageType, message: text };
+    }, []);
 
-    const addMessage = useCallback((message: ChatMessage) => {
+    // Function to add messages to the chat
+    const addMessage = useCallback((message) => {
         setChatMessages(prevMessages => [...prevMessages, message]);
     }, [setChatMessages]);
 
+    // Function to handle the current question
     const handleQuestions = useCallback(() => {
         if (currentQuestionIndex < questions.length) {
-            addMessage(createChatBotMessage(questions[currentQuestionIndex], 'bot'));
+            const message = createChatBotMessage(questions[currentQuestionIndex], 'bot');
+            addMessage(message);
             setCurrentQuestionIndex(current => current + 1);
         } else {
             addMessage(createChatBotMessage("You may type exit to finish creating your charter.", 'bot'));
-            setQuestionsCompleted(true);  // Mark the completion of questions
+            setQuestionsCompleted(true);
         }
     }, [addMessage, createChatBotMessage, currentQuestionIndex]);
 
+    // Function to submit all responses
     const submitResponses = useCallback(async () => {
-        // Logic to submit responses to the backend
-        // After submitting, allow API interactions
-        const userResponses = chatMessages.filter(msg => msg.type === 'user').map(msg => msg.message);
         try {
             const response = await fetch('http://localhost:8000/api/chat/submit_responses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ responses: userResponses }),
+                body: JSON.stringify({ responses }),
                 credentials: 'include'
             });
             if (!response.ok) {
@@ -282,8 +428,9 @@ export const useChatHandler = () => {
         } catch (error) {
             console.error("Failed to submit responses:", error);
         }
-    }, [chatMessages]);
+    }, [responses]);
 
+    // Function to send a message to the API
     const sendMessageToAPI = useCallback(async (message) => {
         try {
             const response = await fetch('http://localhost:8000/api/chat/send_message', {
@@ -293,54 +440,48 @@ export const useChatHandler = () => {
                 credentials: 'include'
             });
             if (!response.ok) throw new Error(`HTTP error ${response.status}`);
-            const { answer } = await response.json();
-            return answer;
+            const result = await response.json();
+            return result.answer;
         } catch (error) {
             console.error("Error during fetch or parsing:", error);
             return "Sorry, there was an error processing your message.";
         }
     }, []);
 
-    const handleSendMessage = useCallback(async (messageText: string) => {
+    // Main function to handle sending messages
+    const handleSendMessage = useCallback(async (messageText) => {
         setIsGenerating(true);
         const normalizedText = messageText.trim().toLowerCase();
         try {
-            addMessage(createChatBotMessage(messageText, 'user'));
-    
-            // Start the questionnaire if "start" is input and it's the first interaction.
+            const message = createChatBotMessage(messageText, 'user');
+            addMessage(message);
+
             if (normalizedText === "start" && currentQuestionIndex === 0) {
                 handleQuestions();
             } else if (normalizedText === "exit" && questionsCompleted) {
-                // Allow exiting only if the questionnaire has been completed.
-                await submitResponses(); 
+                await submitResponses();
                 setChatMessages([]);
                 setCurrentQuestionIndex(0);
                 setQuestionsCompleted(false);
                 addMessage(createChatBotMessage("Thank you, I have recorded your responses. Goodbye!", 'bot'));
+            } else if (currentQuestionIndex > 0 && currentQuestionIndex <= questions.length) {
+                responses[questions[currentQuestionIndex - 1]] = messageText;
+                handleQuestions();
             } else {
-                // Handle general inquiries or continue with questions if the session has started.
-                if (currentQuestionIndex > 0 && currentQuestionIndex <= questions.length) {
-                    handleQuestions();
-                } else {
-                    // If no questionnaire is active or needed, handle as a general inquiry.
-                    if (questionsCompleted || currentQuestionIndex === 0) {
-                        const apiResponse = await sendMessageToAPI(messageText);
-                        addMessage(createChatBotMessage(apiResponse, 'bot'));
-                    } else {
-                        // Prompt to continue or start the questionnaire if not yet started.
-                        addMessage(createChatBotMessage("Please type 'start' to begin the questionnaire, or ask anything else.", 'bot'));
-                    }
-                }
+                const apiResponse = await sendMessageToAPI(messageText);
+                addMessage(createChatBotMessage(apiResponse, 'bot'));
             }
         } finally {
             setIsGenerating(false);
         }
-    }, [addMessage, handleQuestions, createChatBotMessage, currentQuestionIndex, setChatMessages, submitResponses, sendMessageToAPI, questionsCompleted]);
-    
+    }, [addMessage, createChatBotMessage, setChatMessages, handleQuestions, sendMessageToAPI, submitResponses, currentQuestionIndex, questionsCompleted, responses]);
+
+    // Function to reset the chat for a new session
     const handleNewChat = useCallback(() => {
         setChatMessages([]);
         setCurrentQuestionIndex(0);
-        setQuestionsCompleted(false);  // Reset the question completion status
+        setQuestionsCompleted(false);
+        setResponses({});
     }, [setChatMessages]);
 
     return {
