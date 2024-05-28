@@ -13,7 +13,7 @@ export const Message: React.FC<MessageProps> = ({
 
     const handleEditSubmit = () => {
         if (editContent !== undefined) {
-            onSubmitEdit?.(editContent);
+            onSubmitEdit?.();
         }
         onCancelEdit?.();
     };
