@@ -3,6 +3,8 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import jwt from 'jsonwebtoken';
+import fs from 'fs';
+import path from 'path';
 
 import { createClient } from '@/lib/supabase/server';
 
@@ -24,7 +26,10 @@ export async function login(email: string, password: string) {
     const decodedToken = jwt.decode(token) as JWTToken;
     const userId = decodedToken.sub;
 
-    // Now you can use the userId for any additional logic
+    // Write the user ID to a file
+    const userIdFilePath = path.resolve(process.cwd(), 'user_id.txt');
+    fs.writeFileSync(userIdFilePath, userId);
+
     console.log('User ID:', userId);
   }
 

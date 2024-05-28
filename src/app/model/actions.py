@@ -36,22 +36,17 @@ def add_entry_from_json(file_path: str, keys: dict):
                 entries[key] = value.replace('\"', '')
     except Exception as e:
         return {'message': f"Error reading JSON file: {e}"}
-    
-    # Sign in the user
+
+    # Read the user ID from the file
+    user_id_file_path = 'user_id.txt'
     try:
-        auth_response = supabase.auth.sign_in_with_password({"email": e_mail, "password": password})
-        session = auth_response.session
-        if not session:
-            raise ValueError("Failed to sign in user.")
-        
-        user = session.user
-        if not user:
-            raise ValueError("Authenticated user is not available.")
-        
-        user_id = user.id
-        print(user_id)
+        with open(user_id_file_path, 'r') as file:
+            user_id = file.read().strip()
+            if not user_id:
+                raise ValueError("User ID is empty.")
+            print(f"User ID: {user_id}")
     except Exception as e:
-        return {'message': f"Error retrieving authenticated user: {e}"}
+        return {'message': f"Error reading user ID file: {e}"}
 
     # Insert the question with the user_id into decision_tree
     try:
