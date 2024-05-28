@@ -10,8 +10,6 @@ load_dotenv(env_path)
 # Get the environment variables
 supabase_url = os.getenv('NEXT_PUBLIC_SUPABASE_URL')
 supabase_key = os.getenv('NEXT_PUBLIC_SUPABASE_ANON_KEY')
-e_mail = os.getenv('IFC_EMAIL')
-password = os.getenv('IFC_PASSWORD')
 
 # Check if the environment variables are loaded correctly
 if not supabase_url or not supabase_key:
