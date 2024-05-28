@@ -1,22 +1,3 @@
-// class ActionProvider {
-//   constructor(createChatBotMessage, setStateFunc) {
-//     this.createChatBotMessage = createChatBotMessage;
-//     this.setState = setStateFunc;
-//   }
-
-//   handleGreet() {
-//     const message = this.createChatBotMessage('Hello! How can I assist you?');
-//     this.setState(prevState => ({
-//       ...prevState,
-//       messages: [...prevState.messages, message],
-//     }));
-//   }
-
-//   // Add more handlers for specific user interactions...
-// }
-
-// export default ActionProvider;
-
 class ActionProvider {
   constructor(createChatBotMessage, setStateFunc) {
     this.createChatBotMessage = createChatBotMessage;
@@ -119,3 +100,45 @@ class ActionProvider {
 }
 
 export default ActionProvider;
+
+// class ActionProvider {
+//   constructor(createChatBotMessage, setStateFunc) {
+//     this.createChatBotMessage = createChatBotMessage;
+//     this.setState = setStateFunc;
+//   }
+
+//   handleMessage = message => {
+//     this.sendMessageToAPI(message)
+//       .then(response => {
+//         const botMessage = this.createChatBotMessage(response.answer);
+//         this.setState(prev => ({
+//           ...prev,
+//           messages: [...prev.messages, botMessage],
+//         }));
+//       })
+//       .catch(error => {
+//         const botMessage = this.createChatBotMessage(
+//           "I'm sorry, something went wrong."
+//         );
+//         this.setState(prev => ({
+//           ...prev,
+//           messages: [...prev.messages, botMessage],
+//         }));
+//         console.error('Error:', error);
+//       });
+//   };
+
+//   sendMessageToAPI = async message => {
+//     const response = await fetch('/api/chat', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ message }),
+//     });
+//     const data = await response.json();
+//     return data;
+//   };
+// }
+
+// export default ActionProvider;

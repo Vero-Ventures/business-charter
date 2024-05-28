@@ -15,6 +15,10 @@
     /* Full width */
 }
 
+.react-chatbot-kit-chat-message-container {
+    max-height: 70%;
+}
+
 .react-chatbot-kit-chat-bot-message {
     font-size: 16px;
     /* Adjust the font size as desired */
@@ -35,4 +39,35 @@
 .react-chatbot-kit-user-message {
     font-size: 16px;
     /* Ensure user messages match bot messages if desired */
+}
+
+.react-chatbot-kit-chat-header {
+    display: none;
+}
+
+.custom-header {
+    height: 30px;
+    /* Increase height */
+    background-color: #f1f1f1;
+    /* Background color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.custom-header-button {
+    background-color: #00FF00;
+    /* Bright green color */
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.custom-header-button:hover {
+    background-color: #00CC00;
+    /* Darker green on hover */
 }
