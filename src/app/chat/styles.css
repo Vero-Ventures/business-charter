@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 800px;
+    max-width: 1150px;
     /* Adjusted from a fixed pixel width to a percentage */
     margin: auto;
     padding: 25px;
@@ -32,7 +32,7 @@
 
 /* Bot message styling */
 .bot-message {
-    align-self: flex-end;
+    align-self: flex-start;
     /* background-color: #e0e0e0; */
     width: auto;
     /* Ensure messages can grow as needed */
