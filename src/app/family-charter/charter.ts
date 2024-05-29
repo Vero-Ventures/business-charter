@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/client';
 import { SupabaseError } from '@/app/chat/types/types';
 
+
 const supabase = createClient();
 
 export async function fetchLatestCharterEntries(userId: string) {
@@ -30,5 +31,23 @@ export async function fetchLatestCharterEntries(userId: string) {
         return { data: results, error: null };
     } catch (error: any) {  
         return { data: null, error: error.message || "An unknown error occurred" };
+    }
+}
+
+export async function fetchSummaryForAdmin(userId: string | null) {
+    try {
+        const response = await fetch('/api/admin/charter', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user_id: userId }),
+            credentials: 'include',
+        });
+        if (!response.ok) throw new Error('Failed to fetch summary');
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to fetch summary:', error);
+        throw error;
     }
 }
