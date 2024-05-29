@@ -1,35 +1,35 @@
-"use client";
+// "use client";
 
-import { useState, useContext, useEffect } from 'react';
-import { ChatbotUIContext, ChatbotUIProvider } from '@/app/chat/context';
-import { useChatHandler } from '@/app/chat/hooks/use-chat-handler';
+// import { useState, useContext, useEffect } from 'react';
+// import { ChatbotUIContext, ChatbotUIProvider } from '@/app/chat/context';
+// import { useChatHandler } from '@/app/chat/hooks/use-chat-handler';
 // import { ChatInput } from "@/app/chat/chat-input";
-import { ChatUI } from "@/app/chat/chat-ui";
+// import { ChatUI } from "@/app/chat/chat-ui";
 // import { Brand } from "@/components/ui/brand";
-import useHotkey from "@/lib/hooks/use-hotkey";
+// import useHotkey from "@/lib/hooks/use-hotkey";
 // import { useTheme } from "next-themes";
 
-export default function ChatPage() {
-    const { chatMessages } = useContext(ChatbotUIContext);
-    const { handleNewChat } = useChatHandler();
+// export default function ChatPage() {
+//     const { chatMessages } = useContext(ChatbotUIContext);
+//     const { handleNewChat } = useChatHandler();
     // const { theme } = useTheme();
 
-    const [chatStarted, setChatStarted] = useState(false);
+    // const [chatStarted, setChatStarted] = useState(false);
 
-    useHotkey("o", handleNewChat);
+    // useHotkey("o", handleNewChat);
 
-    useEffect(() => {
-        console.log("Chat messages changed:", chatMessages.map(m => m.message)); // Confirm messages are present
+    // useEffect(() => {
+    //     console.log("Chat messages changed:", chatMessages.map(m => m.message)); // Confirm messages are present
 
-        const lastMessageText = chatMessages[chatMessages.length - 1]?.message?.toLowerCase() ?? "";
+    //     const lastMessageText = chatMessages[chatMessages.length - 1]?.message?.toLowerCase() ?? "";
 
-        console.log("Last message text:", lastMessageText); // Should show the actual last message or an empty string
+    //     console.log("Last message text:", lastMessageText); // Should show the actual last message or an empty string
 
-        if (!chatStarted && lastMessageText === "start") {
-            console.log("Start conditions met. Starting chat.");
-            setChatStarted(true);
-        }
-    }, [chatMessages, chatStarted]);  // Keep chatStarted to avoid unnecessary re-renders when it changes
+    //     if (!chatStarted && lastMessageText === "start") {
+    //         console.log("Start conditions met. Starting chat.");
+    //         setChatStarted(true);
+    //     }
+    // }, [chatMessages, chatStarted]);  // Keep chatStarted to avoid unnecessary re-renders when it changes
 
     // const handleInputSubmit = (messageText) => {
     //     if (messageText.trim().toLowerCase() === "start" && !chatStarted) {
@@ -38,7 +38,7 @@ export default function ChatPage() {
     //     handleSendMessage(messageText);
     // };
 
-    console.log("Rendering ChatPage, Chat Started:", chatStarted);
+    // console.log("Rendering ChatPage, Chat Started:", chatStarted);
 
     // return (
     //     <ChatbotUIProvider>
@@ -61,11 +61,24 @@ export default function ChatPage() {
     // )} 
     //     </ChatbotUIProvider>
     // );
-    return (
-        <ChatbotUIProvider>
+//     return (
+//         <ChatbotUIProvider>
             
-                <ChatUI />
+//                 <ChatUI />
 
-        </ChatbotUIProvider>
-    );
-}
+//         </ChatbotUIProvider>
+//     );
+// }
+
+
+// pages/chat/index.tsx
+import dynamic from 'next/dynamic';
+
+// const ServerChatPage = dynamic(() => import('@/app/api/chat/ServerChatPage'), { ssr: false });
+const ServerChatPage = dynamic(() => import('@/app/api/chat/ServerChatPage'), {ssr: false})
+
+const Chat = () => {
+    return <ServerChatPage />;
+};
+
+export default Chat;
