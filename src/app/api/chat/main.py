@@ -74,9 +74,6 @@ def submit_responses():
     app.logger.info(f"Insertion result: {result}")
     return jsonify(result)
 
-def revalidate_path(path: str):
-    pass
-
 def add_entry_to_supabase(entries, user_id):
     entry_map = {
         "Enter up to three questions that guide your family's decision making.": {
