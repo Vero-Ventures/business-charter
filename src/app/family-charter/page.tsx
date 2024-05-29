@@ -51,66 +51,23 @@ const FamilyCharter = () => {
     }
 
     return (
-        // <div>
-        //     <h1>Family Charter</h1>
-        //     {charterData && Object.keys(charterData).length ? (
-        //         Object.entries(charterData).map(([key, item]) => (
-        //             <div key={key}>
-        //                 <h2>{key.replace(/_/g, ' ').toUpperCase()}</h2>
-        //                 <p>{item.question || item.description || item.statement}</p>
-        //             </div>
-        //         ))
-        //     ) : (
-        //         <p>No charter information found.</p>
-        //     )}
-        // </div>
-
         <div className="charter-container">
             <Badge bg="secondary" className="title-badge">Family Charter</Badge>
-            {charterData && Object.keys(charterData).length? (
-                Object.entries(charterData).map(([key, item]) => (
-                    <p className="space-between-attributes">
+            {charterData && Object.keys(charterData).length ? (
+                Object.entries(charterData).map(([key, item], index) => (
+                    // Wrap each entry with a div or React.Fragment and add a unique key prop to it
+                    <div key={key + index} className="space-between-attributes">
                         <Badge pill className="attribute-badges">
                             {key.replace(/_/g, ' ').toUpperCase()}
                         </Badge>
                         <p className="space-between-text">
                             {item.question || item.description || item.statement}
                         </p>
-                    </p>
+                    </div>
                 ))
             ) : (
                 <p>No charter information found.</p>
             )}
-{/* 
-
-                <p className="space-between-attributes">
-                    <Badge pill className="attribute-badges">
-                        Decision Tree
-                    </Badge>
-                    <p className="space-between-text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                </p>
-                <p className="space-between-attributes">
-                <Badge pill className="attribute-badges">
-                    Family Values
-                </Badge>
-                </p>
-                <p className="space-between-attributes">
-                <Badge pill className="attribute-badges">
-                    Family Values
-                </Badge>
-                </p>
-                <p className="space-between-attributes">
-                <Badge pill className="attribute-badges">
-                    Family Values
-                </Badge>
-                </p>
-                <p className="space-between-attributes">
-                <Badge pill className="attribute-badges">
-                    Family Values
-                </Badge>
-                </p> */}
         </div>
     );
 };
