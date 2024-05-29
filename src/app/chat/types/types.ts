@@ -62,3 +62,16 @@ export interface MessageImage {
     alt: string;
 }
 
+export interface SupabaseError {
+    message: string;
+}
+
+export interface CharterEntry {
+    question?: string;
+    description?: string;
+    statement?: string;
+}
+
+export interface CharterData {
+[key: string]: CharterEntry;
+}
