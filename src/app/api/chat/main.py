@@ -11,8 +11,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Add the parent directory to the system path to import model
 sys.path.append(str(Path(__file__).resolve().parents[2] / 'model'))
-from model import generate_summary
-# from model import process_message, generate_summary
+from model import process_message, generate_summary
 
 # Initialize Flask app with CORS
 app = Flask(__name__)
