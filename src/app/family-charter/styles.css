@@ -1,0 +1,38 @@
+/* styles.css */
+.title-badge {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.attribute-badges {
+    margin-bottom: 25px;
+    margin-top: 25px;
+    font-size: 16px;
+    background: #000;
+    border-radius: 12px;
+    padding: 10px;
+    color: white
+}
+
+.charter-container {
+    width: 100%;
+    max-width: 1300px;
+    height: 500px;
+    margin-top: 20px;
+    padding-left: 5%;
+    box-sizing: border-box;
+}
+
+.space-between-attributes {
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+.space-between-text {
+    margin-top: 20px;
+}

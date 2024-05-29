@@ -1,27 +1,40 @@
-
 import React, { useEffect, useRef } from 'react';
-import { useChatbotUI } from '@/app/chat/context'; 
+import { useChatbotUI } from '@/app/chat/context';
+import { AiOutlineOpenAI } from "react-icons/ai";
 import './styles.css';
 
 export const ChatMessages = () => {
-    // const { chatMessages } = useContext(ChatbotUIContext);
     const { chatMessages } = useChatbotUI();
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-        console.log("Updated messages:", chatMessages)
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
     }, [chatMessages]);
 
     return (
         <div className="chat-container">
             {chatMessages.map((msg, index) => (
                 <div key={msg.id || index} className={`message ${msg.type === 'bot' ? 'bot-message' : 'user-message'}`}>
-                    <div className={`${msg.type}-text`}>
-                        {msg.message}
-                    </div>
+                    {msg.type === 'bot' && (
+                        <div className="bot-content">
+                            <div className="bot-icon">
+                                <AiOutlineOpenAI size={35} />
+                            </div>
+                            <div className="bot-text">
+                                {msg.message}
+                            </div>
+                        </div>
+                    )}
+                    {msg.type !== 'bot' && (
+                        <div className="user-text">
+                            {msg.message}
+                        </div>
+                    )}
                 </div>
             ))}
+            <div ref={messagesEndRef} />
         </div>
     );
 };

@@ -19,7 +19,7 @@ export interface MessageProps {
     isLast: boolean;
     onStartEdit?: () => void; 
     onCancelEdit?: () => void;
-    onSubmitEdit?: (content: string) => void;
+    onSubmitEdit?: () => void;
 }
 
 export interface ChatMessage {
@@ -62,3 +62,16 @@ export interface MessageImage {
     alt: string;
 }
 
+export interface SupabaseError {
+    message: string;
+}
+
+export interface CharterEntry {
+    question?: string;
+    description?: string;
+    statement?: string;
+}
+
+export interface CharterData {
+[key: string]: CharterEntry;
+}
