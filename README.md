@@ -48,3 +48,18 @@ This project aims to develop a custom Large Language Model (LLM) to assist busin
 
 - The development will focus on Python and Typescript.
 - Data science, machine learning libraries, and LLM APIs will be used to create the LLM's questioning pipeline and charter compilation functionalities.
+
+## Testing
+- Install packages using `npm i`, and run one of the following commands:
+  - npm run test : Runs Jest unit tests (**Be warned that there may be a bit of lag, as there is an existing bug in the configuration/code**).
+  - npm run test:e2e : Runs Playwright E2E tests, can use --debug to follow step by step.
+  - npm run coverage: Runs Jest unit tests with code coverage and creates formatted coverage report in console.
+ 
+## Pre-commits
+- Install the pre-commits locally by installing packages using `npm i`.
+- Be warned that if you ignore, uninstall, or forget to install the pre-commit hooks, there is a good chance that the GitHub Actions workflow that runs on push/pull request will fail due to formatting/linting issues you may have failed to notice.
+
+## Docker
+- The root directory contains a compose.yaml to build a container running the docker image with the existing Dockerfile.
+  - To build an image using the Dockerfile, run `docker build -t [name] .` in the root directory.
+  - To build a compose container of all the images, run `docker compose up -d` in the root directory.
