@@ -40,6 +40,15 @@ bun.lockb
 # virtual environment
 venv
 
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# code coverage
+.nyc_output/
 # books
 src/app/model/books/ALU 101 TEXTBOOK BASIC LIFE INSURANCE UNDERWRITING (Academy of Life Underwriting).pdf
 src/app/model/books/ALU 201 Intermediate Medical Life Insurance Underwriting (Academy of Life Underwriting).pdf
