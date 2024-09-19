@@ -71,7 +71,7 @@
     "langchain": "^0.2.0",
     "lucide-react": "^0.378.0",
     "mammoth": "^1.7.2",
-    "next": "14.2.3",
+    "next": "14.2.10",
     "next-themes": "^0.3.0",
     "openai": "^4.29.1",
     "react": "^18",
